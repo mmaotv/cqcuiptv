@@ -4,8 +4,6 @@
 
 注意：此频道列表无法在 **非重庆联通** 网络环境下使用。
 
-必须要支持rtsp流的播放器才可使用，比如VLC、potplayer
-
 ### 文件说明
 
 - cqcu-unicast.m3u / cqcu-unicast-alternative.m3u
@@ -13,6 +11,7 @@
   重庆联通单播源，公网或 IPTV 专网均可播放。
 
   - 没有开通 IPTV 业务的用户也能观看
+  - 必须要支持rtsp流的播放器才可使用，比如VLC、potplayer
 
 - cqcu-multicast.m3u
 
