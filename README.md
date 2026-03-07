@@ -4,6 +4,8 @@
 
 注意：此频道列表无法在 **非重庆联通** 网络环境下使用。
 
+可用这个软件使用https://github.com/mytv-android/mytv-android
+
 ### 文件说明
 
 - cqcu-unicast.m3u / cqcu-unicast-alternative.m3u
