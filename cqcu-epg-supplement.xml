@@ -1,0 +1,3205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tv generator-info-name="cqcu-epg-pw-supplement">
+  <channel id="545953">
+    <display-name lang="China">CETV-1</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="545956">
+    <display-name lang="China">CETV-4</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539759">
+    <display-name lang="China">CHC动作电影</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="561371">
+    <display-name lang="China">CHC高清电影</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539900">
+    <display-name lang="China">CHC家庭影院</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="561409">
+    <display-name lang="China">CHC影迷电影</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539790">
+    <display-name lang="China">重庆卫视</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539779">
+    <display-name lang="China">重庆新闻</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539702">
+    <display-name lang="China">重庆少儿</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="544302">
+    <display-name lang="China">重庆影视</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="544407">
+    <display-name lang="China">重庆娱乐</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539636">
+    <display-name lang="China">重庆社会与法</display-name>
+    <icon src="" />
+  </channel>
+  <channel id="539860">
+    <display-name lang="China">重庆农村</display-name>
+    <icon src="" />
+  </channel>
+  <programme channel="545953" start="20260920004500 +0000" stop="20260920013500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920013500 +0000" stop="20260920022500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920022500 +0000" stop="20260920031500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920031500 +0000" stop="20260920040500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920040500 +0000" stop="20260920042500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920042500 +0000" stop="20260920051000 +0000">
+    <title lang="zh">中华史记</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920051000 +0000" stop="20260920052000 +0000">
+    <title lang="zh">对话教育</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920052000 +0000" stop="20260920053000 +0000">
+    <title lang="zh">先锋者说</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920053000 +0000" stop="20260920062000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920062000 +0000" stop="20260920071000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920071000 +0000" stop="20260920072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920072100 +0000" stop="20260920081300 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920081300 +0000" stop="20260920090500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920090500 +0000" stop="20260920092000 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920092000 +0000" stop="20260920103000 +0000">
+    <title lang="zh">纪录片</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920103000 +0000" stop="20260920110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920110000 +0000" stop="20260920114500 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920114500 +0000" stop="20260920120000 +0000">
+    <title lang="zh">全球连线 周观天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920120000 +0000" stop="20260920124500 +0000">
+    <title lang="zh">长安街</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920124500 +0000" stop="20260920132500 +0000">
+    <title lang="zh">校园歌曲工作坊</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920132500 +0000" stop="20260920141500 +0000">
+    <title lang="zh">家长朋友圈</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920141500 +0000" stop="20260920150000 +0000">
+    <title lang="zh">博物馆之夜</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920150000 +0000" stop="20260920155000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920155000 +0000" stop="20260920164000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920164000 +0000" stop="20260920174200 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920174200 +0000" stop="20260920182200 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920182200 +0000" stop="20260920184000 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920184000 +0000" stop="20260920201300 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920201300 +0000" stop="20260920204500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920204500 +0000" stop="20260920211000 +0000">
+    <title lang="zh">长安书院</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920211000 +0000" stop="20260920220800 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920220800 +0000" stop="20260920230000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920230000 +0000" stop="20260920230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920230500 +0000" stop="20260920235400 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260920235400 +0000" stop="20260921000000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545953" start="20260921004500 +0000" stop="20260921013500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921013500 +0000" stop="20260921022500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921022500 +0000" stop="20260921031500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921031500 +0000" stop="20260921040500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921040500 +0000" stop="20260921043700 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921043700 +0000" stop="20260921053000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921053000 +0000" stop="20260921062000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921062000 +0000" stop="20260921071000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921071000 +0000" stop="20260921072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921072100 +0000" stop="20260921081300 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921081300 +0000" stop="20260921090500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921090500 +0000" stop="20260921091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921091500 +0000" stop="20260921100500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921100500 +0000" stop="20260921103000 +0000">
+    <title lang="zh">动画片</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921103000 +0000" stop="20260921110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921110000 +0000" stop="20260921114500 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921114500 +0000" stop="20260921120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921120000 +0000" stop="20260921124400 +0000">
+    <title lang="zh">e视界</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921124400 +0000" stop="20260921133000 +0000">
+    <title lang="zh">行业中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921133000 +0000" stop="20260921142200 +0000">
+    <title lang="zh">“烽火青春 弦歌不辍”大型融媒直播活动</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921142200 +0000" stop="20260921142900 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921142900 +0000" stop="20260921153000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921153000 +0000" stop="20260921162000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921162000 +0000" stop="20260921172500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921172500 +0000" stop="20260921183500 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921183500 +0000" stop="20260921201000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921201000 +0000" stop="20260921204500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921204500 +0000" stop="20260921211000 +0000">
+    <title lang="zh">长安书院</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921211000 +0000" stop="20260921220800 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921220800 +0000" stop="20260921230000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921230000 +0000" stop="20260921230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921230500 +0000" stop="20260921235400 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260921235400 +0000" stop="20260922000000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545953" start="20260922004500 +0000" stop="20260922013500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922013500 +0000" stop="20260922022500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922022500 +0000" stop="20260922031500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922031500 +0000" stop="20260922040500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922040500 +0000" stop="20260922043700 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922043700 +0000" stop="20260922053000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922053000 +0000" stop="20260922062000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922062000 +0000" stop="20260922071000 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922071000 +0000" stop="20260922072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922072100 +0000" stop="20260922081300 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922081300 +0000" stop="20260922090500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922090500 +0000" stop="20260922091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922091500 +0000" stop="20260922100500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922100500 +0000" stop="20260922103000 +0000">
+    <title lang="zh">动画片</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922103000 +0000" stop="20260922110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922110000 +0000" stop="20260922114500 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922114500 +0000" stop="20260922120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922120000 +0000" stop="20260922124500 +0000">
+    <title lang="zh">e视界</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922124500 +0000" stop="20260922133000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922133000 +0000" stop="20260922142200 +0000">
+    <title lang="zh">开学啦:烽火青春弦歌不辍</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922142200 +0000" stop="20260922143000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922143000 +0000" stop="20260922153000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922153000 +0000" stop="20260922220200 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922220200 +0000" stop="20260922220800 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922220800 +0000" stop="20260922230000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922230000 +0000" stop="20260922230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922230500 +0000" stop="20260922235500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260922235500 +0000" stop="20260923000000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545953" start="20260923004500 +0000" stop="20260923013500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923013500 +0000" stop="20260923022500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923022500 +0000" stop="20260923031500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923031500 +0000" stop="20260923040500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923040500 +0000" stop="20260923043700 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923043700 +0000" stop="20260923053000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923053000 +0000" stop="20260923062000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923062000 +0000" stop="20260923071000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923071000 +0000" stop="20260923072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923072100 +0000" stop="20260923081300 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923081300 +0000" stop="20260923090500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923090500 +0000" stop="20260923091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923091500 +0000" stop="20260923100500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923100500 +0000" stop="20260923103000 +0000">
+    <title lang="zh">动画片</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923103000 +0000" stop="20260923110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923110000 +0000" stop="20260923114500 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923114500 +0000" stop="20260923120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923120000 +0000" stop="20260923124500 +0000">
+    <title lang="zh">e视界</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923124500 +0000" stop="20260923133000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923133000 +0000" stop="20260923143000 +0000">
+    <title lang="zh">开学啦:烽火青春弦歌不辍</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923143000 +0000" stop="20260923150000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923150000 +0000" stop="20260923153000 +0000">
+    <title lang="zh">美丽人生</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923153000 +0000" stop="20260923162000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923162000 +0000" stop="20260923165000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923165000 +0000" stop="20260923172500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923172500 +0000" stop="20260923175300 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923175300 +0000" stop="20260923182300 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923182300 +0000" stop="20260923183500 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923183500 +0000" stop="20260923192000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923192000 +0000" stop="20260923201000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923201000 +0000" stop="20260923204200 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923204200 +0000" stop="20260923211000 +0000">
+    <title lang="zh">长安书院</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923211000 +0000" stop="20260923220800 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923220800 +0000" stop="20260923230000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923230000 +0000" stop="20260923230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923230500 +0000" stop="20260923235500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260923235500 +0000" stop="20260924000000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545953" start="20260924004500 +0000" stop="20260924013500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924013500 +0000" stop="20260924022500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924022500 +0000" stop="20260924031500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924031500 +0000" stop="20260924040500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924040500 +0000" stop="20260924043700 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924043700 +0000" stop="20260924053000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924053000 +0000" stop="20260924062000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924062000 +0000" stop="20260924071000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924071000 +0000" stop="20260924072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924072100 +0000" stop="20260924081300 +0000">
+    <title lang="zh">与狼共舞</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924081300 +0000" stop="20260924090500 +0000">
+    <title lang="zh">与狼共舞</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924090500 +0000" stop="20260924091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924091500 +0000" stop="20260924100500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924100500 +0000" stop="20260924103000 +0000">
+    <title lang="zh">动画片</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924103000 +0000" stop="20260924110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924110000 +0000" stop="20260924113900 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924113900 +0000" stop="20260924114500 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924114500 +0000" stop="20260924120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924120000 +0000" stop="20260924124500 +0000">
+    <title lang="zh">e视界</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924124500 +0000" stop="20260924133000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924133000 +0000" stop="20260924143000 +0000">
+    <title lang="zh">开学啦:烽火青春弦歌不辍</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924143000 +0000" stop="20260924153000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924153000 +0000" stop="20260924162000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924162000 +0000" stop="20260924165000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924165000 +0000" stop="20260924172500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924172500 +0000" stop="20260924175300 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924175300 +0000" stop="20260924183500 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924183500 +0000" stop="20260924192000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924192000 +0000" stop="20260924201000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924201000 +0000" stop="20260924204200 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924204200 +0000" stop="20260924211000 +0000">
+    <title lang="zh">长安书院</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924211000 +0000" stop="20260924220800 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924220800 +0000" stop="20260924230000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924230000 +0000" stop="20260924230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924230500 +0000" stop="20260924235500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260924235500 +0000" stop="20260925000000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545953" start="20260925004500 +0000" stop="20260925013500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925013500 +0000" stop="20260925022500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925022500 +0000" stop="20260925031500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925031500 +0000" stop="20260925040500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925040500 +0000" stop="20260925043700 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925043700 +0000" stop="20260925053000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925053000 +0000" stop="20260925062000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925062000 +0000" stop="20260925071000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925071000 +0000" stop="20260925072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925072100 +0000" stop="20260925081300 +0000">
+    <title lang="zh">与狼共舞</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925081300 +0000" stop="20260925090500 +0000">
+    <title lang="zh">与狼共舞</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925090500 +0000" stop="20260925091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925091500 +0000" stop="20260925100500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925100500 +0000" stop="20260925103000 +0000">
+    <title lang="zh">动画片</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925103000 +0000" stop="20260925110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925110000 +0000" stop="20260925113900 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925113900 +0000" stop="20260925114500 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925114500 +0000" stop="20260925120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925120000 +0000" stop="20260925124500 +0000">
+    <title lang="zh">e视界</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925124500 +0000" stop="20260925133000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925133000 +0000" stop="20260925143000 +0000">
+    <title lang="zh">开学啦:烽火青春弦歌不辍</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925143000 +0000" stop="20260925153000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925153000 +0000" stop="20260925162000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925162000 +0000" stop="20260925165000 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925165000 +0000" stop="20260925172500 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925172500 +0000" stop="20260925175300 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925175300 +0000" stop="20260925183500 +0000">
+    <title lang="zh">影视公开课</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925183500 +0000" stop="20260925192000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925192000 +0000" stop="20260925201000 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925201000 +0000" stop="20260925204200 +0000">
+    <title lang="zh">发现中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925204200 +0000" stop="20260925211000 +0000">
+    <title lang="zh">长安书院</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925211000 +0000" stop="20260925220800 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925220800 +0000" stop="20260925230000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925230000 +0000" stop="20260925230500 +0000">
+    <title lang="zh">中华人民共和国国歌</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925230500 +0000" stop="20260925235500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260925235500 +0000" stop="20260926000000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545953" start="20260926004500 +0000" stop="20260926013500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926013500 +0000" stop="20260926022500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926022500 +0000" stop="20260926031500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926031500 +0000" stop="20260926040500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926040500 +0000" stop="20260926042500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926042500 +0000" stop="20260926053000 +0000">
+    <title lang="zh">一职为你</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926053000 +0000" stop="20260926062000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926062000 +0000" stop="20260926071000 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926071000 +0000" stop="20260926072100 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926072100 +0000" stop="20260926081300 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926081300 +0000" stop="20260926090500 +0000">
+    <title lang="zh">电视剧</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926090500 +0000" stop="20260926091500 +0000">
+    <title lang="zh">教育新闻直播间</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926091500 +0000" stop="20260926093000 +0000">
+    <title lang="zh">魅力东方</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926093000 +0000" stop="20260926103000 +0000">
+    <title lang="zh">大戏台</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926103000 +0000" stop="20260926110000 +0000">
+    <title lang="zh">全国教育新闻联播</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926110000 +0000" stop="20260926113900 +0000">
+    <title lang="zh">转播中央台新闻联播</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926113900 +0000" stop="20260926114500 +0000">
+    <title lang="zh">纪录中国</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926114500 +0000" stop="20260926120000 +0000">
+    <title lang="zh">育见</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926120000 +0000" stop="20260926124500 +0000">
+    <title lang="zh">长安街</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926124500 +0000" stop="20260926132000 +0000">
+    <title lang="zh">纪录片</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926132000 +0000" stop="20260926141300 +0000">
+    <title lang="zh">新歌来啦</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926141300 +0000" stop="20260926150000 +0000">
+    <title lang="zh">记录中国</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926150000 +0000" stop="20260926155000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545953" start="20260926155000 +0000" stop="20260927000000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260920000000 +0000" stop="20260920020000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920020000 +0000" stop="20260920030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920030000 +0000" stop="20260920042500 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920042500 +0000" stop="20260920043000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920043000 +0000" stop="20260920050000 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920050000 +0000" stop="20260920054000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920054000 +0000" stop="20260920060500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920060500 +0000" stop="20260920063000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920063000 +0000" stop="20260920070000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920070000 +0000" stop="20260920080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920080000 +0000" stop="20260920090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920090000 +0000" stop="20260920100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920100000 +0000" stop="20260920110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920110000 +0000" stop="20260920113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920113000 +0000" stop="20260920140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920140000 +0000" stop="20260920143000 +0000">
+    <title lang="zh">冠军厨房</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920143000 +0000" stop="20260920151500 +0000">
+    <title lang="zh">家长朋友圈</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920151500 +0000" stop="20260920155500 +0000">
+    <title lang="zh">安全动起来</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920155500 +0000" stop="20260920160000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920160000 +0000" stop="20260920171000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920171000 +0000" stop="20260920173000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920173000 +0000" stop="20260920180000 +0000">
+    <title lang="zh">冠军厨房</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920180000 +0000" stop="20260920184500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920184500 +0000" stop="20260920191500 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920191500 +0000" stop="20260920194500 +0000">
+    <title lang="zh">安全动起来</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920194500 +0000" stop="20260920204000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920204000 +0000" stop="20260920211000 +0000">
+    <title lang="zh">冠军食堂</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920211000 +0000" stop="20260920220000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920220000 +0000" stop="20260920222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920222000 +0000" stop="20260920230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920230000 +0000" stop="20260920233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260920233000 +0000" stop="20260921000000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="545956" start="20260921000000 +0000" stop="20260921003000 +0000">
+    <title lang="zh">国医名师课</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921003000 +0000" stop="20260921011500 +0000">
+    <title lang="zh">一职为你</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921011500 +0000" stop="20260921013000 +0000">
+    <title lang="zh">墨香</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921013000 +0000" stop="20260921020000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921020000 +0000" stop="20260921030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921030000 +0000" stop="20260921040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921040000 +0000" stop="20260921050000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921050000 +0000" stop="20260921060000 +0000">
+    <title lang="zh">田径风云</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921060000 +0000" stop="20260921070000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921070000 +0000" stop="20260921080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921080000 +0000" stop="20260921090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921090000 +0000" stop="20260921100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921100000 +0000" stop="20260921110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921110000 +0000" stop="20260921113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921113000 +0000" stop="20260921140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921140000 +0000" stop="20260921143000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921143000 +0000" stop="20260921150000 +0000">
+    <title lang="zh">动起来一起闪亮</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921150000 +0000" stop="20260921151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921151500 +0000" stop="20260921154000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921154000 +0000" stop="20260921161000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921161000 +0000" stop="20260921170000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921170000 +0000" stop="20260921173000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921173000 +0000" stop="20260921180000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921180000 +0000" stop="20260921184500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921184500 +0000" stop="20260921191500 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921191500 +0000" stop="20260921194500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921194500 +0000" stop="20260921204000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921204000 +0000" stop="20260921211000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921211000 +0000" stop="20260921220000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921220000 +0000" stop="20260921222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921222000 +0000" stop="20260921230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921230000 +0000" stop="20260921233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260921233000 +0000" stop="20260922000000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="545956" start="20260922000000 +0000" stop="20260923000000 +0000">
+    <title lang="zh">国医名师课</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922003000 +0000" stop="20260922011500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922011500 +0000" stop="20260922013000 +0000">
+    <title lang="zh">墨香</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922013000 +0000" stop="20260922020000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922020000 +0000" stop="20260922030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922030000 +0000" stop="20260922040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922040000 +0000" stop="20260922050000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922050000 +0000" stop="20260922054500 +0000">
+    <title lang="zh">一职为你</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922054500 +0000" stop="20260922060000 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922060000 +0000" stop="20260922070000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922070000 +0000" stop="20260922080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922080000 +0000" stop="20260922090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922090000 +0000" stop="20260922100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922100000 +0000" stop="20260922110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922110000 +0000" stop="20260922113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922113000 +0000" stop="20260922140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922140000 +0000" stop="20260922143000 +0000">
+    <title lang="zh">数字体育潮</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922143000 +0000" stop="20260922150000 +0000">
+    <title lang="zh">动起来一起闪亮</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922150000 +0000" stop="20260922151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922151500 +0000" stop="20260922154000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922154000 +0000" stop="20260922220000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922220000 +0000" stop="20260922222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922222000 +0000" stop="20260922230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922230000 +0000" stop="20260922233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260922233000 +0000" stop="20260923000000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-22</date>
+  </programme>
+  <programme channel="545956" start="20260923000000 +0000" stop="20260924000000 +0000">
+    <title lang="zh">国医名师课</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923003000 +0000" stop="20260923011500 +0000">
+    <title lang="zh">一职为你</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923011500 +0000" stop="20260923013000 +0000">
+    <title lang="zh">墨香</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923013000 +0000" stop="20260923020000 +0000">
+    <title lang="zh">冠军说</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923020000 +0000" stop="20260923030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923030000 +0000" stop="20260923040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923040000 +0000" stop="20260923050000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923050000 +0000" stop="20260923060000 +0000">
+    <title lang="zh">乒乓青春</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923060000 +0000" stop="20260923070000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923070000 +0000" stop="20260923080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923080000 +0000" stop="20260923090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923090000 +0000" stop="20260923100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923100000 +0000" stop="20260923110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923110000 +0000" stop="20260923113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923113000 +0000" stop="20260923140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923140000 +0000" stop="20260923143000 +0000">
+    <title lang="zh">数字体育潮</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923143000 +0000" stop="20260923150000 +0000">
+    <title lang="zh">动起来一起闪亮</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923150000 +0000" stop="20260923151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923151500 +0000" stop="20260923154000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923154000 +0000" stop="20260923161000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923161000 +0000" stop="20260923170000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923170000 +0000" stop="20260923173000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923173000 +0000" stop="20260923180000 +0000">
+    <title lang="zh">数字体育潮</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923180000 +0000" stop="20260923184500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923184500 +0000" stop="20260923191500 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923191500 +0000" stop="20260923194500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923194500 +0000" stop="20260923204000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923204000 +0000" stop="20260923211000 +0000">
+    <title lang="zh">数字体育潮</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923211000 +0000" stop="20260923220000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923220000 +0000" stop="20260923222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923222000 +0000" stop="20260923230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923230000 +0000" stop="20260923233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260923233000 +0000" stop="20260924000000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-23</date>
+  </programme>
+  <programme channel="545956" start="20260924000000 +0000" stop="20260925000000 +0000">
+    <title lang="zh">国医名师课</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924003000 +0000" stop="20260924011500 +0000">
+    <title lang="zh">一职为你</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924011500 +0000" stop="20260924013000 +0000">
+    <title lang="zh">墨香</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924013000 +0000" stop="20260924020000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924020000 +0000" stop="20260924030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924030000 +0000" stop="20260924040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924040000 +0000" stop="20260924050000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924050000 +0000" stop="20260924054000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924054000 +0000" stop="20260924060000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924060000 +0000" stop="20260924070000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924070000 +0000" stop="20260924080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924080000 +0000" stop="20260924090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924090000 +0000" stop="20260924100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924100000 +0000" stop="20260924110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924110000 +0000" stop="20260924113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924113000 +0000" stop="20260924140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924140000 +0000" stop="20260924143000 +0000">
+    <title lang="zh">荣耀时刻</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924143000 +0000" stop="20260924150000 +0000">
+    <title lang="zh">动起来一起闪亮</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924150000 +0000" stop="20260924151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924151500 +0000" stop="20260924154000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924154000 +0000" stop="20260924161000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924161000 +0000" stop="20260924170000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924170000 +0000" stop="20260924173000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924173000 +0000" stop="20260924180000 +0000">
+    <title lang="zh">荣耀时刻</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924180000 +0000" stop="20260924184500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924184500 +0000" stop="20260924191500 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924191500 +0000" stop="20260924194500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924194500 +0000" stop="20260924204000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924204000 +0000" stop="20260924211000 +0000">
+    <title lang="zh">荣耀时刻</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924211000 +0000" stop="20260924220000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924220000 +0000" stop="20260924222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924222000 +0000" stop="20260924230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924230000 +0000" stop="20260924233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260924233000 +0000" stop="20260925000000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-24</date>
+  </programme>
+  <programme channel="545956" start="20260925000000 +0000" stop="20260926000000 +0000">
+    <title lang="zh">国医名师课</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925003000 +0000" stop="20260925011500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925011500 +0000" stop="20260925013000 +0000">
+    <title lang="zh">墨香</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925013000 +0000" stop="20260925020000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925020000 +0000" stop="20260925030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925030000 +0000" stop="20260925040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925040000 +0000" stop="20260925050000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925050000 +0000" stop="20260925060000 +0000">
+    <title lang="zh">活力排球</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925060000 +0000" stop="20260925070000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925070000 +0000" stop="20260925080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925080000 +0000" stop="20260925090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925090000 +0000" stop="20260925100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925100000 +0000" stop="20260925110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925110000 +0000" stop="20260925113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925113000 +0000" stop="20260925140000 +0000">
+    <title lang="zh">绿荫青春</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925140000 +0000" stop="20260925143000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925143000 +0000" stop="20260925150000 +0000">
+    <title lang="zh">动起来一起闪亮</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925150000 +0000" stop="20260925151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925151500 +0000" stop="20260925154000 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925154000 +0000" stop="20260925161000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925161000 +0000" stop="20260925170000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925170000 +0000" stop="20260925173000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925173000 +0000" stop="20260925180000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925180000 +0000" stop="20260925184500 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925184500 +0000" stop="20260925191500 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925191500 +0000" stop="20260925194500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925194500 +0000" stop="20260925204000 +0000">
+    <title lang="zh">探索</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925204000 +0000" stop="20260925211000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925211000 +0000" stop="20260925220000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925220000 +0000" stop="20260925222000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925222000 +0000" stop="20260925230000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925230000 +0000" stop="20260925233000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260925233000 +0000" stop="20260926000000 +0000">
+    <title lang="zh">安全动起来</title>
+    <desc />
+    <date>2026-09-25</date>
+  </programme>
+  <programme channel="545956" start="20260926000000 +0000" stop="20260927000000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926020000 +0000" stop="20260926030000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926030000 +0000" stop="20260926040000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926040000 +0000" stop="20260926042500 +0000">
+    <title lang="zh">留学为你来</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926042500 +0000" stop="20260926050000 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926050000 +0000" stop="20260926054000 +0000">
+    <title lang="zh">职教中国</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926054000 +0000" stop="20260926060500 +0000">
+    <title lang="zh">体谈</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926060500 +0000" stop="20260926063000 +0000">
+    <title lang="zh">金牌体育课</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926063000 +0000" stop="20260926070000 +0000">
+    <title lang="zh">闪耀职教</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926070000 +0000" stop="20260926080000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926080000 +0000" stop="20260926090000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926090000 +0000" stop="20260926100000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926100000 +0000" stop="20260926110000 +0000">
+    <title lang="zh">等着我</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926110000 +0000" stop="20260926113000 +0000">
+    <title lang="zh">e体资讯</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926113000 +0000" stop="20260926140000 +0000">
+    <title lang="zh">青春训练营</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926140000 +0000" stop="20260926143000 +0000">
+    <title lang="zh">冠军食堂</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926143000 +0000" stop="20260926150000 +0000">
+    <title lang="zh">家长朋友圈</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926150000 +0000" stop="20260926151500 +0000">
+    <title lang="zh">夏天说体育</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926151500 +0000" stop="20260926154000 +0000">
+    <title lang="zh">安全动起来</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="545956" start="20260926154000 +0000" stop="20260927000000 +0000">
+    <title lang="zh">疾风少年</title>
+    <desc />
+    <date>2026-09-26</date>
+  </programme>
+  <programme channel="539759" start="20260920000200 +0000" stop="20260920000500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920000500 +0000" stop="20260920013400 +0000">
+    <title lang="zh">广东十虎苏灿之卧龙在田</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920013400 +0000" stop="20260920013500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920013500 +0000" stop="20260920030900 +0000">
+    <title lang="zh">南口1937</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920030900 +0000" stop="20260920031000 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920031000 +0000" stop="20260920050400 +0000">
+    <title lang="zh">神话</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920050400 +0000" stop="20260920050500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920050500 +0000" stop="20260920070000 +0000">
+    <title lang="zh">盟军敢死队</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920070000 +0000" stop="20260920083400 +0000">
+    <title lang="zh">动作导视,抗日名将卫立煌</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920083400 +0000" stop="20260920083500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920083500 +0000" stop="20260920103100 +0000">
+    <title lang="zh">新警察故事</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920103100 +0000" stop="20260920103500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920103500 +0000" stop="20260920122400 +0000">
+    <title lang="zh">血战湘江</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920122400 +0000" stop="20260920123000 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920123000 +0000" stop="20260920140200 +0000">
+    <title lang="zh">扫毒风暴</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920140200 +0000" stop="20260920140500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920140500 +0000" stop="20260920153400 +0000">
+    <title lang="zh">火线干探-网络缉凶</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920153400 +0000" stop="20260920153500 +0000">
+    <title lang="zh">动作导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539759" start="20260920153500 +0000" stop="20260921000000 +0000">
+    <title lang="zh">烽火天龙山</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920000000 +0000" stop="20260920010300 +0000">
+    <title lang="zh">黄河守墓人</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920010300 +0000" stop="20260920025200 +0000">
+    <title lang="zh">嫌疑人x的献身</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920025200 +0000" stop="20260920045500 +0000">
+    <title lang="zh">浪浪人生</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920045500 +0000" stop="20260920063500 +0000">
+    <title lang="zh">人生路不熟</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920063500 +0000" stop="20260920083700 +0000">
+    <title lang="zh">飞驰人生Ⅱ</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920083700 +0000" stop="20260920105100 +0000">
+    <title lang="zh">抓娃娃</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920105100 +0000" stop="20260920123600 +0000">
+    <title lang="zh">柳林的故事</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920123600 +0000" stop="20260920140000 +0000">
+    <title lang="zh">浴血卫士</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920140000 +0000" stop="20260920155000 +0000">
+    <title lang="zh">捍卫者</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920155000 +0000" stop="20260920160000 +0000">
+    <title lang="zh">美国空姐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920160000 +0000" stop="20260920171300 +0000">
+    <title lang="zh">美国空姐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920171300 +0000" stop="20260920200000 +0000">
+    <title lang="zh">剿匪龙虎山</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920200000 +0000" stop="20260920203300 +0000">
+    <title lang="zh">剿匪龙虎山</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920203300 +0000" stop="20260920220000 +0000">
+    <title lang="zh">剿匪龙虎山</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920220000 +0000" stop="20260920234500 +0000">
+    <title lang="zh">乌伯林根之殇</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260920234500 +0000" stop="20260921000000 +0000">
+    <title lang="zh">山水相连</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561371" start="20260921000000 +0000" stop="20260921011700 +0000">
+    <title lang="zh">山水相连</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921011700 +0000" stop="20260921024800 +0000">
+    <title lang="zh">冼夫人之浩气英风</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921024800 +0000" stop="20260921043100 +0000">
+    <title lang="zh">功夫联盟</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921043100 +0000" stop="20260921061800 +0000">
+    <title lang="zh">破门</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921061800 +0000" stop="20260921075200 +0000">
+    <title lang="zh">一位著名的病人</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921075200 +0000" stop="20260921094200 +0000">
+    <title lang="zh">地狱男爵-血皇后崛起</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921094200 +0000" stop="20260921115900 +0000">
+    <title lang="zh">唐人街探案Ⅲ</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921115900 +0000" stop="20260921140000 +0000">
+    <title lang="zh">狼图腾</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921140000 +0000" stop="20260921153000 +0000">
+    <title lang="zh">绿皮车奏鸣曲</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="561371" start="20260921153000 +0000" stop="20260922000000 +0000">
+    <title lang="zh">十三猎杀</title>
+    <desc />
+    <date>2026-09-21</date>
+  </programme>
+  <programme channel="539900" start="20260920003900 +0000" stop="20260920004000 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920004000 +0000" stop="20260920033000 +0000">
+    <title lang="zh">黄金三镖客</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920033000 +0000" stop="20260920033500 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920033500 +0000" stop="20260920050200 +0000">
+    <title lang="zh">鸽子起舞</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920050200 +0000" stop="20260920050500 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920050500 +0000" stop="20260920074700 +0000">
+    <title lang="zh">拯救大兵瑞恩</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920074700 +0000" stop="20260920075000 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920075000 +0000" stop="20260920091200 +0000">
+    <title lang="zh">神偷谍影</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920091200 +0000" stop="20260920091500 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920091500 +0000" stop="20260920104600 +0000">
+    <title lang="zh">楚留香</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920104600 +0000" stop="20260920105000 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920105000 +0000" stop="20260920122400 +0000">
+    <title lang="zh">送我上青云</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920122400 +0000" stop="20260920122500 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920122500 +0000" stop="20260920135700 +0000">
+    <title lang="zh">树上有个好地方</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920135700 +0000" stop="20260920140000 +0000">
+    <title lang="zh">家庭导视</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539900" start="20260920140000 +0000" stop="20260921000000 +0000">
+    <title lang="zh">斯大林格勒</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920010100 +0000" stop="20260920010300 +0000">
+    <title lang="zh">2024影迷频道形象片</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920010300 +0000" stop="20260920025200 +0000">
+    <title lang="zh">嫌疑人x的献身</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920025200 +0000" stop="20260920045500 +0000">
+    <title lang="zh">浪浪人生</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920045500 +0000" stop="20260920063500 +0000">
+    <title lang="zh">人生路不熟</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920063500 +0000" stop="20260920083700 +0000">
+    <title lang="zh">飞驰人生2</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920083700 +0000" stop="20260920105100 +0000">
+    <title lang="zh">抓娃娃</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920105100 +0000" stop="20260920123500 +0000">
+    <title lang="zh">柳林的故事</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920123500 +0000" stop="20260920123600 +0000">
+    <title lang="zh">2024影迷频道形象片</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920123600 +0000" stop="20260920140000 +0000">
+    <title lang="zh">浴血卫士</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920140000 +0000" stop="20260920154900 +0000">
+    <title lang="zh">捍卫者</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920154900 +0000" stop="20260920155000 +0000">
+    <title lang="zh">2024影迷频道形象片</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="561409" start="20260920155000 +0000" stop="20260921000000 +0000">
+    <title lang="zh">美国空姐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920002900 +0000" stop="20260920011300 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(31)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920011300 +0000" stop="20260920020600 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(32)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920020600 +0000" stop="20260920030600 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(33)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920030600 +0000" stop="20260920040000 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(34)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920040000 +0000" stop="20260920041800 +0000">
+    <title lang="zh">第一眼新闻</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920041800 +0000" stop="20260920042400 +0000">
+    <title lang="zh">午间气象服务</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920042400 +0000" stop="20260920050800 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(35)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920050800 +0000" stop="20260920060100 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(36)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920060100 +0000" stop="20260920065300 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(37)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920065300 +0000" stop="20260920074500 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(38)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920074500 +0000" stop="20260920084100 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(39)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920084100 +0000" stop="20260920094500 +0000">
+    <title lang="zh">英雄剧场:新燕子李三(40)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920094500 +0000" stop="20260920100300 +0000">
+    <title lang="zh">第1眼新闻</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920100300 +0000" stop="20260920102600 +0000">
+    <title lang="zh">财经壹资讯</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920102600 +0000" stop="20260920103000 +0000">
+    <title lang="zh">重庆天气预报</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920103000 +0000" stop="20260920105100 +0000">
+    <title lang="zh">重庆新闻联播</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920105100 +0000" stop="20260920110000 +0000">
+    <title lang="zh">今日关注</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920110000 +0000" stop="20260920113600 +0000">
+    <title lang="zh">中央新闻联播</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920113600 +0000" stop="20260920122500 +0000">
+    <title lang="zh">传奇剧场:宿命之敌(28)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920122500 +0000" stop="20260920131500 +0000">
+    <title lang="zh">传奇剧场:宿命之敌(29)</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920131500 +0000" stop="20260920143600 +0000">
+    <title lang="zh">创业中国人</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920143600 +0000" stop="20260920150700 +0000">
+    <title lang="zh">健康到家</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920150700 +0000" stop="20260920155000 +0000">
+    <title lang="zh">企业风云路</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539790" start="20260920155000 +0000" stop="20260921000000 +0000">
+    <title lang="zh">午夜剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920000000 +0000" stop="20260920010000 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920010000 +0000" stop="20260920020000 +0000">
+    <title lang="zh">630早报</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920020000 +0000" stop="20260920023000 +0000">
+    <title lang="zh">渝警前沿</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920023000 +0000" stop="20260920032500 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920032500 +0000" stop="20260920034000 +0000">
+    <title lang="zh">环球视界</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920034000 +0000" stop="20260920040000 +0000">
+    <title lang="zh">渝警前沿</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920040000 +0000" stop="20260920050000 +0000">
+    <title lang="zh">630午报</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920050000 +0000" stop="20260920055200 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920055200 +0000" stop="20260920060000 +0000">
+    <title lang="zh">午间气象服务</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920060000 +0000" stop="20260920064500 +0000">
+    <title lang="zh">重庆发现</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920064500 +0000" stop="20260920070000 +0000">
+    <title lang="zh">安全第一</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920070000 +0000" stop="20260920080000 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920080000 +0000" stop="20260920090500 +0000">
+    <title lang="zh">天天630</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920090500 +0000" stop="20260920093000 +0000">
+    <title lang="zh">渝警前沿</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920093000 +0000" stop="20260920102400 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920102400 +0000" stop="20260920103000 +0000">
+    <title lang="zh">天气预报</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920103000 +0000" stop="20260920103300 +0000">
+    <title lang="zh">630新闻冲击波</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920103300 +0000" stop="20260920120000 +0000">
+    <title lang="zh">天天630</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920120000 +0000" stop="20260920124500 +0000">
+    <title lang="zh">重庆发现</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920124500 +0000" stop="20260920130000 +0000">
+    <title lang="zh">新闻解码</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920130000 +0000" stop="20260920140000 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920140000 +0000" stop="20260920150000 +0000">
+    <title lang="zh">630晚报</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920150000 +0000" stop="20260920153300 +0000">
+    <title lang="zh">重庆新闻联播</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539779" start="20260920153300 +0000" stop="20260921000000 +0000">
+    <title lang="zh">网罗天下</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920032600 +0000" stop="20260920034600 +0000">
+    <title lang="zh">冲刺吧宝贝</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920034600 +0000" stop="20260920040000 +0000">
+    <title lang="zh">TICO欢乐假日</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920040000 +0000" stop="20260920064500 +0000">
+    <title lang="zh">TICO巨星饭</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920064500 +0000" stop="20260920071500 +0000">
+    <title lang="zh">迷彩少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920071500 +0000" stop="20260920083900 +0000">
+    <title lang="zh">TICO梦想部落</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920083900 +0000" stop="20260920085000 +0000">
+    <title lang="zh">宝贝看你的</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920085000 +0000" stop="20260920090000 +0000">
+    <title lang="zh">童趣欢乐送</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920090000 +0000" stop="20260920091000 +0000">
+    <title lang="zh">TICO旗舰店</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920091000 +0000" stop="20260920092000 +0000">
+    <title lang="zh">TICO坚果屋</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920092000 +0000" stop="20260920103000 +0000">
+    <title lang="zh">TICO成长快车</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920103000 +0000" stop="20260920115900 +0000">
+    <title lang="zh">TICO动漫星球</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920115900 +0000" stop="20260920135800 +0000">
+    <title lang="zh">TICO动漫空间</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920135800 +0000" stop="20260920152900 +0000">
+    <title lang="zh">正说家装</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920152900 +0000" stop="20260920153400 +0000">
+    <title lang="zh">超级育儿中心</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539702" start="20260920153400 +0000" stop="20260921000000 +0000">
+    <title lang="zh">TICOC世界</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920002900 +0000" stop="20260920004600 +0000">
+    <title lang="zh">装修专题节目</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920004600 +0000" stop="20260920045500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920045500 +0000" stop="20260920061400 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920061400 +0000" stop="20260920093400 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920093400 +0000" stop="20260920100900 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920100900 +0000" stop="20260920113000 +0000">
+    <title lang="zh">一家装饰</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920113000 +0000" stop="20260920150100 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920150100 +0000" stop="20260920154100 +0000">
+    <title lang="zh">渝乐派</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544302" start="20260920154100 +0000" stop="20260921000000 +0000">
+    <title lang="zh">名中医到社区</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920000800 +0000" stop="20260920005800 +0000">
+    <title lang="zh">团团赚</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920005800 +0000" stop="20260920013800 +0000">
+    <title lang="zh">上午剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920013800 +0000" stop="20260920020800 +0000">
+    <title lang="zh">美食厨房</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920020800 +0000" stop="20260920040000 +0000">
+    <title lang="zh">上午剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920040000 +0000" stop="20260920050100 +0000">
+    <title lang="zh">渝乐耍大牌</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920050100 +0000" stop="20260920051100 +0000">
+    <title lang="zh">楼市直通车</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920051100 +0000" stop="20260920053400 +0000">
+    <title lang="zh">团团赚</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920053400 +0000" stop="20260920061200 +0000">
+    <title lang="zh">下午剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920061200 +0000" stop="20260920064400 +0000">
+    <title lang="zh">美食厨房</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920064400 +0000" stop="20260920075400 +0000">
+    <title lang="zh">下午剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920075400 +0000" stop="20260920090600 +0000">
+    <title lang="zh">下午剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920090600 +0000" stop="20260920100000 +0000">
+    <title lang="zh">食全食美</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920100000 +0000" stop="20260920110400 +0000">
+    <title lang="zh">渝乐耍大牌</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920110400 +0000" stop="20260920124500 +0000">
+    <title lang="zh">晚间剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920124500 +0000" stop="20260920133500 +0000">
+    <title lang="zh">晚间剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920133500 +0000" stop="20260920135900 +0000">
+    <title lang="zh">食全食美</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920135900 +0000" stop="20260920144500 +0000">
+    <title lang="zh">渝乐蹦嚓嚓</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="544407" start="20260920144500 +0000" stop="20260921000000 +0000">
+    <title lang="zh">星空星发布</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920001100 +0000" stop="20260920013400 +0000">
+    <title lang="zh">凡人有乐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920013400 +0000" stop="20260920022000 +0000">
+    <title lang="zh">大城小事</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920022000 +0000" stop="20260920024200 +0000">
+    <title lang="zh">正说家装</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920024200 +0000" stop="20260920033000 +0000">
+    <title lang="zh">都市700</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920033000 +0000" stop="20260920040300 +0000">
+    <title lang="zh">玩吧少年</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920040300 +0000" stop="20260920042500 +0000">
+    <title lang="zh">环保进行时</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920042500 +0000" stop="20260920051700 +0000">
+    <title lang="zh">法治中国60分</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920051700 +0000" stop="20260920072700 +0000">
+    <title lang="zh">凡人有乐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920072700 +0000" stop="20260920074700 +0000">
+    <title lang="zh">周末去哪里</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920074700 +0000" stop="20260920085700 +0000">
+    <title lang="zh">正说家装</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920085700 +0000" stop="20260920100000 +0000">
+    <title lang="zh">雾都夜话</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920100000 +0000" stop="20260920105900 +0000">
+    <title lang="zh">大城小事</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920105900 +0000" stop="20260920120000 +0000">
+    <title lang="zh">都市700</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920120000 +0000" stop="20260920130400 +0000">
+    <title lang="zh">凡人有乐</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920130400 +0000" stop="20260920153400 +0000">
+    <title lang="zh">我们的新家</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539636" start="20260920153400 +0000" stop="20260921000000 +0000">
+    <title lang="zh">法治中国60分</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920033000 +0000" stop="20260920043100 +0000">
+    <title lang="zh">拍案说法</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920043100 +0000" stop="20260920060100 +0000">
+    <title lang="zh">天天农事通</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920060100 +0000" stop="20260920093500 +0000">
+    <title lang="zh">剧场</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920093500 +0000" stop="20260920102600 +0000">
+    <title lang="zh">美食厨房</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920102600 +0000" stop="20260920105100 +0000">
+    <title lang="zh">楼市直通车</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920105100 +0000" stop="20260920120000 +0000">
+    <title lang="zh">巴渝视窗</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920120000 +0000" stop="20260920122500 +0000">
+    <title lang="zh">渝中新闻</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920122500 +0000" stop="20260920125000 +0000">
+    <title lang="zh">纪录片</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920125000 +0000" stop="20260920130100 +0000">
+    <title lang="zh">请您欣赏</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920130100 +0000" stop="20260920133600 +0000">
+    <title lang="zh">拍案说法</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920133600 +0000" stop="20260920145500 +0000">
+    <title lang="zh">天天农事通</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+  <programme channel="539860" start="20260920145500 +0000" stop="20260921000000 +0000">
+    <title lang="zh">大律师在线</title>
+    <desc />
+    <date>2026-09-20</date>
+  </programme>
+</tv>

@@ -1,0 +1,303 @@
+#EXTM3U url-tvg="https://epg.112114.xyz/pp.xml.gz,cqcu-epg-supplement.xml"
+#EXTINF:-1 tvg-id="CCTV1" tvg-logo="https://live.fanmingming.cn/tv/CCTV1.png" group-title="央视",CCTV1 综合
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000231?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV2" tvg-logo="https://live.fanmingming.cn/tv/CCTV2.png" group-title="央视",CCTV2 财经
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000295?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV3" tvg-logo="https://live.fanmingming.cn/tv/CCTV3.png" group-title="央视",CCTV3 综艺
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000302?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV4" tvg-logo="https://live.fanmingming.cn/tv/CCTV4.png" group-title="央视",CCTV4 中文国际
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000342?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV5" tvg-logo="https://live.fanmingming.cn/tv/CCTV5.png" group-title="央视",CCTV5 体育
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000304?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV5+" tvg-logo="https://live.fanmingming.cn/tv/CCTV5+.png" group-title="央视",CCTV5+ 体育赛事
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000230?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV6" tvg-logo="https://live.fanmingming.cn/tv/CCTV6.png" group-title="央视",CCTV6 电影
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000305?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV7" tvg-logo="https://live.fanmingming.cn/tv/CCTV7.png" group-title="央视",CCTV7 国防军事
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000290?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV8" tvg-logo="https://live.fanmingming.cn/tv/CCTV8.png" group-title="央视",CCTV8 电视剧
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000307?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV9" tvg-logo="https://live.fanmingming.cn/tv/CCTV9.png" group-title="央视",CCTV9 纪录
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000294?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV10" tvg-logo="https://live.fanmingming.cn/tv/CCTV10.png" group-title="央视",CCTV10 科教
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000293?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV11" tvg-logo="https://live.fanmingming.cn/tv/CCTV11.png" group-title="央视",CCTV11 戏曲
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000389?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV12" tvg-logo="https://live.fanmingming.cn/tv/CCTV12.png" group-title="央视",CCTV12 社会与法
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000292?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV13" tvg-logo="https://live.fanmingming.cn/tv/CCTV13.png" group-title="央视",CCTV13 新闻
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000387?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV14" tvg-logo="https://live.fanmingming.cn/tv/CCTV14.png" group-title="央视",CCTV14 少儿
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000291?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV15" tvg-logo="https://live.fanmingming.cn/tv/CCTV15.png" group-title="央视",CCTV15 音乐
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000388?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV17" tvg-logo="https://live.fanmingming.cn/tv/CCTV17.png" group-title="央视",CCTV17 农业农村
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000346?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="兵器科技" tvg-logo="https://live.fanmingming.cn/tv/兵器科技.png" group-title="央视",CCTV 兵器科技
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000405?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CCTV第一剧场" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/CCTV第一剧场.png" group-title="央视",CCTV 第一剧场
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000410?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="风云剧场" tvg-logo="https://live.fanmingming.cn/tv/风云剧场.png" group-title="央视",CCTV 风云剧场
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000409?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="风云音乐" tvg-logo="https://live.fanmingming.cn/tv/风云音乐.png" group-title="央视",CCTV 风云音乐
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000399?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="风云足球" tvg-logo="https://live.fanmingming.cn/tv/风云足球.png" group-title="央视",CCTV 风云足球
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000403?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="高尔夫网球" tvg-logo="https://live.fanmingming.cn/tv/高尔夫网球.png" group-title="央视",CCTV 高尔夫网球
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000402?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="怀旧剧场" tvg-logo="https://live.fanmingming.cn/tv/怀旧剧场.png" group-title="央视",CCTV 怀旧剧场
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000401?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="女性时尚" tvg-logo="https://live.fanmingming.cn/tv/女性时尚.png" group-title="央视",CCTV 女性时尚
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000408?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="世界地理" tvg-logo="https://live.fanmingming.cn/tv/世界地理.png" group-title="央视",CCTV 世界地理
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000407?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="央视台球" tvg-logo="https://live.fanmingming.cn/tv/央视台球.png" group-title="央视",CCTV 央视台球
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000404?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="文化精品" tvg-logo="https://live.fanmingming.cn/tv/文化精品.png" group-title="央视",CCTV 央视文化精品
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000406?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="545953" tvg-logo="https://live.fanmingming.cn/tv/CETV1.png" group-title="央视",CETV1
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000363?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="545956" tvg-logo="https://live.fanmingming.cn/tv/CETV4.png" group-title="央视",CETV4
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000427?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="早期教育" tvg-logo="https://live.fanmingming.cn/tv/早期教育.png" group-title="央视",CETV 早期教育 SD
+rtsp://123.147.113.180:554/04000001/01000000004000000000000000000400?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CGTN" tvg-logo="https://live.fanmingming.cn/tv/CGTN.png" group-title="央视",CGTN SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000344?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539759" tvg-logo="https://live.fanmingming.cn/tv/CHC动作电影.png" group-title="央视",CHC 动作电影
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000392?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="561371" tvg-logo="https://live.fanmingming.cn/tv/CHC高清电影.png" group-title="央视",CHC 高清电影
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000394?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539900" tvg-logo="https://live.fanmingming.cn/tv/CHC家庭影院.png" group-title="央视",CHC 家庭影院
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000393?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="561409" tvg-logo="https://live.fanmingming.cn/tv/CHC影迷电影.png" group-title="央视",CHC 影迷电影
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000394?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="爱上4K" tvg-logo="https://live.fanmingming.cn/tv/爱上4K.png" group-title="其他",爱上4K HEVC
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000391?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="安徽卫视" tvg-logo="https://live.fanmingming.cn/tv/安徽卫视.png" group-title="卫视",安徽卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000296?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="卡酷少儿" tvg-logo="https://live.fanmingming.cn/tv/卡酷少儿.png" group-title="其他",北京卡酷少儿 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000159?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="北京卫视" tvg-logo="https://live.fanmingming.cn/tv/北京卫视.png" group-title="卫视",北京卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000229?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="北京卫视" tvg-logo="https://live.fanmingming.cn/tv/北京卫视.png" group-title="卫视",北京卫视 4K HEVC HDR AAC
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000425?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="北京卫视" tvg-logo="https://live.fanmingming.cn/tv/北京卫视.png" group-title="卫视",北京卫视 4K HEVC HDR AC3
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000426?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="优优宝贝" tvg-logo="https://live.fanmingming.cn/tv/优优宝贝.png" group-title="其他",北京优优宝贝
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000424?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="重庆红岩文化" tvg-logo="" group-title="重庆",重庆红岩文化
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000369?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="重庆红叶" tvg-logo="" group-title="重庆",重庆红叶
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000373?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="汽摩" tvg-logo="https://live.fanmingming.cn/tv/汽摩.png" group-title="重庆",重庆汽摩
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000371?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539702" tvg-logo="https://live.fanmingming.cn/tv/重庆少儿.png" group-title="重庆",重庆少儿
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000374?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539636" tvg-logo="https://live.fanmingming.cn/tv/重庆社会与法.png" group-title="重庆",重庆社会与法
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000375?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539790" tvg-logo="https://live.fanmingming.cn/tv/重庆卫视.png" group-title="重庆",重庆卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000365?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539860" tvg-logo="https://live.fanmingming.cn/tv/重庆新农村.png" group-title="重庆",重庆新农村
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000376?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="539779" tvg-logo="https://live.fanmingming.cn/tv/重庆新闻.png" group-title="重庆",重庆新闻
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000367?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="重庆移动" tvg-logo="https://live.fanmingming.cn/tv/重庆移动.png" group-title="重庆",重庆移动
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000384?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="544302" tvg-logo="" group-title="重庆",重庆影视剧
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000372?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="544407" tvg-logo="" group-title="重庆",重庆娱乐
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000370?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="东方卫视" tvg-logo="https://live.fanmingming.cn/tv/东方卫视.png" group-title="卫视",东方卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000232?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="东方卫视" tvg-logo="https://live.fanmingming.cn/tv/东方卫视.png" group-title="卫视",东方卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000436?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="东南卫视" tvg-logo="https://live.fanmingming.cn/tv/东南卫视.png" group-title="卫视",东南卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000379?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="广东嘉佳卡通" tvg-logo="https://live.fanmingming.cn/tv/广东嘉佳卡通.png" group-title="影视",广东嘉佳卡通 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000386?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="广东卫视" tvg-logo="https://live.fanmingming.cn/tv/广东卫视.png" group-title="卫视",广东卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000221?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="广东卫视" tvg-logo="https://live.fanmingming.cn/tv/广东卫视.png" group-title="卫视",广东卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000432?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="广西卫视" tvg-logo="https://live.fanmingming.cn/tv/广西卫视.png" group-title="卫视",广西卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000191?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="甘肃卫视" tvg-logo="https://live.fanmingming.cn/tv/甘肃卫视.png" group-title="卫视",甘肃卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000429?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="贵州卫视" tvg-logo="https://live.fanmingming.cn/tv/贵州卫视.png" group-title="卫视",贵州卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000340?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="海南卫视" tvg-logo="https://live.fanmingming.cn/tv/海南卫视.png" group-title="卫视",海南卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000385?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="求索纪录" tvg-logo="https://live.fanmingming.cn/tv/求索纪录.png" group-title="影视",杭州求索纪录
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000397?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="河北卫视" tvg-logo="https://live.fanmingming.cn/tv/河北卫视.png" group-title="卫视",河北卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000341?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="河南卫视" tvg-logo="https://live.fanmingming.cn/tv/河南卫视.png" group-title="卫视",河南卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000423?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="黑龙江卫视" tvg-logo="https://live.fanmingming.cn/tv/黑龙江卫视.png" group-title="卫视",黑龙江卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000227?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="湖北精彩影视" tvg-logo="" group-title="影视",湖北精彩影视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000396?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="湖北卫视" tvg-logo="https://live.fanmingming.cn/tv/湖北卫视.png" group-title="卫视",湖北卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000222?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="茶频道" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/茶频道.png" group-title="其他",湖南茶频道
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000395?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="金鹰卡通" tvg-logo="https://live.fanmingming.cn/tv/金鹰卡通.png" group-title="影视",湖南金鹰卡通 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000162?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="快乐垂钓" tvg-logo="https://live.fanmingming.cn/tv/快乐垂钓.png" group-title="其他",湖南快乐垂钓
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000382?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="湖南卫视" tvg-logo="https://live.fanmingming.cn/tv/湖南卫视.png" group-title="卫视",湖南卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000228?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="湖南卫视" tvg-logo="https://live.fanmingming.cn/tv/湖南卫视.png" group-title="卫视",湖南卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000439?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="江苏卫视" tvg-logo="https://live.fanmingming.cn/tv/江苏卫视.png" group-title="卫视",江苏卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000225?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="江苏卫视" tvg-logo="https://live.fanmingming.cn/tv/江苏卫视.png" group-title="卫视",江苏卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000438?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="江西卫视" tvg-logo="https://live.fanmingming.cn/tv/江西卫视.png" group-title="卫视",江西卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000378?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="吉林卫视" tvg-logo="https://live.fanmingming.cn/tv/吉林卫视.png" group-title="卫视",吉林卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000390?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="辽宁卫视" tvg-logo="https://live.fanmingming.cn/tv/辽宁卫视.png" group-title="卫视",辽宁卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000260?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="内蒙古卫视" tvg-logo="https://live.fanmingming.cn/tv/内蒙古卫视.png" group-title="卫视",内蒙古卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000180?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="宁夏卫视" tvg-logo="https://live.fanmingming.cn/tv/宁夏卫视.png" group-title="卫视",宁夏卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000194?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="青海卫视" tvg-logo="https://live.fanmingming.cn/tv/青海卫视.png" group-title="卫视",青海卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000182?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="山东教育卫视" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/山东教育卫视.png" group-title="卫视",山东教育卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000428?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="山东卫视" tvg-logo="https://live.fanmingming.cn/tv/山东卫视.png" group-title="卫视",山东卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000261?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="山东卫视" tvg-logo="https://live.fanmingming.cn/tv/山东卫视.png" group-title="卫视",山东卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000440?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="山西卫视" tvg-logo="https://live.fanmingming.cn/tv/山西卫视.png" group-title="卫视",山西卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000179?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="陕西卫视" tvg-logo="https://live.fanmingming.cn/tv/陕西卫视.png" group-title="卫视",陕西卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000189?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="动漫秀场" tvg-logo="https://live.fanmingming.cn/tv/动漫秀场.png" group-title="上海",上海动漫秀场
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000413?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="都市剧场" tvg-logo="https://live.fanmingming.cn/tv/都市剧场.png" group-title="上海",上海都市剧场
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000412?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="法制天地" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/法制天地.png" group-title="上海",上海法制天地
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000417?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="欢笑剧场" tvg-logo="https://live.fanmingming.cn/tv/欢笑剧场.png" group-title="上海",上海欢笑剧场 4K HEVC
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000411?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="上海纪实人文" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/上海纪实人文.png" group-title="上海",上海纪实人文
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000275?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="金色学堂" tvg-logo="https://live.fanmingming.cn/tv/金色学堂.png" group-title="上海",上海金色学堂
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000416?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="乐游" tvg-logo="https://live.fanmingming.cn/tv/乐游.png" group-title="上海",上海乐游
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000419?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="魅力足球" tvg-logo="https://live.fanmingming.cn/tv/魅力足球.png" group-title="上海",上海魅力足球
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000415?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="生活时尚" tvg-logo="https://live.fanmingming.cn/tv/生活时尚.png" group-title="上海",上海生活时尚
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000418?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="游戏风云" tvg-logo="https://live.fanmingming.cn/tv/游戏风云.png" group-title="上海",上海游戏风云
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000414?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="深圳卫视" tvg-logo="https://live.fanmingming.cn/tv/深圳卫视.png" group-title="卫视",深圳卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000226?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="深圳卫视" tvg-logo="https://live.fanmingming.cn/tv/深圳卫视.png" group-title="卫视",深圳卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000431?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="四川卫视" tvg-logo="https://live.fanmingming.cn/tv/四川卫视.png" group-title="卫视",四川卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000377?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="四川卫视" tvg-logo="https://live.fanmingming.cn/tv/四川卫视.png" group-title="卫视",四川卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000441?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="天津卫视" tvg-logo="https://live.fanmingming.cn/tv/天津卫视.png" group-title="卫视",天津卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000223?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="西藏卫视" tvg-logo="https://live.fanmingming.cn/tv/西藏卫视.png" group-title="卫视",西藏卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000434?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="兵团卫视" tvg-logo="https://live.fanmingming.cn/tv/兵团卫视.png" group-title="卫视",新疆兵团卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000435?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="新疆卫视" tvg-logo="https://live.fanmingming.cn/tv/新疆卫视.png" group-title="卫视",新疆卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000433?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="云南卫视" tvg-logo="https://live.fanmingming.cn/tv/云南卫视.png" group-title="卫视",云南卫视 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000208?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="浙江卫视" tvg-logo="https://live.fanmingming.cn/tv/浙江卫视.png" group-title="卫视",浙江卫视
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000224?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="浙江卫视" tvg-logo="https://live.fanmingming.cn/tv/浙江卫视.png" group-title="卫视",浙江卫视 4K HEVC HDR
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000437?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="中国交通" tvg-logo="https://live.fanmingming.cn/tv/中国交通.png" group-title="其他",中国交通
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000420?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="中学生" tvg-logo="https://live.fanmingming.cn/tv/中学生.png" group-title="其他",中央新影 中学生
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000430?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV5+" tvg-logo="https://live.fanmingming.cn/tv/IPTV5+.png" group-title="IPTV",IPTV5+ SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000149?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV6+" tvg-logo="https://live.fanmingming.cn/tv/IPTV6+.png" group-title="IPTV",IPTV6+ SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000148?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV8+" tvg-logo="https://live.fanmingming.cn/tv/IPTV8+.png" group-title="IPTV",IPTV8+ SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000147?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="春晚" tvg-logo="https://live.fanmingming.cn/tv/春晚.png" group-title="IPTV",IPTV 春晚频道 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000150?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV谍战剧场" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/IPTV谍战剧场.png" group-title="IPTV",IPTV 谍战剧场 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000154?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV法治" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/IPTV法治.png" group-title="IPTV",IPTV 法治 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000152?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV经典电影" tvg-logo="https://live.fanmingming.cn/tv/IPTV经典电影.png" group-title="IPTV",IPTV 经典电影 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000156?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV魅力时尚" tvg-logo="https://live.fanmingming.cn/tv/IPTV魅力时尚.png" group-title="IPTV",IPTV 魅力时尚 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000157?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV热播剧场" tvg-logo="https://live.fanmingming.cn/tv/IPTV热播剧场.png" group-title="IPTV",IPTV 热播剧 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000155?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV少儿动画" tvg-logo="https://live.fanmingming.cn/tv/IPTV少儿动画.png" group-title="IPTV",IPTV 少儿动画 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000158?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV相声小品" tvg-logo="https://live.fanmingming.cn/tv/IPTV相声小品.png" group-title="IPTV",IPTV 相声小品 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000151?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="IPTV野外" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/IPTV野外.png" group-title="IPTV",IPTV 野外 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000153?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="爱生活" tvg-logo="" group-title="其他",爱生活 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000318?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="财富天下" tvg-logo="https://live.fanmingming.cn/tv/财富天下.png" group-title="其他",财富天下 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000276?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="世界地理" tvg-logo="https://live.fanmingming.cn/tv/世界地理.png" group-title="其他",地理 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000337?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="都市剧场" tvg-logo="https://live.fanmingming.cn/tv/都市剧场.png" group-title="影视",都市剧场 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000336?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="动画" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/动画.png" group-title="影视",动画 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000324?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="动作影院" tvg-logo="" group-title="影视",动作影院 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000312?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="高网" tvg-logo="" group-title="其他",高网 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000316?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="newtv古装剧场" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/newtv古装剧场.png" group-title="影视",古装剧场 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000334?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="国学" tvg-logo="https://live.fanmingming.cn/tv/国学.png" group-title="其他",国学 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000327?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="光影" tvg-logo="" group-title="其他",光影 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000320?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="好学生" tvg-logo="" group-title="其他",好学生 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000323?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="CHC家庭影院" tvg-logo="https://live.fanmingming.cn/tv/CHC家庭影院.png" group-title="影视",家庭影院 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000311?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="iHOT爱解密" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/iHOT爱解密.png" group-title="其他",解密 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000329?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="newtv热播精选" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/newtv热播精选.png" group-title="其他",精选 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000330?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="newtv军旅剧场" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/newtv军旅剧场.png" group-title="影视",军旅剧场 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000335?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="newtv军事评论" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/newtv军事评论.png" group-title="其他",军事 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000328?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="美人" tvg-logo="" group-title="其他",美人 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000331?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="美妆" tvg-logo="" group-title="其他",美妆 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000332?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="墨宝" tvg-logo="" group-title="其他",墨宝 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000321?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="咪咕台球" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/咪咕台球.png" group-title="其他",台球 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000319?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="武术世界" tvg-logo="https://live.fanmingming.cn/tv/武术世界.png" group-title="其他",武术 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000317?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="武侠剧" tvg-logo="" group-title="影视",武侠剧 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000314?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="戏曲" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/戏曲.png" group-title="影视",戏曲 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000326?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="喜剧影院" tvg-logo="" group-title="影视",喜剧影院 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000313?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="星影" tvg-logo="" group-title="其他",星影 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000312?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="音乐剧场" tvg-logo="" group-title="影视",音乐剧场 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000333?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="早教" tvg-logo="" group-title="其他",早教 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000325?AuthInfo=xxx&userid=
+#EXTINF:-1 tvg-id="咪咕足球" tvg-logo="https://raw.githubusercontent.com/vircloud/TVLogo/master/咪咕足球.png" group-title="其他",足球 SD
+rtsp://123.147.113.84:554/04000001/01000000004000000000000000000315?AuthInfo=xxx&userid=
