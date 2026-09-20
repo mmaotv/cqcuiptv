@@ -29,6 +29,10 @@
 
   - 可能会造成切换频道卡顿
 
+台标版和节目指南怎么用 / 注意
+1.两个文件放同一目录（cqcu-unicast_epg.m3u 和 cqcu-epg-supplement.xml）。若播放器是从本地存储加载 m3u 且支持相对路径的 EPG，直接就行；否则把 XML 托管到一个可访问的 http 地址（GitHub raw / 本地 web 服务器 / NAS），把 url-tvg 里那个 cqcu-epg-supplement.xml 换成完整 URL。
+2.补充源是静态快照（7 天），不会自动更新。需要刷新时重跑 scripts/build_epg_supplement.py 即可（也可让它每天定时跑）
+
 ### 配置说明
 
 参考 [重庆联通 IPTV 单线复用 + 内网融合教程](https://blog.imouto.in/post/iptv/2022/cqcu-iptv-on-openwrt/)。
