@@ -73,23 +73,33 @@ def fetch_xmltv_channels(url):
     """拉取 XMLTV 的 <channel> 段, 返回 {归一化名: id}。"""
     out = {}
     req = urllib.request.Request(url, headers=UA)
+
+    def _parse(stream):
+        buf = ""
+        for raw in stream:
+            line = raw.decode("utf-8", "ignore") if isinstance(raw, bytes) else raw
+            if line.startswith("<programme"):
+                break
+            buf += line
+            if "</channel>" in buf:
+                m = re.search(r'<channel id="([^"]*)">', buf)
+                if m:
+                    cid = m.group(1)
+                    nm = re.search(r"<display-name[^>]*>([^<]*)</display-name>", buf)
+                    name = nm.group(1) if nm else ""
+                    out[normalize(name)] = cid
+                buf = ""
+
     try:
         with urllib.request.urlopen(req, timeout=180) as r:
-            src = gzip.GzipFile(fileobj=r) if url.endswith(".gz") else r
-            buf = ""
-            for raw in src:
-                line = raw.decode("utf-8", "ignore")
-                if line.startswith("<programme"):
-                    break
-                buf += line
-                if "</channel>" in buf:
-                    m = re.search(r'<channel id="([^"]*)">', buf)
-                    if m:
-                        cid = m.group(1)
-                        nm = re.search(r"<display-name[^>]*>([^<]*)</display-name>", buf)
-                        name = nm.group(1) if nm else ""
-                        out[normalize(name)] = cid
-                    buf = ""
+            _parse(gzip.GzipFile(fileobj=r))   # 先按 gzip 解析
+    except OSError:
+        # 源偶尔返回明文 XML(非 gz): 重新拉取按明文解析
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                _parse(r)
+        except Exception as e:
+            print(f"[警告] 拉取 EPG 源失败 {url}: {e}", file=sys.stderr)
     except Exception as e:
         print(f"[警告] 拉取 EPG 源失败 {url}: {e}", file=sys.stderr)
     return out
@@ -224,13 +234,14 @@ def main():
           f" = 已验证源 {n_zsdc+n_51+n_112}")
     print(f"  退回中文名兜底(播放器端由 112114 按名匹配, 沙箱不可达未验证): {n_fb}")
     if fb_channels:
-        print("  这部分多为卫视/地方台/CCTV付费台, 你的播放器能连 112114, 大概率也有节目单;")
-        print("  只有最冷门的 IPTV数字台/本地台可能真无。示例:")
-        for n in fb_channels[:12]:
+        print("  全量清单(多为卫视/地方台/CCTV付费台, 播放器端大概率也有节目单):")
+        for n in fb_channels:
             print(f"    {n}")
-        if len(fb_channels) > 12:
-            print(f"    ... 共 {len(fb_channels)} 个")
     print(f"  无台标: {len(no_logo)} 个 (已留空 tvg-logo)")
+    if no_logo:
+        print("  无台标清单:")
+        for n in no_logo:
+            print(f"    {n}")
 
 
 if __name__ == "__main__":
