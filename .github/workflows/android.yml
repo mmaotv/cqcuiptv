@@ -45,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CQCU-TV-apk
+          name: LightTV-apk
           path: app/build/outputs/apk/release/*.apk
 
       - name: Publish to release (app-latest)
@@ -53,7 +53,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: app-latest
-          name: CQCU 直播 · 最新构建
+          name: 轻直播 · 最新构建
           body: |
             由 GitHub Actions 自动构建，提交 ${{ github.sha }}
           files: app/build/outputs/apk/release/*.apk

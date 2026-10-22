@@ -23,17 +23,32 @@ public final class Playlist {
     private static final int CONNECT_TIMEOUT = 8000;
     private static final int READ_TIMEOUT = 15000;
 
+    /** 一次加载的结果：频道 + 列表自己声明的 EPG 地址（#EXTM3U url-tvg）。 */
+    public static final class Loaded {
+        public final List<Channel> channels;
+        public final List<String> epgUrls;
+
+        Loaded(List<Channel> channels, List<String> epgUrls) {
+            this.channels = channels;
+            this.epgUrls = epgUrls;
+        }
+    }
+
     private Playlist() {
     }
 
     /** 远程地址是 http/https 就下载，其余的（空、内置）回落到打包在 APK 里的列表。 */
     public static List<Channel> load(String url, Context ctx) throws IOException {
+        return loadAll(url, ctx).channels;
+    }
+
+    public static Loaded loadAll(String url, Context ctx) throws IOException {
         if (!TextUtils.isEmpty(url) && (url.startsWith("http://") || url.startsWith("https://"))) {
-            return parseText(download(url));
+            return parseAll(download(url));
         }
         InputStream in = ctx.getAssets().open("playlist.m3u");
         try {
-            return parseText(readAll(in));
+            return parseAll(readAll(in));
         } finally {
             in.close();
         }
@@ -44,7 +59,7 @@ public final class Playlist {
         conn.setConnectTimeout(CONNECT_TIMEOUT);
         conn.setReadTimeout(READ_TIMEOUT);
         conn.setInstanceFollowRedirects(true);
-        conn.setRequestProperty("User-Agent", "CQCU-TV/1.0");
+        conn.setRequestProperty("User-Agent", "LightTV/2.0");
         try {
             int code = conn.getResponseCode();
             if (code / 100 != 2) {
@@ -70,11 +85,21 @@ public final class Playlist {
         return parseText(readAll(in));
     }
 
+    public static Loaded parseAll(InputStream in) throws IOException {
+        return parseAll(readAll(in));
+    }
+
     /** 解析 #EXTINF 属性与紧随其后的播放地址，忽略 #EXTVLCOPT 等其它指令。 */
     public static List<Channel> parseText(String text) {
+        return parseAll(text).channels;
+    }
+
+    /** 频道 + 列表头里声明的 EPG 地址。 */
+    public static Loaded parseAll(String text) {
         List<Channel> out = new ArrayList<Channel>();
+        List<String> epgUrls = new ArrayList<String>();
         if (TextUtils.isEmpty(text)) {
-            return out;
+            return new Loaded(out, epgUrls);
         }
         String body = text.startsWith("\uFEFF") ? text.substring(1) : text;
         String[] lines = body.replace("\r", "").split("\n");
@@ -87,6 +112,21 @@ public final class Playlist {
         for (String raw : lines) {
             String line = raw.trim();
             if (line.length() == 0) {
+                continue;
+            }
+            if (line.startsWith("#EXTM3U")) {
+                Matcher m = ATTR.matcher(line);
+                while (m.find()) {
+                    String key = m.group(1).toLowerCase();
+                    if ("url-tvg".equals(key) || "x-tvg-url".equals(key)) {
+                        for (String u : m.group(2).split(",")) {
+                            String s = u.trim();
+                            if (s.length() > 0 && !epgUrls.contains(s)) {
+                                epgUrls.add(s);
+                            }
+                        }
+                    }
+                }
                 continue;
             }
             if (line.startsWith("#EXTINF")) {
@@ -123,6 +163,6 @@ public final class Playlist {
                 pendingName = null;
             }
         }
-        return out;
+        return new Loaded(out, epgUrls);
     }
 }

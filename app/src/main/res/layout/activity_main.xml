@@ -9,6 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- 手势层：盖在画面上吃触摸事件，面板在这之后添加，所以面板仍然能收到触摸 -->
+    <View
+        android:id="@+id/gesture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
     <!-- 提示 / 错误 -->
     <TextView
         android:id="@+id/notice"
@@ -34,6 +41,7 @@
         android:layout_marginTop="34dp"
         android:background="@drawable/osd_bg"
         android:gravity="center_vertical"
+        android:maxWidth="820dp"
         android:orientation="horizontal"
         android:paddingBottom="12dp"
         android:paddingLeft="20dp"
@@ -72,6 +80,28 @@
                 android:layout_marginTop="2dp"
                 android:textColor="@color/text_dim"
                 android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/osd_epg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:maxWidth="640dp"
+                android:singleLine="true"
+                android:textColor="#FFB9C2CC"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/osd_meta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="monospace"
+                android:singleLine="true"
+                android:textColor="#FF7C858F"
+                android:textSize="12sp"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 
@@ -88,21 +118,22 @@
         android:paddingLeft="14dp"
         android:paddingRight="14dp"
         android:paddingTop="8dp"
-        android:text="数字键 选台　↑↓ 换台　OK 频道列表　左右 音量　MENU 设置"
+        android:text="数字键 选台　↑↓ 换台　OK 频道列表　INFO 节目单　MENU 设置"
         android:textColor="@color/text_dim"
         android:textSize="14sp"
         android:visibility="gone" />
 
-    <!-- 频道列表抽屉 -->
+    <!-- 频道列表抽屉：左边分类，右边该分类下的频道 -->
     <LinearLayout
         android:id="@+id/panel"
-        android:layout_width="400dp"
+        android:layout_width="700dp"
+        android:clickable="true"
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:background="@drawable/panel_bg"
         android:orientation="vertical"
-        android:paddingLeft="14dp"
-        android:paddingRight="14dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:paddingTop="26dp"
         android:visibility="gone">
 
@@ -131,8 +162,79 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ListView
+                android:id="@+id/group_list"
+                android:layout_width="186dp"
+                android:layout_height="match_parent"
+                android:cacheColorHint="#00000000"
+                android:divider="#00000000"
+                android:dividerHeight="2dp"
+                android:fadingEdge="none"
+                android:listSelector="@drawable/item_selector"
+                android:scrollbars="none" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="8dp"
+                android:background="#22FFFFFF" />
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:cacheColorHint="#00000000"
+                android:divider="#00000000"
+                android:dividerHeight="2dp"
+                android:fadingEdge="none"
+                android:listSelector="@drawable/item_selector"
+                android:scrollbars="none" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 节目单 -->
+    <LinearLayout
+        android:id="@+id/epg_panel"
+        android:layout_width="620dp"
+        android:clickable="true"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@drawable/panel_bg"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="26dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/epg_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:paddingBottom="6dp"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/epg_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="12dp"
+            android:textColor="@color/text_dim"
+            android:textSize="14sp" />
+
         <ListView
-            android:id="@+id/list"
+            android:id="@+id/epg_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

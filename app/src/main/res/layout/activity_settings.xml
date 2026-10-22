@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="32dp"
+        android:paddingBottom="40dp"
         android:paddingLeft="56dp"
         android:paddingRight="56dp"
         android:paddingTop="32dp">
@@ -30,10 +30,181 @@
             android:textColor="@color/text_dim"
             android:textSize="14sp" />
 
+        <!-- 局域网填源 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
+            android:text="在手机 / 电脑上填源（省得用遥控器打字）"
+            android:textColor="@color/text"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="3dp"
+            android:text="开启后在局域网内的手机或电脑浏览器里打开下面的地址，就能直接粘贴 M3U 或填列表地址，保存后电视端立刻重新加载。"
+            android:textColor="@color/text_dim"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cfg_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:background="@drawable/btn_bg"
+                android:minWidth="140dp"
+                android:paddingLeft="22dp"
+                android:paddingRight="22dp"
+                android:text="开启"
+                android:textColor="#FFFFFFFF"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/cfg_url"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:text="未开启"
+                android:textColor="#FF7FD1A0"
+                android:textIsSelectable="true"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- 缓存 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="播放列表缓存"
+            android:textColor="@color/text"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="3dp"
+            android:text="从地址拉下来的列表会存到本地，下次启动直接用缓存，不再重复下载。"
+            android:textColor="@color/text_dim"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/cache_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textColor="#FF7FD1A0"
+            android:textSize="13sp" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ttl_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minWidth="86dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="7 天"
+                    android:textColor="@color/chip_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/ttl_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minWidth="86dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="15 天"
+                    android:textColor="@color/chip_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/ttl_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minWidth="86dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="一个月"
+                    android:textColor="@color/chip_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/ttl_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/chip_bg"
+                    android:gravity="center"
+                    android:minWidth="86dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="不自动"
+                    android:textColor="@color/chip_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="到期后下次启动会自动重新拉取；选了「不自动」就一直用现有缓存，只能点下面的按钮手动更新。"
+            android:textColor="@color/text_dim"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="52dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/btn_bg"
+            android:minWidth="150dp"
+            android:paddingLeft="22dp"
+            android:paddingRight="22dp"
+            android:text="立即重新拉取"
+            android:textColor="#FFFFFFFF"
+            android:textSize="15sp" />
+
+        <!-- 地址 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="播放列表地址（http / https）"
             android:textColor="@color/text_dim"
             android:textSize="14sp" />
@@ -126,7 +297,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
             android:lineSpacingExtra="3dp"
-            android:text="遥控器：数字键直达频道号（如按 1 到 CCTV1，按 1 再按 2 到 12 台）\n↑↓ 上一个 / 下一个频道　左右 音量　OK 频道列表　MENU 或长按 OK 进本页"
+            android:text="遥控器：数字键直达频道号（如按 1 到 CCTV1，按 1 再按 2 到 12 台）\n↑↓ 上一个 / 下一个频道　左右 音量　OK 频道列表　INFO 节目单　MENU 或长按 OK 进本页\n\n触摸屏：单击显示 / 隐藏台标，双击频道列表，左右滑动换台，上下滑动调音量，长按进设置"
             android:textColor="@color/text_dim"
             android:textSize="13sp" />
     </LinearLayout>

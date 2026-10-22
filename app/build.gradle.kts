@@ -2,8 +2,8 @@ plugins {
     id("com.android.application")
 }
 
-val appVersionName = "1.0.0"
-val appVersionCode = 1
+val appVersionName = "2.0.0"
+val appVersionCode = 2
 
 // 默认播放列表地址，可用 -PdefaultPlaylist=... 在构建时覆盖（方便局域网调试）
 val defaultPlaylist = (findProperty("defaultPlaylist") as String?)
@@ -59,7 +59,7 @@ androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
             val impl = output as com.android.build.api.variant.impl.VariantOutputImpl
-            impl.outputFileName.set("CQCU-TV-${appVersionName}.apk")
+            impl.outputFileName.set("LightTV-${appVersionName}.apk")
         }
     }
 }

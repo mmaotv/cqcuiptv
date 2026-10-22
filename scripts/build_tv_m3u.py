@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""把 cqcu-unicast_epg.m3u 重排成"适合电视遥控器"的频道顺序，输出 cqcu-tv.m3u。
+"""把 cqcu-unicast_epg.m3u 重排成"适合电视遥控器 + 分好类"的频道表，输出 cqcu-tv.m3u。
 
-为什么需要重排：
-  cqcu-unicast_epg.m3u 是按分组英文序生成的，CCTV 与其他台混在一起，
-  在电视上按数字键根本对不上台号。这里按下面的顺序输出，使：
+重排规则（决定台号）：
+    1 台 = CCTV1 …… 17 台 = CCTV17+CCTV5+，18 台起是湖南卫视等卫视台，
+    之后是 4K 超高清、央视付费、重庆、上海、IPTV、影视、其他。
 
-      1 台 = CCTV1，2 台 = CCTV2 …… CCTV 全部排完之后紧接着是湖南卫视等卫视台
+同时重写 group-title，把原来的粗分组细化成：
+    央视 / 卫视 / 4K超高清 / 央视付费 / 重庆 / 上海 / IPTV / 影视 / 其他
+这样 App 里就能按分类浏览，而不是 150 个台平铺。
 
-  这样遥控器按 1 就是 CCTV1，按 1、2 就是 12 台，跟运营商盒子一致。
-
-同时把结果复制一份到 app/src/main/assets/playlist.m3u，作为 App 的内置兜底列表。
+结果会复制一份到 app/src/main/assets/playlist.m3u 作为内置兜底列表。
 
 用法：python scripts/build_tv_m3u.py
 """
@@ -25,11 +25,9 @@ SRC = os.path.join(ROOT, "cqcu-unicast_epg.m3u")
 DST = os.path.join(ROOT, "cqcu-tv.m3u")
 ASSET = os.path.join(ROOT, "app", "src", "main", "assets", "playlist.m3u")
 
-# 台号顺序（先 CCTV 主频道，紧接着卫视，之后才是央视付费频道和别的分组）
-RANK_CCTV = 0      # CCTV1 … CCTV17
-RANK_WEISHI = 1    # 湖南卫视 … 各省卫视
-RANK_CCTV_PAY = 2  # CCTV 付费频道 / CETV / CHC / CGTN
-GROUP_RANK = {"重庆": 3, "上海": 4, "IPTV": 5, "影视": 6, "其他": 7}
+# 分类与排序权重
+CATEGORIES = ["央视", "卫视", "4K超高清", "央视付费", "重庆", "上海", "IPTV", "影视", "其他"]
+RANK = {name: i for i, name in enumerate(CATEGORIES)}
 
 # 卫视频道内部顺序：湖南卫视排第一（紧跟央视之后），其余按常见习惯
 WEISHI_ORDER = [
@@ -75,28 +73,50 @@ class Rec(object):
         self.url = url
         self.name = name
         self.group = group
+        self.category = self.classify()
+        self.extinf = self.rebuild_extinf()
+
+    def classify(self):
+        if "4k" in self.name.lower() or "4K" in self.name:
+            return "4K超高清"
+        m = CCTV_RE.match(self.name)
+        if m and self.group == "央视":
+            return "央视"
+        if self.group == "卫视":
+            return "卫视"
+        if self.group == "央视":
+            return "央视付费"
+        return self.group if self.group in RANK else "其他"
+
+    def rebuild_extinf(self):
+        line = self.extinf
+        if re.search(r'group-title="[^"]*"', line):
+            return re.sub(r'group-title="[^"]*"', 'group-title="%s"' % self.category, line, count=1)
+        # 没有 group-title 就补一个
+        return line.replace("#EXTINF:-1", '#EXTINF:-1 group-title="%s"' % self.category, 1)
 
     def key(self):
+        rank = RANK[self.category]
         m = CCTV_RE.match(self.name)
 
-        # 1) 央视主频道：CCTV1、CCTV2 …… CCTV5、CCTV5+ …… CCTV17
-        if m and self.group == "央视":
-            return (RANK_CCTV, int(m.group(1)), 0 if not m.group(2) else 1, 0, self.idx)
+        if self.category == "央视" and m:
+            return (rank, int(m.group(1)), 0 if not m.group(2) else 1, 0, self.idx)
 
-        # 2) 卫视：湖南卫视打头
-        if self.group == "卫视":
+        if self.category == "卫视":
             base = strip_trailing(self.name)
             k = WEISHI_ORDER.index(base) if base in WEISHI_ORDER else 500 + self.idx
-            return (RANK_WEISHI, 0, 0, k, self.idx)
+            return (rank, 0, 0, k, self.idx)
 
-        # 3) 央视付费频道 / CETV / CHC / CGTN
-        if self.group == "央视":
+        if self.category == "4K超高清":
             base = strip_trailing(self.name)
-            k = PAY_ORDER.index(base) if base in PAY_ORDER else 900
-            return (RANK_CCTV_PAY, 0, 0, k, self.idx)
+            k = WEISHI_ORDER.index(base) if base in WEISHI_ORDER else 500 + self.idx
+            return (rank, 0, 0, k, self.idx)
 
-        # 4) 其余分组保持源文件里的相对顺序
-        rank = GROUP_RANK.get(self.group, 7)
+        if self.category == "央视付费":
+            base = strip_trailing(self.name)
+            k = PAY_ORDER.index(base) if base in PAY_ORDER else 900 + self.idx
+            return (rank, 0, 0, k, self.idx)
+
         return (rank, 0, 0, 0, self.idx)
 
 
@@ -155,14 +175,18 @@ def main():
     os.makedirs(os.path.dirname(ASSET), exist_ok=True)
     shutil.copyfile(DST, ASSET)
 
+    counts = {}
+    for r in recs:
+        counts[r.category] = counts.get(r.category, 0) + 1
     print(f"已生成: {DST}")
     print(f"已同步: {ASSET}")
     print(f"总频道: {len(recs)}")
+    for c in CATEGORIES:
+        if counts.get(c):
+            print(f"  {c:<8} {counts[c]}")
     print("前 20 个频道：")
     for n, r in enumerate(recs[:20], 1):
-        print(f"  {n:>3}  {r.name}")
-    cctv = sum(1 for r in recs if CCTV_RE.match(r.name) and r.group == "央视")
-    print(f"CCTV 主频道占前 {cctv} 个台号，卫视从第 {cctv + 1} 个开始")
+        print(f"  {n:>3}  {r.name}  [{r.category}]")
     return 0
 
 
