@@ -41,6 +41,11 @@ public class MainActivity extends Activity implements
     /** 底部默认提示语 */
     private static final String HINT_DEFAULT =
             "数字键 选台　↑↓ 换台　OK 频道列表　左右 音量　MENU 设置";
+    /** raw.githubusercontent 在国内经常拉不动，兜底走 jsdelivr 镜像 */
+    private static final String MIRROR_URL =
+            "https://cdn.jsdelivr.net/gh/mmaotv/cqcuiptv@main/cqcu-tv.m3u";
+    /** 在线列表的单次超时（DNS 卡住也认栽，别让用户干等） */
+    private static final long FETCH_TIMEOUT = 12000L;
 
     private SurfaceView surfaceView;
     private SurfaceHolder holder;
@@ -165,14 +170,26 @@ public class MainActivity extends Activity implements
                     if (!TextUtils.isEmpty(custom.trim())) {
                         result = Playlist.parseText(custom);
                     } else if (!TextUtils.isEmpty(url)) {
-                        result = Playlist.load(url, MainActivity.this);
-                        if (result.isEmpty()) {
+                        result = fetch(url);
+                        if (result == null || result.isEmpty()) {
                             result = null;
                             error = "列表里没有频道";
                         }
                     }
                 } catch (Exception e) {
                     error = e.getMessage() == null ? e.toString() : e.getMessage();
+                }
+                // 用的还是默认地址、而且没拉到时，换镜像再试一次
+                if (result == null && prefs.custom().trim().length() == 0
+                        && prefs.url().equals(prefs.defaultUrl())) {
+                    try {
+                        List<Channel> mirror = fetch(MIRROR_URL);
+                        if (mirror != null && !mirror.isEmpty()) {
+                            result = mirror;
+                            error = null;
+                        }
+                    } catch (Exception ignored) {
+                    }
                 }
                 final List<Channel> r = result;
                 final String err = error;
@@ -188,6 +205,27 @@ public class MainActivity extends Activity implements
                 });
             }
         }).start();
+    }
+
+    /** 带总超时的拉取：DNS 卡死时 HttpURLConnection 的 connectTimeout 是管不住的。 */
+    private List<Channel> fetch(final String url) throws Exception {
+        java.util.concurrent.FutureTask<List<Channel>> task =
+                new java.util.concurrent.FutureTask<List<Channel>>(
+                        new java.util.concurrent.Callable<List<Channel>>() {
+                            @Override
+                            public List<Channel> call() throws Exception {
+                                return Playlist.load(url, MainActivity.this);
+                            }
+                        });
+        Thread t = new Thread(task, "playlist");
+        t.setDaemon(true);
+        t.start();
+        try {
+            return task.get(FETCH_TIMEOUT, java.util.concurrent.TimeUnit.MILLISECONDS);
+        } catch (java.util.concurrent.TimeoutException e) {
+            task.cancel(true);
+            throw new java.io.IOException("连接超时");
+        }
     }
 
     /** 列表发生变化才重新起播，避免内置列表和在线列表都成功时抖动。 */
