@@ -67,6 +67,8 @@ public class MainActivity extends Activity implements
     private float accY;
     private float swipeX;
     private float swipeY;
+    /** 一次按下只认一次滑动动作，否则滑得远了会连着换好几个台 */
+    private boolean gestureDone;
 
     /** rtsp 源 */
     private LivePlayer livePlayer;
@@ -117,7 +119,7 @@ public class MainActivity extends Activity implements
     private final Handler handler = new Handler();
 
     private String numBuf = "";
-    private long okDownAt;
+    private long okDownAt = -1;
 
     private final Runnable commitNumber = new Runnable() {
         @Override
@@ -276,6 +278,7 @@ public class MainActivity extends Activity implements
         public boolean onDown(MotionEvent e) {
             accX = 0;
             accY = 0;
+            gestureDone = false;
             return true;
         }
 
@@ -289,12 +292,18 @@ public class MainActivity extends Activity implements
                 closeEpg();
                 return true;
             }
-            if (osd.getVisibility() == View.VISIBLE) {
-                osd.setVisibility(View.GONE);
-                handler.removeCallbacks(hideOsd);
-            } else {
-                showChannelOsd();
+            int w = gestureLayer == null ? 0 : gestureLayer.getWidth();
+            float x = e.getX();
+            // 左边换上一个台，右边换下一个台，中间呼出频道列表——不用记手势也能用
+            if (w > 0 && x < w * 0.22f) {
+                step(-1);
+                return true;
             }
+            if (w > 0 && x > w * 0.78f) {
+                step(1);
+                return true;
+            }
+            openPanel();
             return true;
         }
 
@@ -304,9 +313,8 @@ public class MainActivity extends Activity implements
                 closePanel();
             } else if (epgOpen) {
                 closeEpg();
-                openPanel();
             } else {
-                openPanel();
+                openEpg();
             }
             return true;
         }
@@ -320,36 +328,25 @@ public class MainActivity extends Activity implements
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float dx, float dy) {
-            if (e1 == null || panelOpen || epgOpen) {
+            if (e1 == null || panelOpen || epgOpen || gestureDone) {
                 return false;
             }
             accX += dx;
             accY += dy;
             if (Math.abs(accX) >= swipeX && Math.abs(accX) > Math.abs(accY) * 1.3f) {
                 // 向左滑是下一台，向右滑是上一台
+                gestureDone = true;
                 step(accX > 0 ? 1 : -1);
                 accX = 0;
                 accY = 0;
             } else if (Math.abs(accY) >= swipeY && Math.abs(accY) > Math.abs(accX) * 1.3f) {
                 // 上滑加音量，下滑减音量
+                gestureDone = true;
                 volume(accY > 0 ? 1 : -1);
                 accX = 0;
                 accY = 0;
             }
             return true;
-        }
-    }
-
-    /** 触摸时点一下画面，把当前台信息显示出来。 */
-    private void showChannelOsd() {
-        if (channels.isEmpty() || index >= channels.size()) {
-            return;
-        }
-        Channel c = channels.get(index);
-        showOsd(String.valueOf(index + 1), c.name, c.group);
-        updateOsdEpg();
-        if (osdMeta.getText().length() > 0) {
-            osdMeta.setVisibility(View.VISIBLE);
         }
     }
 
@@ -736,6 +733,9 @@ public class MainActivity extends Activity implements
         }
         index = i;
         prefs.setLastIndex(i);
+        if (adapter != null) {
+            adapter.setCurrent(i);
+        }
 
         Channel c = channels.get(i);
         showOsd(String.valueOf(i + 1), c.name, c.group);
@@ -1063,6 +1063,7 @@ public class MainActivity extends Activity implements
             return;
         }
         groupIndex = gi;
+        groupAdapter.setSelected(gi);
         Group g = groups.get(gi);
         shown.clear();
         shownNumbers = new int[g.indices.size()];
@@ -1072,6 +1073,7 @@ public class MainActivity extends Activity implements
             shown.add(channels.get(global));
         }
         adapter.setData(shown, shownNumbers, epg);
+        adapter.setCurrent(index);
         list.setSelection(0);
     }
 
@@ -1099,6 +1101,8 @@ public class MainActivity extends Activity implements
             closePanel();
             tune(global);
         } else if (rid == R.id.group_list) {
+            // 触摸点分类要立刻切右栏；遥控器靠 onItemSelected，但触摸模式不会有焦点变化
+            showGroup(position);
             if (list.getCount() > 0) {
                 list.requestFocus();
             }
@@ -1189,7 +1193,10 @@ public class MainActivity extends Activity implements
                     okDownAt = System.currentTimeMillis();
                     return true;
                 }
-                if (System.currentTimeMillis() - okDownAt >= LONG_PRESS) {
+                boolean longPress = okDownAt > 0
+                        && System.currentTimeMillis() - okDownAt >= LONG_PRESS;
+                okDownAt = -1;
+                if (longPress) {
                     openSettings();
                 } else if (notice.getVisibility() == View.VISIBLE) {
                     tune(index);

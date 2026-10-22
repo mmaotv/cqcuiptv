@@ -14,10 +14,13 @@ import java.util.List;
 public final class GroupAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
+    private final int accent;
     private final List<Group> data = new ArrayList<Group>();
+    private int selected = 0;
 
     public GroupAdapter(Context ctx) {
         inflater = LayoutInflater.from(ctx);
+        accent = ctx.getResources().getColor(R.color.accent);
     }
 
     public void setData(List<Group> groups) {
@@ -25,6 +28,12 @@ public final class GroupAdapter extends BaseAdapter {
         if (groups != null) {
             data.addAll(groups);
         }
+        notifyDataSetChanged();
+    }
+
+    /** 记住当前分类：触摸操作没有焦点，只能靠 selected 状态给出高亮。 */
+    public void setSelected(int index) {
+        selected = index;
         notifyDataSetChanged();
     }
 
@@ -50,8 +59,12 @@ public final class GroupAdapter extends BaseAdapter {
             v = inflater.inflate(R.layout.item_group, parent, false);
         }
         Group g = data.get(position);
-        ((TextView) v.findViewById(R.id.group_name)).setText(g.name);
+        boolean on = position == selected;
+        TextView name = (TextView) v.findViewById(R.id.group_name);
+        name.setText(g.name);
+        name.setTextColor(on ? accent : 0xFFEDEFF2);
         ((TextView) v.findViewById(R.id.group_count)).setText(String.valueOf(g.indices.size()));
+        v.setSelected(on);
         return v;
     }
 }

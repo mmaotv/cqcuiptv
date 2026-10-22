@@ -14,12 +14,15 @@ import java.util.List;
 public final class ChannelAdapter extends BaseAdapter {
 
     private final LayoutInflater inflater;
+    private final int accent;
     private final List<Channel> data = new ArrayList<Channel>();
     private int[] numbers = new int[0];
     private Epg epg;
+    private int current = -1;
 
     public ChannelAdapter(Context ctx) {
         inflater = LayoutInflater.from(ctx);
+        accent = ctx.getResources().getColor(R.color.accent);
     }
 
     /** numbers[i] 是该行在总列表里的下标，用来显示全局台号。 */
@@ -30,6 +33,12 @@ public final class ChannelAdapter extends BaseAdapter {
         if (list != null) {
             data.addAll(list);
         }
+        notifyDataSetChanged();
+    }
+
+    /** 正在播的频道（总列表下标）：触摸操作没有焦点高亮，靠这个标出来。 */
+    public void setCurrent(int globalIndex) {
+        current = globalIndex;
         notifyDataSetChanged();
     }
 
@@ -60,9 +69,13 @@ public final class ChannelAdapter extends BaseAdapter {
             v = inflater.inflate(R.layout.item_channel, parent, false);
         }
         Channel c = data.get(position);
-        int number = position < numbers.length ? numbers[position] + 1 : position + 1;
-        ((TextView) v.findViewById(R.id.no)).setText(String.valueOf(number));
+        int global = position < numbers.length ? numbers[position] : position;
+        boolean playing = global == current;
+        TextView no = (TextView) v.findViewById(R.id.no);
+        no.setText(String.valueOf(global + 1));
+        no.setTextColor(playing ? accent : 0xFF9AA3AE);
         ((TextView) v.findViewById(R.id.name)).setText(c.name);
+        v.setSelected(playing);
 
         TextView sub = (TextView) v.findViewById(R.id.tag);
         String text = "";

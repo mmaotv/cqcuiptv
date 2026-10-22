@@ -282,9 +282,18 @@ public final class RtspSession {
     }
 
     public void close() {
-        if (streaming && session != null) {
+        // PLAY 之后这条连接上全是 RTP 交织包，读响应会把码流当成文本吃掉、还会卡到超时。
+        // 所以 TEARDOWN 只发不等，发完立刻关 socket。
+        if (streaming && session != null && out != null) {
             try {
-                request("TEARDOWN", url, "");
+                StringBuilder sb = new StringBuilder();
+                sb.append("TEARDOWN ").append(url).append(" RTSP/1.0\r\n");
+                sb.append("CSeq: ").append(cseq++).append("\r\n");
+                sb.append("User-Agent: ").append(userAgent).append("\r\n");
+                sb.append("Session: ").append(session).append("\r\n\r\n");
+                // 不加锁：万一另一个线程正卡在 request() 的读里，加锁会把 close() 一起拖住
+                out.write(sb.toString().getBytes("UTF-8"));
+                out.flush();
             } catch (Throwable ignored) {
             }
         }

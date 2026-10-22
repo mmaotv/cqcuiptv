@@ -4,9 +4,13 @@ import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.media.MediaCodec;
+import android.media.MediaCodecInfo;
+import android.media.MediaCodecList;
 import android.media.MediaFormat;
+import android.os.Build;
 import android.os.SystemClock;
 import android.util.Log;
+import android.util.Range;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 
@@ -53,6 +57,11 @@ public final class LivePlayer implements TsDemuxer.Listener {
 
     private final ArrayDeque<Frame> videoQueue = new ArrayDeque<Frame>();
     private final ArrayDeque<Frame> audioQueue = new ArrayDeque<Frame>();
+    private final ArrayDeque<Frame> videoPool = new ArrayDeque<Frame>();
+    private final ArrayDeque<Frame> audioPool = new ArrayDeque<Frame>();
+    /** 队列上限：4K 帧不能囤太多，囤多了既占内存又拖延迟 */
+    private static final int QUEUE_VIDEO = 12;
+    private static final int QUEUE_AUDIO = 40;
 
     private volatile int videoCodec;
     private volatile int audioCodec;
@@ -235,15 +244,21 @@ public final class LivePlayer implements TsDemuxer.Listener {
 
     @Override
     public void onVideo(byte[] data, int length, long ptsUs, boolean keyframe) {
-        Frame f = new Frame();
-        f.data = new byte[length];
-        System.arraycopy(data, 0, f.data, 0, length);
-        f.length = length;
-        f.ptsUs = ptsUs;
-        f.key = keyframe;
+        // 缓冲区复用：4K 单帧几百 KB，每帧 new 一次会让 GC 一直打断解码
         synchronized (videoQueue) {
-            while (videoQueue.size() > 40) {
-                videoQueue.pollFirst();
+            Frame f = videoPool.pollFirst();
+            if (f == null) {
+                f = new Frame();
+            }
+            if (f.data == null || f.data.length < length) {
+                f.data = new byte[length + (length >> 2)];
+            }
+            System.arraycopy(data, 0, f.data, 0, length);
+            f.length = length;
+            f.ptsUs = ptsUs;
+            f.key = keyframe;
+            while (videoQueue.size() > QUEUE_VIDEO) {
+                recycle(videoPool, videoQueue.pollFirst());
             }
             videoQueue.addLast(f);
             videoQueue.notifyAll();
@@ -252,17 +267,31 @@ public final class LivePlayer implements TsDemuxer.Listener {
 
     @Override
     public void onAudio(byte[] data, int length, long ptsUs) {
-        Frame f = new Frame();
-        f.data = new byte[length];
-        System.arraycopy(data, 0, f.data, 0, length);
-        f.length = length;
-        f.ptsUs = ptsUs;
         synchronized (audioQueue) {
-            while (audioQueue.size() > 120) {
-                audioQueue.pollFirst();
+            Frame f = audioPool.pollFirst();
+            if (f == null) {
+                f = new Frame();
+            }
+            if (f.data == null || f.data.length < length) {
+                f.data = new byte[length + (length >> 2)];
+            }
+            System.arraycopy(data, 0, f.data, 0, length);
+            f.length = length;
+            f.ptsUs = ptsUs;
+            while (audioQueue.size() > QUEUE_AUDIO) {
+                recycle(audioPool, audioQueue.pollFirst());
             }
             audioQueue.addLast(f);
             audioQueue.notifyAll();
+        }
+    }
+
+    private static void recycle(ArrayDeque<Frame> pool, Frame f) {
+        if (f == null) {
+            return;
+        }
+        if (pool.size() < 8) {
+            pool.addLast(f);
         }
     }
 
@@ -283,25 +312,26 @@ public final class LivePlayer implements TsDemuxer.Listener {
         int srcWidth = spsWidth > 0 ? spsWidth : 1920;
         int srcHeight = spsHeight > 0 ? spsHeight : 1080;
         String mime = videoCodec == TsDemuxer.VIDEO_HEVC ? "video/hevc" : "video/avc";
-        MediaCodec codec = openCodec(mime, srcWidth, srcHeight);
-        if (codec != null) {
-            decodeWidth = srcWidth;
-            decodeHeight = srcHeight;
-        } else if (srcHeight > 1088) {
-            // 极少数固件 4K 硬解起不来，退到 1080p 让芯片内部缩放（仍然不转码）
-            codec = openCodec(mime, 1920, 1080);
-            if (codec != null) {
-                decodeWidth = 1920;
-                decodeHeight = 1080;
-            }
-        }
+
+        // 解码尺寸必须先夹到这颗解码器真正支持的范围里：这台机器的 MTK HEVC 硬解上限只有
+        // 2560x1440，拿 3840x2160 去 configure 组件会当场崩（ACodec ERROR 0x80001005），
+        // MediaCodec 被打进 Released 态，之后每次 dequeue 都抛异常，线程就空转烧 CPU。
+        CodecChoice choice = chooseCodec(mime, srcWidth, srcHeight);
+        MediaCodec codec = choice == null ? null : openCodec(choice, mime);
         if (codec == null) {
-            listener.onError("视频解码失败：这个盒子解不了 " + mime);
+            listener.onError("视频解码失败：这个盒子没有能解 " + mime + " 的解码器");
             return;
+        }
+        decodeWidth = choice.width;
+        decodeHeight = choice.height;
+        if (choice.width < srcWidth) {
+            Log.i(TAG, "decode " + srcWidth + "x" + srcHeight + " -> " + choice.width + "x" + choice.height
+                    + " (" + choice.name + " 的能力上限)");
         }
 
         boolean waitingKey = true;
         long lastPts = 0;
+        int failCount = 0;
         while (running) {
             Frame f;
             synchronized (videoQueue) {
@@ -316,13 +346,13 @@ public final class LivePlayer implements TsDemuxer.Listener {
             if (f == null) {
                 continue;
             }
-            if (waitingKey && !f.key) {
-                continue;
-            }
-            waitingKey = false;
-            long pts = f.ptsUs >= 0 ? f.ptsUs : lastPts + 40000;
-            lastPts = pts;
             try {
+                if (waitingKey && !f.key) {
+                    continue;
+                }
+                waitingKey = false;
+                long pts = f.ptsUs >= 0 ? f.ptsUs : lastPts + 40000;
+                lastPts = pts;
                 int index = codec.dequeueInputBuffer(10000);
                 if (index < 0) {
                     continue;
@@ -334,13 +364,32 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 }
                 ib.put(f.data, 0, f.length);
                 codec.queueInputBuffer(index, 0, f.length, pts, 0);
+                drainVideo(codec);
+                failCount = 0;
+            } catch (IllegalStateException dead) {
+                // 解码器已经被系统回收（4K 码流撑崩组件就是这个表现）。
+                // 再循环只是每秒刷几十次异常、白烧 CPU，直接把话说给用户听。
+                Log.w(TAG, "video codec dead at " + choice.width + "x" + choice.height);
+                listener.onError("这个频道解不了：" + srcWidth + "x" + srcHeight
+                        + "\n本机 " + vName(mime) + " 硬解最高只到 "
+                        + choice.width + "x" + choice.height);
+                break;
             } catch (Throwable t) {
-                if (running) {
-                    Log.w(TAG, "queue video fail", t);
+                if (!running) {
+                    break;
                 }
-                continue;
+                if (++failCount > 40) {
+                    Log.w(TAG, "video decode gave up", t);
+                    listener.onError("视频解码出错，换台试试");
+                    break;
+                }
+                Log.w(TAG, "queue video fail", t);
+                sleep(10);
+            } finally {
+                synchronized (videoQueue) {
+                    recycle(videoPool, f);
+                }
             }
-            drainVideo(codec);
         }
         try {
             codec.stop();
@@ -352,11 +401,108 @@ public final class LivePlayer implements TsDemuxer.Listener {
         }
     }
 
-    /** 按指定尺寸建解码器；带 csd 参数集，失败返回 null 由上层决定退不退。 */
-    private MediaCodec openCodec(String mime, int width, int height) {
+    private static String vName(String mime) {
+        return "video/hevc".equals(mime) ? "HEVC" : "H.264";
+    }
+
+    /** 选中的解码器：名字 + 真正要 configure 的尺寸（可能比源码流小）。 */
+    private static final class CodecChoice {
+        String name;
+        int width;
+        int height;
+    }
+
+    /** 常见显示尺寸，从大到小试；解码器支持哪一档就用哪一档。 */
+    private static final int[][] SIZE_LADDER = {
+            {3840, 2160}, {2560, 1440}, {1920, 1080}, {1280, 720}, {720, 576}
+    };
+
+    /**
+     * 按 mime 挑一颗能真正吃下这个尺寸的解码器。
+     * <p>
+     * 不用 createDecoderByType 是因为它只返回「第一个匹配」，压根不看尺寸上限；
+     * 遇到 4K HEVC 会挑到上限 2560x1440 的 MTK 组件，configure 直接把它撑崩。
+     * 这里读 MediaCodecInfo 的能力表，硬件优先、尺寸够大优先。
+     */
+    private CodecChoice chooseCodec(String mime, int srcWidth, int srcHeight) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            try {
+                MediaCodecList list = new MediaCodecList(MediaCodecList.ALL_CODECS);
+                // 先硬件后软件，软件解 4K 会直接把机器拖死
+                for (int pass = 0; pass < 2; pass++) {
+                    for (int[] size : SIZE_LADDER) {
+                        if (size[0] > srcWidth || size[1] > srcHeight) {
+                            continue;
+                        }
+                        for (MediaCodecInfo info : list.getCodecInfos()) {
+                            if (info.isEncoder()) {
+                                continue;
+                            }
+                            boolean hw = info.isHardwareAccelerated();
+                            if ((pass == 0) != hw) {
+                                continue;
+                            }
+                            if (!supports(info, mime, size[0], size[1])) {
+                                continue;
+                            }
+                            CodecChoice c = new CodecChoice();
+                            c.name = info.getName();
+                            c.width = size[0];
+                            c.height = size[1];
+                            return c;
+                        }
+                    }
+                }
+            } catch (Throwable t) {
+                Log.w(TAG, "codec list fail", t);
+            }
+        }
+        // 老系统没有能力查询接口，只能照源尺寸试一把
+        CodecChoice c = new CodecChoice();
+        c.name = null;
+        c.width = srcWidth;
+        c.height = srcHeight;
+        return c;
+    }
+
+    private static boolean supports(MediaCodecInfo info, String mime, int width, int height) {
         try {
-            MediaCodec codec = MediaCodec.createDecoderByType(mime);
-            MediaFormat format = MediaFormat.createVideoFormat(mime, width, height);
+            boolean type = false;
+            for (String t : info.getSupportedTypes()) {
+                if (t.equalsIgnoreCase(mime)) {
+                    type = true;
+                    break;
+                }
+            }
+            if (!type) {
+                return false;
+            }
+            MediaCodecInfo.VideoCapabilities vc =
+                    info.getCapabilitiesForType(mime).getVideoCapabilities();
+            if (vc == null) {
+                return false;
+            }
+            Range<Integer> rw = vc.getSupportedWidths();
+            Range<Integer> rh = vc.getSupportedHeights();
+            if (width < rw.getLower() || width > rw.getUpper()) {
+                return false;
+            }
+            if (height < rh.getLower() || height > rh.getUpper()) {
+                return false;
+            }
+            return vc.isSizeSupported(width, height);
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+
+    /** 按选定尺寸建解码器，带上 csd 参数集；失败返回 null。 */
+    private MediaCodec openCodec(CodecChoice choice, String mime) {
+        try {
+            MediaCodec codec = choice.name != null
+                    ? MediaCodec.createByCodecName(choice.name)
+                    : MediaCodec.createDecoderByType(mime);
+            MediaFormat format = MediaFormat.createVideoFormat(mime, choice.width, choice.height);
             format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 4 * 1024 * 1024);
             byte[] c0 = csd0;
             byte[] c1 = csd1;
@@ -370,7 +516,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
             codec.start();
             return codec;
         } catch (Throwable t) {
-            Log.w(TAG, "video codec fail " + width + "x" + height, t);
+            Log.w(TAG, "video codec fail " + choice.width + "x" + choice.height, t);
             return null;
         }
     }
@@ -510,6 +656,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 }
             } catch (Throwable t) {
                 Log.w(TAG, "audio fail", t);
+            } finally {
+                synchronized (audioQueue) {
+                    recycle(audioPool, f);
+                }
             }
         }
     }
@@ -550,10 +700,12 @@ public final class LivePlayer implements TsDemuxer.Listener {
         running = false;
         synchronized (videoQueue) {
             videoQueue.clear();
+            videoPool.clear();
             videoQueue.notifyAll();
         }
         synchronized (audioQueue) {
             audioQueue.clear();
+            audioPool.clear();
             audioQueue.notifyAll();
         }
         RtspSession s = rtsp;
@@ -589,7 +741,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
             return;
         }
         try {
-            t.join(800);
+            t.join(150);
         } catch (InterruptedException ignored) {
         }
     }
