@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="32dp"
+        android:paddingLeft="56dp"
+        android:paddingRight="56dp"
+        android:paddingTop="32dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textColor="@color/text"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="改完点保存，返回即生效"
+            android:textColor="@color/text_dim"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="播放列表地址（http / https）"
+            android:textColor="@color/text_dim"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/url_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/field_bg"
+            android:hint="https://raw.githubusercontent.com/mmaotv/cqcuiptv/main/cqcu-tv.m3u"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:padding="14dp"
+            android:singleLine="true"
+            android:textColor="@color/text"
+            android:textColorHint="#FF5A626C"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="自定义 M3U（填了就优先用它；留空则用上面的地址）"
+            android:textColor="@color/text_dim"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/custom_input"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/field_bg"
+            android:fontFamily="monospace"
+            android:gravity="top|left"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:padding="14dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/text"
+            android:textColorHint="#FF5A626C"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:background="@drawable/btn_bg"
+                android:minWidth="150dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="26dp"
+                android:text="保存并重载"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/btn_bg"
+                android:minWidth="130dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="恢复默认"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="56dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/btn_bg"
+                android:minWidth="110dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="取消"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:lineSpacingExtra="3dp"
+            android:text="遥控器：数字键直达频道号（如按 1 到 CCTV1，按 1 再按 2 到 12 台）\n↑↓ 上一个 / 下一个频道　左右 音量　OK 频道列表　MENU 或长按 OK 进本页"
+            android:textColor="@color/text_dim"
+            android:textSize="13sp" />
+    </LinearLayout>
+</ScrollView>

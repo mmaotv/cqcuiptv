@@ -20,6 +20,8 @@ jobs:
           python-version: "3.11"
       - name: Build m3u
         run: python scripts/build_epg_m3u.py
+      - name: Rebuild TV ordered m3u (app default playlist)
+        run: python scripts/build_tv_m3u.py
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
