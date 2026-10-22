@@ -110,6 +110,7 @@ public class MainActivity extends Activity implements
     private int index;
 
     private Epg epg;
+    private volatile boolean epgLoading;
     private final List<String> epgSources = new ArrayList<String>();
 
     private Prefs prefs;
@@ -591,9 +592,10 @@ public class MainActivity extends Activity implements
     }
 
     private void startEpgLoad() {
-        if (channels.isEmpty()) {
+        if (channels.isEmpty() || epgLoading) {
             return;
         }
+        epgLoading = true;
         final Set<String> ids = Epg.wantedIds(channels);
         final List<String> sources = new ArrayList<String>(epgSources);
 
@@ -602,6 +604,7 @@ public class MainActivity extends Activity implements
             public void run() {
                 Epg cached = Epg.fromCache(MainActivity.this, ids);
                 if (cached != null && !cached.isEmpty()) {
+                    epgLoading = false;
                     final Epg c = cached;
                     runOnUiThread(new Runnable() {
                         @Override
@@ -612,6 +615,7 @@ public class MainActivity extends Activity implements
                     return;
                 }
                 Epg fresh = Epg.download(MainActivity.this, sources, ids);
+                epgLoading = false;
                 if (fresh != null && !fresh.isEmpty()) {
                     final Epg f = fresh;
                     runOnUiThread(new Runnable() {
