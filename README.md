@@ -8,14 +8,14 @@
 
 ## CQCU 直播（这个 App）
 
-一个只有 **41 KB** 的电视直播客户端，为「遥控器 + 数字键」而写：按 `1` 就是 CCTV1，
+一个只有 **53 KB** 的电视直播客户端，为「遥控器 + 数字键」而写：按 `1` 就是 CCTV1，
 CCTV 全部排完之后紧接着是湖南卫视等卫视台。
 
 ![直播画面](docs/screenshots/01-live.jpg)
 
 ### 特性
 
-- **体积**：约 41 KB，零第三方依赖（不用 AndroidX / ExoPlayer），直接用系统 `MediaPlayer` 解码，
+- **体积**：约 53 KB，零第三方依赖（不用 AndroidX / ExoPlayer），直接用系统 `MediaPlayer` 解码，
   `rtsp://`、`http://`、`.m3u8` 都交给盒子本身的硬解能力
 - **兼容**：minSdk 19，Android 4.4 及以上都能装
 - **换台**：数字键直达频道号，上下键依次换台，左右键调音量
