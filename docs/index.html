@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>轻直播 · LightLive — 极轻量安卓电视直播 App（M3U / EPG / IPTV）</title>
 <meta name="description" content="轻直播 LightLive 是一款约 100KB、零依赖的安卓电视/盒子直播客户端，支持自定义 M3U 源、EPG 节目单、频道分类、触摸与遥控操作。Android 4.4+ 可用。" />
-<meta name="keywords" content="安卓直播,电视直播,IPTV,M3U,M3U8,EPG,节目单,直播软件,android iptv player,live tv,m3u player,rtsp,免费,开源" />
+<meta name="keywords" content="安卓直播,电视直播,IPTV,重庆联通,联通IPTV,重庆直播,IPTV源,M3U,M3U8,EPG,节目单,直播软件,单线复用,内网融合,android iptv player,live tv,m3u player,rtsp,chongqing,unicom,免费,开源" />
 <style>
   :root{
     --brand1:#5b6cff; --brand2:#9b5bff; --ink:#1d1d1f; --muted:#6b6b70;
@@ -91,6 +91,19 @@
 
 <section class="alt">
   <div class="wrap">
+    <h2>内置重庆联通 IPTV 源</h2>
+    <p class="lead">这套 App 最初就是为重庆联通 IPTV 做的。仓库自带一份按「真实电视频道号」重排的直播列表 <code>cqcu-tv.m3u</code>：CCTV1 是 1 台、卫视紧跟央视、按 <code>group-title</code> 分类。装好即用，不用自己找源。</p>
+    <div class="grid">
+      <div class="card"><h3>📡 单播源</h3><p>公网 / IPTV 专网都能播，<strong>没开通 IPTV 业务也能看</strong>。需要支持 RTSP 的播放器——App 自带，开箱即看。</p></div>
+      <div class="card"><h3>🔀 组播源 + udpxy</h3><p>仅 IPTV 专网可用；带 udpxy 版本做了组播转单播，配合家里路由器即可全家各设备看电视。</p></div>
+      <div class="card"><h3>🧰 全网融合</h3><p>参考《重庆联通 IPTV 单线复用 + 内网融合》教程，把直播融进家里的 OpenWrt 网络，一根线同时上网和看电视。</p></div>
+    </div>
+    <p class="lead" style="margin-top:24px">⚠️ 这些源只能在 <strong>重庆联通网络</strong> 下播放，其他网络打不开跟 App 无关。仓库里还提供带台标 / EPG 的完整版 <code>cqcu-unicast_epg.m3u</code>，适合 VLC / Kodi / mytv-android 等播放器。</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2>界面截图</h2>
     <p class="lead">播放、分类频道列表、数字键换台、设置页一览。</p>
     <div class="shots">
@@ -132,7 +145,7 @@
 <section class="en">
   <div class="wrap">
     <h2 style="text-align:left">English</h2>
-    <p><strong>LightLive (轻直播)</strong> is a tiny (~100 KB, zero-dependency) Android TV / set-top-box <strong>live-TV client</strong> for playing <strong>IPTV / M3U playlists</strong>. Features: channel numbers like a real TV, categories from M3U <code>group-title</code>, <strong>EPG</strong> program guide (XMLTV), custom sources, remote + touch control, and a self-built RTSP/MPEG-TS player with hardware decode. Works on <strong>Android 4.4+</strong>.</p>
+    <p><strong>LightLive (轻直播)</strong> is a tiny (~100 KB, zero-dependency) Android TV / set-top-box <strong>live-TV client</strong> for playing <strong>IPTV / M3U playlists</strong>. Features: channel numbers like a real TV, categories from M3U <code>group-title</code>, <strong>EPG</strong> program guide (XMLTV), custom sources, remote + touch control, and a self-built RTSP/MPEG-TS player with hardware decode. Works on <strong>Android 4.4+</strong>. It ships with a ready-to-use <strong>Chongqing Unicom IPTV</strong> playlist (<code>cqcu-tv.m3u</code>) reordered by real channel numbers.</p>
     <p>Download the latest APK from <a href="https://github.com/mmaotv/cqcuiptv/releases/latest">Releases</a>, or build with <code>./gradlew assembleRelease</code>. Source & docs: <a href="https://github.com/mmaotv/cqcuiptv">github.com/mmaotv/cqcuiptv</a>.</p>
     <p style="color:#6b6b70">Keywords: android iptv player, m3u, m3u8, epg, live tv, rtsp, mpeg-ts, media player, android tv, set-top box, free, open source.</p>
   </div>
