@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -59,7 +59,7 @@ public final class Playlist {
         conn.setConnectTimeout(CONNECT_TIMEOUT);
         conn.setReadTimeout(READ_TIMEOUT);
         conn.setInstanceFollowRedirects(true);
-        conn.setRequestProperty("User-Agent", "LightTV/2.0");
+        conn.setRequestProperty("User-Agent", "LightLive/3.0");
         try {
             int code = conn.getResponseCode();
             if (code / 100 != 2) {

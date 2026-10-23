@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 /** 播放列表地址、自定义 M3U、缓存周期、局域网配置服务开关、上次收看的频道号。 */
 public final class Prefs {
 
-    private static final String FILE = "cqcu_tv";
+    private static final String FILE = "qinglive";
 
     /** 自动拉取周期可选项（天），0 = 不自动更新 */
     public static final int[] CACHE_DAYS = {7, 15, 30, 0};

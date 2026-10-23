@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.app.Activity;
 import android.os.Bundle;

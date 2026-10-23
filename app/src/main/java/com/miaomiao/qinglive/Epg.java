@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -152,7 +152,7 @@ public final class Epg {
         conn.setConnectTimeout(8000);
         conn.setReadTimeout(20000);
         conn.setInstanceFollowRedirects(true);
-        conn.setRequestProperty("User-Agent", "LightTV/2.0");
+        conn.setRequestProperty("User-Agent", "LightLive/3.0");
         conn.setRequestProperty("Accept-Encoding", "gzip");
         try {
             int code = conn.getResponseCode();

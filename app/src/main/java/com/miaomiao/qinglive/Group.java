@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

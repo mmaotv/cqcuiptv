@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv.player;
+package com.miaomiao.qinglive.player;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;

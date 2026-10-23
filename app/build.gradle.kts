@@ -2,19 +2,21 @@ plugins {
     id("com.android.application")
 }
 
-val appVersionName = "2.0.1"
-val appVersionCode = 3
+val appVersionName = "3.0.0"
+val appVersionCode = 4
 
 // 默认播放列表地址，可用 -PdefaultPlaylist=... 在构建时覆盖（方便局域网调试）
 val defaultPlaylist = (findProperty("defaultPlaylist") as String?)
     ?: "https://raw.githubusercontent.com/mmaotv/cqcuiptv/main/cqcu-tv.m3u"
 
 android {
-    namespace = "com.miaomiaotv.cqcuiptv"
+    // 包名刻意避开 tv / iptv / launcher 等词：部分电视厂商的安装管控会按这些关键词判为
+    // 「电视应用」或「运营商业务」直接拦截，与功能无关。
+    namespace = "com.miaomiao.qinglive"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.miaomiaotv.cqcuiptv"
+        applicationId = "com.miaomiao.qinglive"
         minSdk = 19
         targetSdk = 28
         versionCode = appVersionCode
@@ -25,10 +27,10 @@ android {
     signingConfigs {
         create("release") {
             // 公开项目的固定自签名，仅用于让不同版本的 APK 能相互覆盖安装
-            storeFile = file("../keystore/cqcuiptv.jks")
-            storePassword = "cqcuiptv"
-            keyAlias = "cqcuiptv"
-            keyPassword = "cqcuiptv"
+            storeFile = file("../keystore/qinglive.jks")
+            storePassword = "qinglive"
+            keyAlias = "qinglive"
+            keyPassword = "qinglive"
         }
     }
 
@@ -62,7 +64,7 @@ androidComponents {
     onVariants { variant ->
         variant.outputs.forEach { output ->
             val impl = output as com.android.build.api.variant.impl.VariantOutputImpl
-            impl.outputFileName.set("LightTV-${appVersionName}.apk")
+            impl.outputFileName.set("LightLive-${appVersionName}.apk")
         }
     }
 }

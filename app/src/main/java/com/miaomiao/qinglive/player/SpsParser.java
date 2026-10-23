@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv.player;
+package com.miaomiao.qinglive.player;
 
 /**
  * 从 Annex-B 码流里找 SPS 并解出真实分辨率。

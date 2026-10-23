@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv.player;
+package com.miaomiao.qinglive.player;
 
 /**
  * MPEG-1/2 Layer II 音频解码：把 PES 里连续的 MP2 字节流按帧切开，逐帧解码成 16bit PCM。

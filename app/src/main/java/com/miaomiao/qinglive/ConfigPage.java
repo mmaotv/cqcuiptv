@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 /**
  * 局域网配置页的 HTML（纯 Java，不依赖 Android，方便在电脑上单独预览排版）。

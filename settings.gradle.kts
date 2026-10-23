@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "cqcuiptv"
+rootProject.name = "qinglive"
 include(":app")

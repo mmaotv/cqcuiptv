@@ -45,7 +45,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: LightTV-apk
+          name: LightLive-apk
           path: app/build/outputs/apk/release/*.apk
 
       - name: Publish to release (app-latest)

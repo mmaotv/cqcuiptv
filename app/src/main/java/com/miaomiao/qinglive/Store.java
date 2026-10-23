@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -20,7 +20,7 @@ public final class Store {
     private static final String CUSTOM = "custom.m3u";
     private static final String CACHE = "playlist.cache";
 
-    private static final String H_MAGIC = "#LIGHTTV-CACHE 1";
+    private static final String H_MAGIC = "#LIGHTLIVE-CACHE 1";
     private static final String H_URL = "#url:";
     private static final String H_SAVED = "#saved:";
 
@@ -52,17 +52,6 @@ public final class Store {
 
     public static String readCustom(Context ctx) {
         String text = readText(customFile(ctx));
-        if (TextUtils.isEmpty(text)) {
-            // 兼容 1.x：老版本把自定义内容存在 SharedPreferences 里
-            String legacy = ctx.getSharedPreferences("cqcu_tv", Context.MODE_PRIVATE)
-                    .getString("custom", "");
-            if (!TextUtils.isEmpty(legacy)) {
-                writeCustom(ctx, legacy);
-                ctx.getSharedPreferences("cqcu_tv", Context.MODE_PRIVATE)
-                        .edit().remove("custom").apply();
-                return legacy;
-            }
-        }
         return text == null ? "" : text;
     }
 

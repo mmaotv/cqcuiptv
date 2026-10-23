@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.miaomiaotv.cqcuiptv.player.LivePlayer;
+import com.miaomiao.qinglive.player.LivePlayer;
 
 import java.util.ArrayList;
 import java.util.List;

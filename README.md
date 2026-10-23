@@ -1,4 +1,4 @@
-# 轻直播 · LightTV
+# 轻直播 · LightLive
 
 一个 **约 100 KB** 的电视直播客户端，遥控器、触摸屏都能用：
 按 `1` 就是 CCTV1，CCTV 全部排完之后紧接着是湖南卫视等卫视台；频道按央视 / 卫视 / 4K / 各地
@@ -240,16 +240,29 @@ jsdelivr 镜像（`cdn.jsdelivr.net/gh/mmaotv/cqcuiptv@main/cqcu-tv.m3u`），�
 
 ## 安装
 
-- **直接下载**：[Releases](https://github.com/mmaotv/cqcuiptv/releases/latest) 里的 `LightTV-*.apk`
+- **直接下载**：[Releases](https://github.com/mmaotv/cqcuiptv/releases/latest) 里的 `LightLive-*.apk`
 - **adb 安装**：
 
   ```bash
-  adb install -r LightTV-2.0.1.apk
+  adb install -r LightLive-3.0.0.apk
   ```
 
 装好以后在电视桌面上找 **轻直播**（蓝紫渐变 + 白色电视图标）。
 
-> 包名仍然是 `com.miaomiaotv.cqcuiptv`，这样从 1.x 升级上来可以直接覆盖安装，不用先卸载。
+> 包名是 `com.miaomiao.qinglive`。**刻意不含 `tv` / `iptv` / `launcher` 这些词**——小米、海信、创维等
+> 电视的安装管控会按关键词把 APK 判成「电视应用」或「运营商业务」直接拦截，跟功能无关。
+> 3.0.0 换了包名，等于一个全新应用，跟 1.x / 2.x 不能互相覆盖升级，装之前可以先留着旧版对照。
+
+### 电视上装不上时先分清是哪一类
+
+包装不上大多数时候跟包名无关，先照这个顺序试一遍，别一上来就改包名：
+
+| 现象 | 真实原因 | 怎么办 |
+| --- | --- | --- |
+| `adb install` 报 `INSTALL_FAILED_USER_RESTRICTED` | 电视没开「未知来源安装」，或没给文件管理器单独授权 | 去设置里开权限，跟包名无关 |
+| `adb install` 报 `INSTALL_FAILED_VERIFICATION_FAILURE` | 联网时走了云端合规/签名校验 | 电视先断网再装 |
+| 点 APK 弹「该应用存在风险，已拦截」，但 `adb install` 能装 | 安装器 UI 的关键词策略 | 这时包名、文件名、应用名里的用词才有意义 |
+| 弹「该应用是为旧版 Android 构建」 | `targetSdk = 28` 偏低 | 暂时忽略，或升 targetSdk 后重编 |
 
 ## 自己编译
 
@@ -257,7 +270,7 @@ jsdelivr 镜像（`cdn.jsdelivr.net/gh/mmaotv/cqcuiptv@main/cqcu-tv.m3u`），�
 
 ```bash
 ./gradlew assembleRelease
-# 产物：app/build/outputs/apk/release/LightTV-2.0.1.apk
+# 产物：app/build/outputs/apk/release/LightLive-3.0.0.apk
 ```
 
 想把自己的列表打进 APK 当默认列表，可以覆盖默认地址：
@@ -272,7 +285,7 @@ jsdelivr 镜像（`cdn.jsdelivr.net/gh/mmaotv/cqcuiptv@main/cqcu-tv.m3u`），�
 python scripts/make_icons.py
 ```
 
-签名用仓库里的 `keystore/cqcuiptv.jks`（密码 `cqcuiptv`，公开自签名，只为保证版本之间能覆盖安装）。
+签名用仓库里的 `keystore/qinglive.jks`（密码 `qinglive`，公开自签名，只为保证版本之间能覆盖安装）。
 推送到 `main` 后 GitHub Actions 会自动构建并更新 `app-latest` Release。
 
 ---

@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv.player;
+package com.miaomiao.qinglive.player;
 
 /**
  * MPEG-TS 解复用：PAT/PMT 找流，按 PID 拼 PES，再按时间戳把 ES 交给上层。

@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv.player;
+package com.miaomiao.qinglive.player;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

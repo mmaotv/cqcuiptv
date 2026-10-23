@@ -1,4 +1,4 @@
-package com.miaomiaotv.cqcuiptv;
+package com.miaomiao.qinglive;
 
 /** 一个频道：名字、播放地址、分组，以及可选的 EPG id / 台标。 */
 public final class Channel {
