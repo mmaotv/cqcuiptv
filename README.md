@@ -1,13 +1,76 @@
 # 轻直播 · LightLive
 
-一个 **约 100 KB** 的电视直播客户端，遥控器、触摸屏都能用：
-按 `1` 就是 CCTV1，CCTV 全部排完之后紧接着是湖南卫视等卫视台；频道按央视 / 卫视 / 4K / 各地
-分类展示，每个频道都带节目单（EPG）。
+> **极轻量的安卓电视 / 盒子直播客户端** —— 约 **100 KB**、零第三方依赖、Android 4.4+ 都能装。
+> 支持**自定义 M3U 源**、**EPG 节目单**、**频道分类**、**触摸与遥控操作**，自研 RTSP/MPEG-TS 播放内核，
+> 不内置任何广告、不需要账号。
 
-配套提供一套重庆联通 IPTV 的频道列表（`cqcu-tv.m3u`），但这些源只能在**重庆联通网络**下播放，
-其他网络打开会黑屏/超时。
+[![Build APK](https://github.com/mmaotv/cqcuiptv/actions/workflows/android.yml/badge.svg)](https://github.com/mmaotv/cqcuiptv/actions/workflows/android.yml)
+[![License](https://img.shields.io/github/license/mmaotv/cqcuiptv)](LICENSE)
+[![APK size](https://img.shields.io/badge/APK-%7E100%20KB-blue)](https://github.com/mmaotv/cqcuiptv/releases/latest)
+[![Android](https://img.shields.io/badge/Android-4.4%2B-brightgreen)](https://www.android.com/)
+[![Platform](https://img.shields.io/badge/platform-Android%20TV%20%2F%20Phone-orange)](https://github.com/mmaotv/cqcuiptv/releases/latest)
+
+**一句话**：像老电视一样「按 1 就是 CCTV1」的直播 App —— 遥控器、触摸屏都能用，频道按
+央视 / 卫视 / 4K / 各地分类展示，每个频道都带节目单（EPG）。
+
+> 关键词：安卓直播 · 电视直播 · IPTV · M3U / M3U8 播放器 · EPG 节目单 · 自定义源 · 直播软件 ·
+> Android live TV · IPTV player · M3U · EPG · RTSP · 免费 · 开源
 
 ![播放画面](docs/screenshots/01-live.jpg)
+
+---
+
+## 目录
+
+- [这是什么](#这是什么)
+- [快速开始（下载安装）](#快速开始下载安装)
+- [特性](#特性)
+- [遥控器按键](#遥控器按键)
+- [触摸操作（平板 / 触摸大屏）](#触摸操作平板--触摸大屏)
+- [分类与台号](#分类与台号)
+- [节目单（EPG）](#节目单epg)
+- [播放内核](#播放内核)
+- [换直播源](#换直播源)
+- [安装](#安装)
+- [自己编译](#自己编译)
+- [已知限制](#已知限制)
+- [播放列表文件说明](#播放列表文件说明)
+- [English](#english)
+- [相关项目](#相关项目)
+- [致谢与许可](#致谢与许可)
+
+---
+
+## 这是什么
+
+轻直播（LightLive）是一个**只干一件事**的电视直播客户端：把台放出来、把节目单写清楚。
+
+它不像通用播放器那样大而全，而是针对「电视 / 盒子上看直播」这个场景做了减法：
+
+- **体积约 100 KB**，零第三方依赖（不使用 AndroidX / ExoPlayer / VLC），老盒子也跑得动；
+- **不用记复杂手势**：遥控器数字键直达、上下换台，触摸屏单击左右换台、点中间开列表；
+- **源是自定义的**：你给它一个 M3U 地址（或整段内容），它就能播，不止局限于内置的重庆联通源；
+- **节目单是外挂的**：每个频道显示「正在播 / 下一档」，按 `INFO` 看当天完整节目表。
+
+配套仓库里还提供一套重庆联通 IPTV 的频道列表（`cqcu-tv.m3u`），但这些源**只能在重庆联通网络**下播放，
+其他网络打开会黑屏 / 超时 —— 这是源本身的限制，跟 App 无关。
+
+---
+
+## 快速开始（下载安装）
+
+1. 打开 [Releases](https://github.com/mmaotv/cqcuiptv/releases/latest)，下载 `LightLive-*.apk`；
+2. 把 APK 拷到电视 / 盒子上安装，或在电脑上用 adb 安装：
+
+   ```bash
+   adb install -r LightLive-3.0.0.apk
+   ```
+
+3. 装好后在桌面找 **轻直播**（蓝紫渐变 + 白色电视图标），打开就能看内置频道；
+4. 想换源：进设置页填 M3U 地址 / 粘贴整段内容，或在同局域网用手机/电脑打开 `http://盒子IP:8965` 填源。
+
+> 包名是 `com.miaomiao.qinglive`，**刻意不含 `tv` / `iptv` / `launcher`** —— 小米、海信、创维等电视的
+> 安装管控会按这些词把 APK 判成「电视应用 / 运营商业务」直接拦截，跟功能无关。详见[安装](#安装)。
 
 ---
 
@@ -329,8 +392,6 @@ python scripts/make_icons.py
   重庆联通组播源，只能在 IPTV 专网播放。带 udpxy 的版本做了组播转单播，
   请按实际情况修改 udpxy 服务器地址与端口（可能会造成切换频道卡顿）。
 
-其他播放器也可以用它：[mytv-android](https://github.com/mytv-android/mytv-android)
-
 ### 自动更新
 
 `.github/workflows/update.yml` 每天 0 点（UTC）跑一次：
@@ -344,10 +405,50 @@ python scripts/make_icons.py
 
 ---
 
-## 致谢
+## English
+
+**LightLive (轻直播)** is a tiny (~100 KB, **zero-dependency**) Android TV / set-top-box **live-TV client**
+for playing **IPTV / M3U playlists**.
+
+- 📺 **Channel numbers like a real TV** — press `1` for CCTV1, `18` for 湖南卫视 (Hunan TV), etc.
+- 🗂️ **Categories** from M3U `group-title`; **EPG** program guide (XMLTV) with "now playing / next".
+- 📡 **Custom sources** — paste a M3U URL or the whole playlist; not tied to the bundled China Unicom list.
+- 🎮 **Remote + touch** — D-pad number keys, or tap left/right to change channel, tap center for the list.
+- 🧩 **Self-built player** — RTSP (TCP interleaved) → RTP → MPEG-TS → `MediaCodec` hardware decode
+  (HEVC / AVC), pure-Java MP2 soft-decode, AAC / AC3 / EAC3 via system decoder, unified `AudioTrack`.
+- 🪶 **~100 KB**, no AndroidX / ExoPlayer / VLC; **Android 4.4+** (API 19).
+
+**Download / build**
+
+```bash
+# build
+./gradlew assembleRelease
+# or grab the latest APK from Releases
+```
+
+Default playlist and EPG are fetched over the network; the APK also ships a built-in list for offline use.
+
+*Keywords for search:* `android iptv player`, `m3u`, `m3u8`, `epg`, `live tv`, `rtsp`, `mpeg-ts`,
+`media player`, `android tv`, `set-top box`, `free`, `open source`.
+
+---
+
+## 相关项目
+
+- [mytv-android](https://github.com/mytv-android/mytv-android) —— 另一个开源安卓直播 App，可作为替代品参考
+- [fanmingming/live](https://github.com/fanmingming/live) —— 本项目的 EPG（节目单）数据来源
+- [delthas/JavaMP3](https://github.com/delthas/JavaMP3) —— 本项目的 MP2 音频软解移植来源
+
+---
+
+## 致谢与许可
 
 - MP2 音频解码移植自 [delthas/JavaMP3](https://github.com/delthas/JavaMP3)（MIT），
   许可证见 `third_party/javamp3/LICENSE`
 - 节目单数据来自 [fanmingming/live](https://github.com/fanmingming/live)
 
+本项目基于 **MIT 许可证** 开源（见 [LICENSE](LICENSE)）。
+
 本项目仅用于学习和个人观看，直播源版权归各电视台所有，请勿用于商业用途。
+
+如果这个项目对你有用，欢迎 **Star** ⭐ 让更多人能看到：<https://github.com/mmaotv/cqcuiptv>

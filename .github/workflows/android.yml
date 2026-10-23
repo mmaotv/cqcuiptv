@@ -55,5 +55,24 @@ jobs:
           tag_name: app-latest
           name: 轻直播 · 最新构建
           body: |
-            由 GitHub Actions 自动构建，提交 ${{ github.sha }}
+            ## 轻直播 / LightLive · 最新自动构建
+
+            由 GitHub Actions 自动构建（提交 `${{ github.sha }}`）。
+
+            ### 这是什么
+            极轻量的安卓电视 / 盒子直播客户端，约 100 KB、零第三方依赖、Android 4.4+ 都能装。
+            支持自定义 M3U 源、EPG 节目单、频道分类、触摸与遥控操作。
+
+            ### 下载安装
+            - 把下方 `LightLive-*.apk` 下载到电视 / 盒子上安装；
+            - 或在电脑上 `adb install -r LightLive-*.apk`；
+            - 装好后在桌面找 **轻直播**（蓝紫渐变 + 白色电视图标）。
+
+            > 包名 `com.miaomiao.qinglive`，刻意不含 tv / iptv / launcher 等词，
+            > 避免被电视厂商的安装管控按关键词拦截。详见仓库 README 的「安装」章节。
+
+            ### 说明
+            这是跟踪 `main` 分支的最新构建，功能与仓库 README 一致。
+            完整使用说明、键位表、EPG 与播放内核原理见：
+            https://github.com/mmaotv/cqcuiptv#readme
           files: app/build/outputs/apk/release/*.apk
