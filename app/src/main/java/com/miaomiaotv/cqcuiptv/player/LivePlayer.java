@@ -59,12 +59,24 @@ public final class LivePlayer implements TsDemuxer.Listener {
     private final ArrayDeque<Frame> audioQueue = new ArrayDeque<Frame>();
     private final ArrayDeque<Frame> videoPool = new ArrayDeque<Frame>();
     private final ArrayDeque<Frame> audioPool = new ArrayDeque<Frame>();
-    /** 队列上限：4K 帧不能囤太多，囤多了既占内存又拖延迟 */
-    private static final int QUEUE_VIDEO = 12;
-    private static final int QUEUE_AUDIO = 40;
+    private long videoBytes;
+    /** 队列上限：直播源的视频 PTS 本来比音频时钟超前 0.7 秒左右，队列得放得下这段 */
+    private static final int QUEUE_VIDEO = 40;
+    /** 队列里最多占多少字节，4K 单帧几百 KB，按帧数限会吃光内存 */
+    private static final long MAX_QUEUE_BYTES = 8 * 1024 * 1024L;
+    /** 送进解码器时允许比“正在播的声音”超前多少：够解码起转就行 */
+    private static final long LEAD_US = 80000L;
+    /** 音频 24 帧约 0.6 秒：再大就只是堆延迟，音画会越拉越开 */
+    private static final int QUEUE_AUDIO = 24;
 
     private volatile int videoCodec;
     private volatile int audioCodec;
+
+    /** 诊断计数（只在排查时看，不参与播放逻辑） */
+    private volatile long stIn, stDrop, stFed, stOut, stBytes, stLate, stAvUs;
+
+    /** 队列爆过、参考帧被丢掉了：等下一个关键帧重来，否则会一直花屏 */
+    private volatile boolean resyncNeeded;
 
     private final MediaCodec.BufferInfo videoInfo = new MediaCodec.BufferInfo();
 
@@ -152,6 +164,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
                             }
                             int off = n > 0 ? rtpHeaderLength(buf, n) : -1;
                             if (off > 0 && n > off) {
+                                stBytes += n - off;
                                 demuxer.feed(buf, off, n - off);
                             }
                         } else {
@@ -257,8 +270,18 @@ public final class LivePlayer implements TsDemuxer.Listener {
             f.length = length;
             f.ptsUs = ptsUs;
             f.key = keyframe;
-            while (videoQueue.size() > QUEUE_VIDEO) {
-                recycle(videoPool, videoQueue.pollFirst());
+            stIn++;
+            videoBytes += length;
+            while (videoQueue.size() > QUEUE_VIDEO || videoBytes > MAX_QUEUE_BYTES) {
+                stDrop++;
+                // 丢掉的是 GOP 中间的参考帧，解码器会一路花屏，必须等关键帧重来
+                resyncNeeded = true;
+                Frame old = videoQueue.pollFirst();
+                if (old == null) {
+                    break;
+                }
+                videoBytes -= old.length;
+                recycle(videoPool, old);
             }
             videoQueue.addLast(f);
             videoQueue.notifyAll();
@@ -332,7 +355,18 @@ public final class LivePlayer implements TsDemuxer.Listener {
         boolean waitingKey = true;
         long lastPts = 0;
         int failCount = 0;
+        long lastStat = SystemClock.elapsedRealtime();
         while (running) {
+            long nowMs = SystemClock.elapsedRealtime();
+            if (nowMs - lastStat >= 10000) {
+                lastStat = nowMs;
+                Log.i(TAG, "[stat] q=" + videoQueue.size() + "/" + QUEUE_VIDEO
+                        + " in=" + stIn + " drop=" + stDrop + " fed=" + stFed
+                        + " out=" + stOut + " late=" + stLate
+                        + " av=" + (stAvUs / 1000) + "ms"
+                        + " kbps=" + (stBytes * 8 / 1000 / 10));
+                stBytes = 0;
+            }
             Frame f;
             synchronized (videoQueue) {
                 if (videoQueue.isEmpty()) {
@@ -342,6 +376,9 @@ public final class LivePlayer implements TsDemuxer.Listener {
                     }
                 }
                 f = videoQueue.pollFirst();
+                if (f != null) {
+                    videoBytes -= f.length;
+                }
             }
             if (f == null) {
                 continue;
@@ -350,10 +387,46 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 if (waitingKey && !f.key) {
                     continue;
                 }
+                if (resyncNeeded) {
+                    // 队列溢出时丢掉了参考帧，从这里接不上，干脆等关键帧、清空解码器重来
+                    if (!f.key) {
+                        continue;
+                    }
+                    resyncNeeded = false;
+                    try {
+                        codec.flush();
+                    } catch (Throwable ignored) {
+                    }
+                }
                 waitingKey = false;
                 long pts = f.ptsUs >= 0 ? f.ptsUs : lastPts + 40000;
                 lastPts = pts;
-                int index = codec.dequeueInputBuffer(10000);
+                // 按音频时钟放行：本源的视频 PTS 比音频超前约 0.7 秒（用 ffprobe 抓包量出来的），
+                // 直接喂进去画面就跑到声音前面。这里等它「快轮到上屏了」再送进解码器。
+                // 关键是不能写成「算出延迟后 sleep 整个延迟」——那样喂帧速率会掉到 5fps，
+                // 队列越堆越满、丢参考帧、画面又卡又花，正是之前 CCTV3 的现象。
+                AudioOutput ao = audioOutput;
+                while (running) {
+                    long clock = ao == null ? -1 : ao.clockUs();
+                    if (clock < 0) {
+                        break;
+                    }
+                    long lead = pts - clock;
+                    if (lead <= LEAD_US) {
+                        break;
+                    }
+                    drainVideo(codec);
+                    sleep((int) Math.min((lead - LEAD_US) / 1000, 40));
+                }
+                // 输入缓冲暂时拿不到时先抽输出腾地方，别把这帧扔了——丢中间帧就是丢参考帧
+                int index = -1;
+                for (int tries = 0; tries < 40 && running; tries++) {
+                    index = codec.dequeueInputBuffer(5000);
+                    if (index >= 0) {
+                        break;
+                    }
+                    drainVideo(codec);
+                }
                 if (index < 0) {
                     continue;
                 }
@@ -364,6 +437,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 }
                 ib.put(f.data, 0, f.length);
                 codec.queueInputBuffer(index, 0, f.length, pts, 0);
+                stFed++;
                 drainVideo(codec);
                 failCount = 0;
             } catch (IllegalStateException dead) {
@@ -555,15 +629,20 @@ public final class LivePlayer implements TsDemuxer.Listener {
             AudioOutput out = audioOutput;
             long clock = out == null ? -1 : out.clockUs();
             if (clock > 0) {
-                long delay = pts - clock;
-                if (delay > 120000) {
-                    sleep((int) Math.min(delay / 1000, 200));
-                } else if (delay < -500000) {
-                    codec.releaseOutputBuffer(outIndex, false);
-                    continue;
-                }
+                stAvUs = pts - clock;
+            }
+            // 这里绝不能按延迟 sleep：直播的 PTS 本来就比声音时钟超前一个网络缓冲的量，
+            // sleep 会让喂帧变慢 → 队列堆积丢帧 → 超前量更大 → 永远在 sleep，
+            // 于是画面既卡又因为丢参考帧而花屏。落后就丢显示帧追上去，超前就正常放。
+            if (clock > 0 && pts + 800000 < clock) {
+                stLate++;
+                codec.releaseOutputBuffer(outIndex, false);
+                continue;
             }
             boolean render = videoInfo.size > 0;
+            if (render) {
+                stOut++;
+            }
             codec.releaseOutputBuffer(outIndex, render);
             if (render && !preparedReported) {
                 preparedReported = true;
@@ -627,6 +706,12 @@ public final class LivePlayer implements TsDemuxer.Listener {
             return;
         }
         Mp2AudioDecoder mp2 = audioCodec == TsDemuxer.AUDIO_MP2 ? new Mp2AudioDecoder() : null;
+
+        // 启动时音频线程在等解码器就绪，这段时间队列里攒了将近一秒的旧数据。
+        // 不清掉的话，整场播放的声音都会比画面晚将近一秒。
+        synchronized (audioQueue) {
+            audioQueue.clear();
+        }
 
         while (running) {
             Frame f;
@@ -701,6 +786,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
         synchronized (videoQueue) {
             videoQueue.clear();
             videoPool.clear();
+            videoBytes = 0;
             videoQueue.notifyAll();
         }
         synchronized (audioQueue) {
@@ -727,6 +813,8 @@ public final class LivePlayer implements TsDemuxer.Listener {
         audioOutput = null;
         preparedReported = false;
         firstVideoPtsUs = -1;
+        resyncNeeded = false;
+        stIn = stDrop = stFed = stOut = stBytes = stLate = 0;
         videoWidth = 0;
         videoHeight = 0;
         spsWidth = 0;
@@ -774,6 +862,9 @@ public final class LivePlayer implements TsDemuxer.Listener {
         private long anchorPtsUs = -1;
         private long anchorMs;
         private volatile long lastPtsUs = -1;
+        /** 已写入 AudioTrack 的总帧数 / 已写入数据末尾的 PTS，用来算“耳朵正在听哪一刻” */
+        private long totalFrames;
+        private long endPtsUs = -1;
 
         void prepare(int audioCodec) {
             if (audioCodec == TsDemuxer.AUDIO_AAC) {
@@ -806,7 +897,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
             if (track == null) {
                 return;
             }
-            anchor(ptsUs);
+            note(ptsUs, length / (2 * Math.max(1, ch)));
             try {
                 track.write(pcm, 0, length);
             } catch (Throwable ignored) {
@@ -858,8 +949,8 @@ public final class LivePlayer implements TsDemuxer.Listener {
                         byte[] raw = new byte[info.size];
                         ob.position(info.offset);
                         ob.get(raw, 0, info.size);
-                        anchor(info.presentationTimeUs);
                         byte[] pcm = pcmChannels > 2 ? downmix(raw, pcmChannels) : raw;
+                        note(info.presentationTimeUs, pcm.length / (2 * Math.max(1, channels)));
                         track.write(pcm, 0, pcm.length);
                     }
                     codec.releaseOutputBuffer(outIndex, false);
@@ -928,7 +1019,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
             if (min <= 0) {
                 min = 16 * 1024;
             }
-            int size = Math.max(min * 3, 48 * 1024);
+            int size = Math.max(min * 2, 32 * 1024);
+            if (size > 48 * 1024) {
+                size = 48 * 1024;
+            }
             try {
                 track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelMask,
                         AudioFormat.ENCODING_PCM_16BIT, size, AudioTrack.MODE_STREAM);
@@ -939,26 +1033,51 @@ public final class LivePlayer implements TsDemuxer.Listener {
             }
         }
 
-        private void anchor(long ptsUs) {
-            if (ptsUs < 0) {
+        /**
+         * 记录“已写进 AudioTrack 的数据末尾”的时刻与帧数。
+         * <p>
+         * 原来的时钟是「最后写入的 PTS + 流逝时间」，可 AudioTrack 里还压着几百毫秒没放出来，
+         * 于是时钟跑在耳朵前面；再加上启动时音频队列攒了一秒的旧数据，音画能差到 0.9 秒。
+         * 现在按时钟 = 已写入末尾 - 还没播完的帧数，才是真正正在听的位置。
+         */
+        private void note(long ptsUs, int frames) {
+            if (frames <= 0 || sampleRate <= 0) {
                 return;
             }
-            lastPtsUs = ptsUs;
-            if (anchorPtsUs < 0 || Math.abs(ptsUs - clockUs()) > 2000000L) {
-                anchorPtsUs = ptsUs;
-                anchorMs = SystemClock.elapsedRealtime();
+            long dur = (long) frames * 1000000L / sampleRate;
+            if (ptsUs >= 0) {
+                lastPtsUs = ptsUs;
+                endPtsUs = ptsUs + dur;
+            } else if (endPtsUs > 0) {
+                endPtsUs += dur;
+            } else {
+                return;
             }
+            totalFrames += frames;
         }
 
-        /** 音频时钟（微秒），视频按它对齐。 */
+        /** 音频时钟（微秒）：正在播放的那一帧的 PTS。 */
         long clockUs() {
-            if (anchorPtsUs < 0) {
+            if (endPtsUs <= 0 || sampleRate <= 0) {
                 return -1;
             }
-            return anchorPtsUs + (SystemClock.elapsedRealtime() - anchorMs) * 1000L;
+            long head = 0;
+            if (track != null) {
+                try {
+                    head = track.getPlaybackHeadPosition() & 0xFFFFFFFFL;
+                } catch (Throwable ignored) {
+                }
+            }
+            long pending = totalFrames - head;
+            if (pending < 0) {
+                pending = 0;
+            }
+            return endPtsUs - pending * 1000000L / sampleRate;
         }
 
         private void closeTrack() {
+            totalFrames = 0;
+            endPtsUs = -1;
             if (track != null) {
                 try {
                     track.pause();

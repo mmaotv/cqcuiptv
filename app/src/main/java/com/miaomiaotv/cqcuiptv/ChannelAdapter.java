@@ -79,7 +79,7 @@ public final class ChannelAdapter extends BaseAdapter {
 
         TextView sub = (TextView) v.findViewById(R.id.tag);
         String text = "";
-        if (epg != null) {
+        if (epg != null && !epg.isEmpty()) {
             String id = c.tvgId.length() > 0 ? c.tvgId : c.name;
             Epg.Programme now = epg.now(id);
             if (now != null) {
@@ -89,6 +89,10 @@ public final class ChannelAdapter extends BaseAdapter {
                 if (next != null) {
                     text = Epg.formatClock(next.start) + " " + next.title;
                 }
+            }
+            if (text.length() == 0) {
+                // 节目单源没收录这个台（付费频道、地方台常见），说清楚，别让人以为是错位
+                text = "暂无节目单";
             }
         }
         if (text.length() > 0) {

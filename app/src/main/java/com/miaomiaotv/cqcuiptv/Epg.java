@@ -267,7 +267,13 @@ public final class Epg {
                 c.get(java.util.Calendar.HOUR_OF_DAY), c.get(java.util.Calendar.MINUTE));
     }
 
-    /** XMLTV 时间：20261022200000 +0800 */
+    /**
+     * XMLTV 时间：20261022200000 +0800。
+     * <p>
+     * 时区是**节目时间所在的时区**，不是设备时区。原先把它当成设备时区再减去偏移，
+     * 中国时区（+0800）下等于多减了 8 小时，整张节目单全部往后错了 8 小时——
+     * 早上 7 点显示的是下午 3 点的节目。这里按冒号后的偏移建 Calendar。
+     */
     private static long parseTime(String s) {
         if (s == null || s.length() < 14) {
             return 0;
@@ -279,20 +285,18 @@ public final class Epg {
             int hour = Integer.parseInt(s.substring(8, 10));
             int minute = Integer.parseInt(s.substring(10, 12));
             int second = Integer.parseInt(s.substring(12, 14));
-            java.util.Calendar c = java.util.Calendar.getInstance();
+            java.util.TimeZone tz = java.util.TimeZone.getDefault();
+            String tail = s.length() > 14 ? s.substring(14).trim() : "";
+            if (tail.length() >= 5 && (tail.charAt(0) == '+' || tail.charAt(0) == '-')) {
+                tz = java.util.TimeZone.getTimeZone(
+                        "GMT" + tail.substring(0, 3) + ":" + tail.substring(3, 5));
+            } else if (tail.startsWith("Z")) {
+                tz = java.util.TimeZone.getTimeZone("GMT");
+            }
+            java.util.Calendar c = java.util.Calendar.getInstance(tz);
             c.clear();
             c.set(year, month - 1, day, hour, minute, second);
-            int offset = 0;
-            if (s.length() >= 19) {
-                String tz = s.substring(15).trim();
-                if (tz.startsWith("+") || tz.startsWith("-")) {
-                    int sign = tz.charAt(0) == '-' ? -1 : 1;
-                    int hh = Integer.parseInt(tz.substring(1, 3));
-                    int mm = Integer.parseInt(tz.substring(3, 5));
-                    offset = sign * (hh * 60 + mm) * 60000;
-                }
-            }
-            return c.getTimeInMillis() - offset;
+            return c.getTimeInMillis();
         } catch (Exception e) {
             return 0;
         }
