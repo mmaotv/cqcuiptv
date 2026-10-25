@@ -167,7 +167,7 @@ rtsp://123.147.113.84:554/04000001/01000000004000000000000000000404?AuthInfo=xxx
 rtsp://123.147.113.84:554/04000001/01000000004000000000000000000406?AuthInfo=xxx&userid=
 #EXTINF:-1 tvg-id="CETV1" tvg-logo="https://live.fanmingming.cn/tv/CETV1.png" group-title="央视",CETV1
 rtsp://123.147.113.84:554/04000001/01000000004000000000000000000363?AuthInfo=xxx&userid=
-#EXTINF:-1 tvg-id="CETV4" tvg-logo="https://live.fanmingming.cn/tv/CETV4.png" group-title="央视",CETV4
+#EXTINF:-1 tvg-id="1860" tvg-logo="https://live.fanmingming.cn/tv/CETV4.png" group-title="央视",CETV4
 rtsp://123.147.113.84:554/04000001/01000000004000000000000000000427?AuthInfo=xxx&userid=
 #EXTINF:-1 tvg-id="CETV早期教育" tvg-logo="" group-title="央视",CETV 早期教育 SD
 rtsp://123.147.113.180:554/04000001/01000000004000000000000000000400?AuthInfo=xxx&userid=
