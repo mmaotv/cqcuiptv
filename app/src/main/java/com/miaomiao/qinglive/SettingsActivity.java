@@ -149,8 +149,8 @@ public class SettingsActivity extends Activity {
             return;
         }
         checking = true;
-        btnUpdateCheck.setEnabled(false);
-        btnUpdateNotes.setEnabled(false);
+        // 不去 setEnabled(false)：禁用一个正被遥控器聚焦的按钮会让焦点跳到别处，
+        // 用户下一次按 OK 就点到了别的控件；连点由 checking 挡住就够了。
         updateState.setText("正在检查更新…");
         Updater.check(this, new Updater.Callback() {
             @Override
@@ -159,8 +159,6 @@ public class SettingsActivity extends Activity {
                 if (isFinishing()) {
                     return;
                 }
-                btnUpdateCheck.setEnabled(true);
-                btnUpdateNotes.setEnabled(true);
                 if (info == null) {
                     updateState.setText("检查失败：" + error
                             + "\n（更新清单和播放列表在同一个地址源，能正常拉列表一般就能检查）");

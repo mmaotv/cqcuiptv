@@ -45,6 +45,8 @@ public final class Updater {
 
     private static final int CONNECT_TIMEOUT = 8000;
     private static final int READ_TIMEOUT = 15000;
+    /** 一次检查的总时限（含 DNS、连接、读完整个清单） */
+    private static final long CHECK_TOTAL_TIMEOUT = 20000L;
 
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
 
@@ -98,17 +100,35 @@ public final class Updater {
     /** 后台线程拉清单，结果回主线程。 */
     public static void check(final Context ctx, final Callback cb) {
         final Context app = ctx.getApplicationContext();
+        // HttpURLConnection 的 connectTimeout 管不住 DNS 卡死，所以外面再套一个总超时的看门狗
+        final java.util.concurrent.FutureTask<Info> task =
+                new java.util.concurrent.FutureTask<Info>(
+                        new java.util.concurrent.Callable<Info>() {
+                            @Override
+                            public Info call() throws Exception {
+                                Info info = fetch();
+                                info.newer = isNewer(app, info);
+                                return info;
+                            }
+                        });
+        Thread worker = new Thread(task, "update-check");
+        worker.setDaemon(true);
+        worker.start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Info info = null;
                 String error = null;
                 try {
-                    info = fetch();
-                    info.newer = isNewer(app, info);
+                    info = task.get(CHECK_TOTAL_TIMEOUT, java.util.concurrent.TimeUnit.MILLISECONDS);
+                } catch (java.util.concurrent.TimeoutException e) {
+                    task.cancel(true);
+                    error = "连接超时，稍后再试";
+                } catch (java.util.concurrent.ExecutionException e) {
+                    error = friendly(e.getCause() == null ? e : e.getCause());
                 } catch (Throwable t) {
                     error = friendly(t);
-                    info = null;
                 }
                 final Info fi = info;
                 final String fe = error;
@@ -119,7 +139,7 @@ public final class Updater {
                     }
                 });
             }
-        }, "update-check").start();
+        }, "update-check-watchdog").start();
     }
 
     private static Info fetch() throws Exception {
