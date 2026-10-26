@@ -66,6 +66,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
     private static final long MAX_QUEUE_BYTES = 8 * 1024 * 1024L;
     /** 送进解码器时允许比“正在播的声音”超前多少：够解码起转就行 */
     private static final long LEAD_US = 80000L;
+    /** 开播前预缓冲的编码帧数：网络/RTSP 常成簇送包，靠这段缓冲顶住短暂空档 */
+    private static final int PREBUFFER_FRAMES = 15;
+    /** 无音频时钟时按墙钟放行的提前量；也等于编码帧留在队列里吸收抖动的深度 */
+    private static final long PACE_AHEAD_US = 40000L;
     /** 音频 24 帧约 0.6 秒：再大就只是堆延迟，音画会越拉越开 */
     private static final int QUEUE_AUDIO = 24;
 
@@ -92,6 +96,9 @@ public final class LivePlayer implements TsDemuxer.Listener {
     private volatile byte[] csd0;
     private volatile byte[] csd1;
     private long firstVideoPtsUs = -1;
+    /** 无音频时钟时的墙钟节拍锚点：第一次喂帧时记下 (wallNs, ptsUs)，之后按两者差放行 */
+    private long paceWallNs = -1;
+    private long pacePtsUs;
     private volatile String metaLine = "";
     private boolean preparedReported;
 
@@ -355,6 +362,18 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 + " decode=" + choice.width + "x" + choice.height
                 + " codec=" + (choice.name == null ? "type-fallback" : choice.name));
 
+        // 抖动缓冲：先攒若干编码帧再开播。RTSP/TCP 常把一串包一次性送到，中间夹短暂空档；
+        // 若边收边喂，队列会被瞬间抽干，网络一空档画面就冻一下（[starve] 反复触发）。
+        // 预缓冲把这段空档吸收掉，喂帧速率再由下面的节拍控制保持恒定。
+        long pb0 = SystemClock.elapsedRealtime();
+        while (running && videoQueue.size() < PREBUFFER_FRAMES) {
+            if (SystemClock.elapsedRealtime() - pb0 > 3000) {
+                break;   // 源太慢/帧率极低，别死等
+            }
+            sleep(20);
+        }
+        Log.i(TAG, "prebuffer " + videoQueue.size() + " frames");
+
         boolean waitingKey = true;
         long lastPts = 0;
         int failCount = 0;
@@ -371,6 +390,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 stBytes = 0;
             }
             Frame f;
+            long w0 = SystemClock.elapsedRealtime();
             synchronized (videoQueue) {
                 if (videoQueue.isEmpty()) {
                     try {
@@ -384,6 +404,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 }
             }
             if (f == null) {
+                long wms = SystemClock.elapsedRealtime() - w0;
+                if (wms >= 90) {
+                    Log.i(TAG, "[starve] no frame waited " + wms + "ms");
+                }
                 continue;
             }
             try {
@@ -412,26 +436,59 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 // 关键是不能写成「算出延迟后 sleep 整个延迟」——那样喂帧速率会掉到 5fps，
                 // 队列越堆越满、丢参考帧、画面又卡又花，正是之前 CCTV3 的现象。
                 AudioOutput ao = audioOutput;
-                while (running) {
-                    long clock = ao == null ? -1 : ao.clockUs();
-                    if (clock < 0) {
-                        break;
+                long clock = ao == null ? -1 : ao.clockUs();
+                if (clock > 0) {
+                    // 有音频时钟：以音频为基准放行，快轮到上屏了才喂解码器。
+                    // 这既控音画同步，也天然把编码帧压在 videoQueue 里当抖动缓冲。
+                    while (running) {
+                        clock = ao.clockUs();
+                        if (clock < 0) {
+                            break;
+                        }
+                        long lead = pts - clock;
+                        if (lead <= LEAD_US) {
+                            break;
+                        }
+                        drainVideo(codec);
+                        sleep((int) Math.min((lead - LEAD_US) / 1000, 40));
                     }
-                    long lead = pts - clock;
-                    if (lead <= LEAD_US) {
-                        break;
+                } else {
+                    // 音频时钟不可用（无音频/解码失败）：改用墙钟按码流 PTS 节奏放行，
+                    // 让喂帧速率≈真实帧率，编码帧因此留在 videoQueue 里吸收网络成簇/空档，
+                    // 而不是一收到就抽干喂完、网络一断就冻。这是 [starve] 反复卡顿的根因修复。
+                    if (paceWallNs < 0) {
+                        paceWallNs = System.nanoTime();
+                        pacePtsUs = pts;
                     }
-                    drainVideo(codec);
-                    sleep((int) Math.min((lead - LEAD_US) / 1000, 40));
+                    while (running) {
+                        long targetNs = paceWallNs + (pts - pacePtsUs) * 1000L;
+                        long ahead = targetNs - System.nanoTime();
+                        if (ahead <= PACE_AHEAD_US * 1000L) {
+                            break;   // 已到点（或已过时）→ 立刻喂
+                        }
+                        if (ahead < -2000000000L) {
+                            // PTS 回绕/跳变（如换台接缝）：重新锚定，别让画面长时间干等
+                            paceWallNs = System.nanoTime();
+                            pacePtsUs = pts;
+                            break;
+                        }
+                        drainVideo(codec);
+                        sleep((int) Math.min(ahead / 1000000L, 40));
+                    }
                 }
                 // 输入缓冲暂时拿不到时先抽输出腾地方，别把这帧扔了——丢中间帧就是丢参考帧
                 int index = -1;
+                long ib0 = SystemClock.elapsedRealtime();
                 for (int tries = 0; tries < 40 && running; tries++) {
                     index = codec.dequeueInputBuffer(5000);
                     if (index >= 0) {
                         break;
                     }
                     drainVideo(codec);
+                }
+                long ibms = SystemClock.elapsedRealtime() - ib0;
+                if (ibms >= 80) {
+                    Log.i(TAG, "[dec] input wait " + ibms + "ms q=" + videoQueue.size());
                 }
                 if (index < 0) {
                     continue;
@@ -859,6 +916,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
         audioOutput = null;
         preparedReported = false;
         firstVideoPtsUs = -1;
+        paceWallNs = -1;
         resyncNeeded = false;
         stIn = stDrop = stFed = stOut = stBytes = stLate = 0;
         videoWidth = 0;
