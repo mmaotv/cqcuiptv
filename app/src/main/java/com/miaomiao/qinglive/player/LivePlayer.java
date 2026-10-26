@@ -671,23 +671,17 @@ public final class LivePlayer implements TsDemuxer.Listener {
             boolean render = videoInfo.size > 0;
             if (render) {
                 stOut++;
-                // 关键修复：上屏时间戳一律用「单调时钟(System.nanoTime) + 音画超前量」。
-                // 绝不能直接 releaseOutputBuffer(index, true) —— 那会让 Surface 用缓冲区
-                // 自带的原始码流 PTS(绝对时基，动辄几十小时)作为上屏时刻，相对 SurfaceFlinger
-                // 的 expectedPresent 超前约 24 小时，被判定为 implausible 直接丢弃/错时呈现，
-                // 表现为「每个频道换台/启动头一秒几乎每一帧都掉 → 卡一下」。
-                // 用 nanoTime 作基准就落在 SF 的单调时钟域，时间戳合理，不再 implausible。
-                long lead = (clock > 0) ? (pts - clock) : 0;   // 比声音时钟超前多少微秒
-                if (lead > 250000) lead = 250000;              // 音频时钟抖动算出的天文数字，封顶 250ms
-                else if (lead < -50000) lead = 0;              // 落后太多就当“现在放”，丢显示帧追上
-                long presentNs = System.nanoTime() + (lead > 0 ? lead * 1000L : 0);
+                // 直接以「当前单调时钟(System.nanoTime)」立即上屏，落在 SurfaceFlinger 的
+                // 单调时钟域：零 implausible，也绝不让帧以「未来时间戳」滞留 Surface 缓冲队列。
+                // 之前 3.0.3 用 releaseOutputBuffer(index, now+lead) 把帧压进 Surface 高达
+                // 250ms，解码成簇输出时 Surface 缓冲被塞满产生背压、阻塞解码线程，反致「每秒卡好几次」。
+                // 音画同步改由 runVideo 的输入节流(按音频时钟放行, LEAD_US=80ms)与下方丢帧逻辑负责，
+                // 不再用 Surface 的未来时间戳做调度——那套在当前盒子固件上会背压丢帧。
                 try {
-                    // API 21+ 两参重载 (index, renderTimestampNs)：把帧按音画超前量对齐到
-                    // 正确的 vsync 上屏，解码成簇输出也不会聚簇丢帧（修复 CCTV8「每秒掉一次」、
-                    // CCTV1 模糊块）；clock 未就绪时也用 nanoTime 基准，避免原始 PTS 引发的 implausible。
-                    codec.releaseOutputBuffer(outIndex, presentNs);
+                    codec.releaseOutputBuffer(outIndex, System.nanoTime());
                 } catch (Throwable t) {
-                    // API21 以下两参重载不可用时的兜底；本机 API21+，正常不会走到。
+                    // API21 以下两参重载不可用时的兜底（本机 API21+，正常不走）；
+                    // 用 true 立即呈现（即便带原始 PTS 也只会被 SF 钳到当前 vsync，不滞留）。
                     codec.releaseOutputBuffer(outIndex, true);
                 }
             } else {
