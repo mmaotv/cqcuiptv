@@ -556,7 +556,7 @@ public final class Updater {
         if (bytes >= 1024 * 1024) {
             return String.format(java.util.Locale.US, "%.1f MB", bytes / 1048576.0);
         }
-        return (bytes / 1024) + " KB";
+        return Math.round(bytes / 1024.0) + " KB";
     }
 
     private static void toast(final Activity act, final String text) {

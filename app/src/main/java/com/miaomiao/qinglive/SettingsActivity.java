@@ -167,10 +167,15 @@ public class SettingsActivity extends Activity {
                 if (info.newer) {
                     updateState.setText("发现新版本 " + info.versionName
                             + "（当前 " + Updater.versionName(SettingsActivity.this) + "）");
+                    Updater.showNotes(SettingsActivity.this, info, allowInstall);
                 } else {
                     updateState.setText("已是最新版本 " + info.versionName);
+                    // 点「检查更新」发现已是最新时只更新状态文字，不弹窗打断；
+                    // 只有用户自己点「更新日志」才把内容摆出来看。
+                    if (!allowInstall) {
+                        Updater.showNotes(SettingsActivity.this, info, false);
+                    }
                 }
-                Updater.showNotes(SettingsActivity.this, info, allowInstall);
             }
         });
     }
