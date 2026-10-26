@@ -31,22 +31,33 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * 检查更新：读仓库根目录的 update.json（与播放列表同一个 raw.githubusercontent 通道，
- * 墙内可达性和列表一致），拿到新版本号、更新日志、安装包地址。
+ * 检查更新：读仓库根目录的 update.json，拿到新版本号、更新日志、安装包地址。
+ *
+ * 国内访问 GitHub 时通时断（实测同一台盒子半小时内会从 200 变成连不上），所以清单
+ * 同时向几个镜像取、谁先成功用谁；单个源卡住也不会拖住整次检查。
  *
  * 是否升级完全由用户决定：这里只做「检查 → 展示日志 → 用户点更新才下载安装」，
  * 不做后台自动下载、不静默安装。
  */
 public final class Updater {
 
-    /** 更新清单地址 */
-    public static final String MANIFEST =
-            "https://raw.githubusercontent.com/mmaotv/cqcuiptv/main/update.json";
+    /**
+     * 更新清单源，按顺序启动、并发竞速，取最先返回的那份。
+     * raw 是权威源（5 分钟缓存）；jsDelivr 国内通常更快，但分支缓存可能有十几小时延迟，
+     * 所以只当兜底——能查到版本号总比「检查失败」好。
+     */
+    private static final String[] MANIFESTS = {
+            "https://raw.githubusercontent.com/mmaotv/cqcuiptv/main/update.json",
+            "https://gcore.jsdelivr.net/gh/mmaotv/cqcuiptv@main/update.json",
+            "https://cdn.jsdelivr.net/gh/mmaotv/cqcuiptv@main/update.json",
+    };
 
     private static final int CONNECT_TIMEOUT = 8000;
     private static final int READ_TIMEOUT = 15000;
     /** 一次检查的总时限（含 DNS、连接、读完整个清单） */
     private static final long CHECK_TOTAL_TIMEOUT = 20000L;
+    /** 抢清单的时限：比总时限小，留出报告结果的时间 */
+    private static final long FETCH_DEADLINE = 12000L;
 
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
 
@@ -142,9 +153,51 @@ public final class Updater {
         }, "update-check-watchdog").start();
     }
 
+    /** 并发向所有清单源要同一份 json，谁先成功用谁，全都失败才报错。 */
     private static Info fetch() throws Exception {
-        // 复用播放列表的下载器：同样的 UA、超时和错误信息
-        String body = Playlist.download(MANIFEST);
+        final java.util.concurrent.LinkedBlockingQueue<Object[]> results =
+                new java.util.concurrent.LinkedBlockingQueue<Object[]>();
+        for (final String url : MANIFESTS) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Object[] r;
+                    try {
+                        // 复用播放列表的下载器：同样的 UA、超时和错误信息
+                        r = new Object[]{parse(Playlist.download(url)), null};
+                    } catch (Throwable e) {
+                        r = new Object[]{null, e};
+                    }
+                    //noinspection ResultOfMethodCallIgnored
+                    results.offer(r);
+                }
+            }, "update-fetch");
+            t.setDaemon(true);
+            t.start();
+        }
+
+        long deadline = System.currentTimeMillis() + FETCH_DEADLINE;
+        Exception last = null;
+        for (int i = 0; i < MANIFESTS.length; i++) {
+            long wait = deadline - System.currentTimeMillis();
+            if (wait <= 0) {
+                break;
+            }
+            Object[] r = results.poll(wait, java.util.concurrent.TimeUnit.MILLISECONDS);
+            if (r == null) {
+                break;
+            }
+            if (r[0] != null) {
+                return (Info) r[0];
+            }
+            if (r[1] instanceof Exception) {
+                last = (Exception) r[1];
+            }
+        }
+        throw last != null ? last : new IOException("连接超时，稍后再试");
+    }
+
+    private static Info parse(String body) throws Exception {
         JSONObject o = new JSONObject(body);
 
         Info info = new Info();

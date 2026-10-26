@@ -2,8 +2,8 @@ plugins {
     id("com.android.application")
 }
 
-val appVersionName = "3.0.8"
-val appVersionCode = 12
+val appVersionName = "3.0.9"
+val appVersionCode = 13
 
 // 默认播放列表地址，可用 -PdefaultPlaylist=... 在构建时覆盖（方便局域网调试）
 val defaultPlaylist = (findProperty("defaultPlaylist") as String?)
