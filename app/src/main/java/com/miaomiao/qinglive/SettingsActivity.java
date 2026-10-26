@@ -193,7 +193,10 @@ public class SettingsActivity extends Activity {
     }
 
     private static String dayTime(long ms) {
-        java.util.Calendar c = java.util.Calendar.getInstance();
+        // 与 EPG 一致用北京时间：盒子系统时区可能被设成别处（如 America/New_York），
+        // 用设备时区会把缓存时间也带偏。
+        java.util.Calendar c = java.util.Calendar.getInstance(
+                java.util.TimeZone.getTimeZone("GMT+08:00"));
         c.setTimeInMillis(ms);
         return String.format(java.util.Locale.US, "%02d-%02d %02d:%02d",
                 c.get(java.util.Calendar.MONTH) + 1, c.get(java.util.Calendar.DAY_OF_MONTH),

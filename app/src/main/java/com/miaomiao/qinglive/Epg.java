@@ -259,9 +259,15 @@ public final class Epg {
         return epg;
     }
 
+    /** EPG 数据统一是北京时间（+0800），显示时必须用这个时区，不能用设备时区——
+     *  有些盒子把系统时区设成了别处（如 America/New_York），用设备时区格式化会把
+     *  整张节目单平移 12 小时，于是「正在播」判定（用绝对毫秒）是对的，但显示的时间全错。 */
+    private static final java.util.TimeZone EPG_TZ =
+            java.util.TimeZone.getTimeZone("GMT+08:00");
+
     /** 20:30 这种格式，供列表与 OSD 用。 */
     public static String formatClock(long time) {
-        java.util.Calendar c = java.util.Calendar.getInstance();
+        java.util.Calendar c = java.util.Calendar.getInstance(EPG_TZ);
         c.setTimeInMillis(time);
         return String.format(java.util.Locale.US, "%02d:%02d",
                 c.get(java.util.Calendar.HOUR_OF_DAY), c.get(java.util.Calendar.MINUTE));
