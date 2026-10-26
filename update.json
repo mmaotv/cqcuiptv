@@ -1,15 +1,15 @@
 {
-  "versionName": "3.0.8",
-  "versionCode": 12,
+  "versionName": "3.0.9",
+  "versionCode": 13,
   "date": "2026-10-26",
-  "size": 116605,
-  "apk": "https://github.com/mmaotv/cqcuiptv/releases/download/app-latest/LightLive-3.0.8.apk",
+  "size": 117034,
+  "apk": "https://github.com/mmaotv/cqcuiptv/releases/download/app-latest/LightLive-3.0.9.apk",
   "notes": [
     "设置页新增「版本更新」：可以手动检查新版本、先看更新日志，再决定要不要升级。",
     "支持在应用内直接下载并安装新版，装好自动覆盖旧版，不用再拷 U 盘或接 adb。",
     "「更新日志」按钮可随时查看最新版本改了什么；不点「立即更新」就只是看一眼，不会下载任何东西。",
-    "已是最新版本时不弹窗打断，只在按钮下方显示一行状态。",
-    "检查更新带 20 秒总超时，网络卡住会直接告诉你原因，不会一直转圈。",
+    "更新清单同时从 GitHub 和国内镜像取，网络不稳时也能查出结果，卡住会直接提示原因。",
+    "已是最新版本时不再弹窗打断，只在按钮下方显示一行状态。",
     "修复：网络抖动造成的周期性卡顿（开播预缓冲 + 音频时钟缺失时按墙钟节拍放行）。"
   ]
 }
