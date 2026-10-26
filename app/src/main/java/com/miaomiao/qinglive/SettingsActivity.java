@@ -5,18 +5,24 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/** 设置页：列表地址 / 自定义 M3U / 缓存周期 / 局域网填源。 */
+/** 设置页：列表地址 / 自定义 M3U / 缓存周期 / 局域网填源 / 检查更新。 */
 public class SettingsActivity extends Activity {
 
     private EditText urlInput;
     private EditText customInput;
     private TextView cacheState;
     private TextView cfgUrl;
+    private TextView updateState;
+    private Button btnUpdateCheck;
+    private Button btnUpdateNotes;
     private TextView[] chips;
     private Prefs prefs;
+    /** 正在检查更新：避免连点重复发请求 */
+    private boolean checking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,63 @@ public class SettingsActivity extends Activity {
         refreshChips();
         refreshCacheState();
         refreshServer();
+        setupUpdate();
+    }
+
+    /** 版本更新入口：只检查 + 展示日志，装不装由用户点按钮决定。 */
+    private void setupUpdate() {
+        updateState = (TextView) findViewById(R.id.update_state);
+        ((TextView) findViewById(R.id.ver_current)).setText(
+                "当前版本 " + Updater.versionName(this)
+                        + "（" + Updater.versionCode(this) + "）");
+        btnUpdateCheck = (Button) findViewById(R.id.btn_update_check);
+        btnUpdateNotes = (Button) findViewById(R.id.btn_update_notes);
+        btnUpdateCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkUpdate(true);
+            }
+        });
+        btnUpdateNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 只看日志，不对「更新」做任何引导
+                checkUpdate(false);
+            }
+        });
+    }
+
+    private void checkUpdate(final boolean allowInstall) {
+        if (checking) {
+            return;
+        }
+        checking = true;
+        btnUpdateCheck.setEnabled(false);
+        btnUpdateNotes.setEnabled(false);
+        updateState.setText("正在检查更新…");
+        Updater.check(this, new Updater.Callback() {
+            @Override
+            public void onResult(Updater.Info info, String error) {
+                checking = false;
+                if (isFinishing()) {
+                    return;
+                }
+                btnUpdateCheck.setEnabled(true);
+                btnUpdateNotes.setEnabled(true);
+                if (info == null) {
+                    updateState.setText("检查失败：" + error
+                            + "\n（更新清单和播放列表在同一个地址源，能正常拉列表一般就能检查）");
+                    return;
+                }
+                if (info.newer) {
+                    updateState.setText("发现新版本 " + info.versionName
+                            + "（当前 " + Updater.versionName(SettingsActivity.this) + "）");
+                } else {
+                    updateState.setText("已是最新版本 " + info.versionName);
+                }
+                Updater.showNotes(SettingsActivity.this, info, allowInstall);
+            }
+        });
     }
 
     @Override
