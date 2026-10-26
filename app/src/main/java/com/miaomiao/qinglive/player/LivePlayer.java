@@ -404,6 +404,9 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 waitingKey = false;
                 long pts = f.ptsUs >= 0 ? f.ptsUs : lastPts + 40000;
                 lastPts = pts;
+                if (audioOutput != null) {
+                    audioOutput.lastVideoPtsUs = pts;
+                }
                 // 按音频时钟放行：本源的视频 PTS 比音频超前约 0.7 秒（用 ffprobe 抓包量出来的），
                 // 直接喂进去画面就跑到声音前面。这里等它「快轮到上屏了」再送进解码器。
                 // 关键是不能写成「算出延迟后 sleep 整个延迟」——那样喂帧速率会掉到 5fps，
@@ -668,33 +671,24 @@ public final class LivePlayer implements TsDemuxer.Listener {
             boolean render = videoInfo.size > 0;
             if (render) {
                 stOut++;
-                if (clock <= 0) {
-                    // 音频时钟还没就绪（启动头一秒），立刻上屏，别干等
+                // 关键修复：上屏时间戳一律用「单调时钟(System.nanoTime) + 音画超前量」。
+                // 绝不能直接 releaseOutputBuffer(index, true) —— 那会让 Surface 用缓冲区
+                // 自带的原始码流 PTS(绝对时基，动辄几十小时)作为上屏时刻，相对 SurfaceFlinger
+                // 的 expectedPresent 超前约 24 小时，被判定为 implausible 直接丢弃/错时呈现，
+                // 表现为「每个频道换台/启动头一秒几乎每一帧都掉 → 卡一下」。
+                // 用 nanoTime 作基准就落在 SF 的单调时钟域，时间戳合理，不再 implausible。
+                long lead = (clock > 0) ? (pts - clock) : 0;   // 比声音时钟超前多少微秒
+                if (lead > 250000) lead = 250000;              // 音频时钟抖动算出的天文数字，封顶 250ms
+                else if (lead < -50000) lead = 0;              // 落后太多就当“现在放”，丢显示帧追上
+                long presentNs = System.nanoTime() + (lead > 0 ? lead * 1000L : 0);
+                try {
+                    // API 21+ 两参重载 (index, renderTimestampNs)：把帧按音画超前量对齐到
+                    // 正确的 vsync 上屏，解码成簇输出也不会聚簇丢帧（修复 CCTV8「每秒掉一次」、
+                    // CCTV1 模糊块）；clock 未就绪时也用 nanoTime 基准，避免原始 PTS 引发的 implausible。
+                    codec.releaseOutputBuffer(outIndex, presentNs);
+                } catch (Throwable t) {
+                    // API21 以下两参重载不可用时的兜底；本机 API21+，正常不会走到。
                     codec.releaseOutputBuffer(outIndex, true);
-                } else {
-                    // 用码流 PTS 把上屏时刻对齐到「正在播放的声音」所在的墙上时间：
-                    // 让每一帧都在它该出现的那一刻才呈现，而不是一解码出来就立刻堆上去。
-                    // 之前不调度，解码帧成簇地瞬间上屏，SurfaceFlinger 在一个 vsync 内
-                    // 塞不下就丢帧，表现为「每秒掉一次」的卡顿（CCTV8 最明显）；CCTV1 还会
-                    // 因为丢帧聚簇而显得模糊块。配合 runVideo 里 80ms 的超前限流，每帧最多
-                    // 被 Surface 按住约 80ms，不会撑爆解码器输出缓冲。
-                    long lead = pts - clock;          // 比声音时钟超前多少微秒
-                    if (lead <= -50000) {
-                        // 落后太多，别把时间往回拨，直接现在上屏追上
-                        codec.releaseOutputBuffer(outIndex, true);
-                    } else {
-                        long delayNs = lead > 0 ? lead * 1000L : 0;
-                        long schedNs = System.nanoTime() + delayNs;
-                        try {
-                            // API 21+ 的两参重载 (index, renderTimestampNs)：
-                            // 把帧按码流 PTS 对齐到「正在播放的声音」所在的墙上时刻再上屏，
-                            // 即便解码成簇输出，Surface 也会在各自正确的 vsync 上呈现，
-                            // 不再聚簇丢帧（修复 CCTV8「每秒掉一次」、CCTV1 模糊块）。
-                            codec.releaseOutputBuffer(outIndex, schedNs);
-                        } catch (Throwable t) {
-                            codec.releaseOutputBuffer(outIndex, true);
-                        }
-                    }
                 }
             } else {
                 codec.releaseOutputBuffer(outIndex, false);
@@ -787,12 +781,15 @@ public final class LivePlayer implements TsDemuxer.Listener {
                     byte[] pcm = mp2.feed(f.data, 0, f.length);
                     if (pcm != null && pcm.length > 0) {
                         out.writePcm(pcm, pcm.length, mp2.sampleRate, mp2.channels,
-                                f.ptsUs >= 0 ? f.ptsUs : -1);
+                                f.ptsUs >= 0 ? f.ptsUs
+                                        : (out.lastVideoPtsUs > 0 ? out.lastVideoPtsUs - 50000 : -1));
                     }
                 } else if (audioCodec == TsDemuxer.AUDIO_AAC) {
                     feedAac(out, f);
                 } else {
-                    out.writeCodec(f.data, 0, f.length, f.ptsUs >= 0 ? f.ptsUs : -1);
+                    out.writeCodec(f.data, 0, f.length,
+                            f.ptsUs >= 0 ? f.ptsUs
+                                    : (out.lastVideoPtsUs > 0 ? out.lastVideoPtsUs - 50000 : -1));
                 }
             } catch (Throwable t) {
                 Log.w(TAG, "audio fail", t);
@@ -918,6 +915,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
         private long anchorPtsUs = -1;
         private long anchorMs;
         private volatile long lastPtsUs = -1;
+        /** 视频当前 pts（绝对时基，≈码流里的 90kHz 时基）。音频 PTS 缺失时，
+         *  用它把音频时钟锚定到与视频同一时基，否则音频时钟会从 0 起、与视频差好几个小时，
+         *  lead 算成天文数字 → 传给 Surface 的时间戳被当 implausible 丢弃→掉帧。 */
+        volatile long lastVideoPtsUs;
         /** 已写入 AudioTrack 的总帧数 / 已写入数据末尾的 PTS，用来算“耳朵正在听哪一刻” */
         private long totalFrames;
         private long endPtsUs = -1;
@@ -981,7 +982,8 @@ public final class LivePlayer implements TsDemuxer.Listener {
                     ib.clear();
                     if (length <= ib.capacity()) {
                         ib.put(data, offset, length);
-                        long ts = ptsUs >= 0 ? ptsUs : lastPtsUs + 24000;
+                        long ts = ptsUs >= 0 ? ptsUs
+                        : (lastVideoPtsUs > 0 ? lastVideoPtsUs - 50000 : lastPtsUs + 24000);
                         codec.queueInputBuffer(inIndex, 0, length, ts, 0);
                     } else {
                         codec.queueInputBuffer(inIndex, 0, 0, 0, 0);
@@ -1096,26 +1098,40 @@ public final class LivePlayer implements TsDemuxer.Listener {
          * 于是时钟跑在耳朵前面；再加上启动时音频队列攒了一秒的旧数据，音画能差到 0.9 秒。
          * 现在按时钟 = 已写入末尾 - 还没播完的帧数，才是真正正在听的位置。
          */
+        // 视频线程（drainVideo / runVideo 的限流循环）和音频线程（note）都会访问
+        // endPtsUs / totalFrames：必须同步，否则视频线程会读到“endPtsUs 已更新、
+        // totalFrames 还没更新”的中间态，把时钟算成≈0，进而 lead = pts − 0 爆炸成几小时，
+        // 传给 Surface 的时间戳被当成 implausible 直接丢弃 → 掉帧卡顿。
+        private final Object clockLock = new Object();
+
         private void note(long ptsUs, int frames) {
             if (frames <= 0 || sampleRate <= 0) {
                 return;
             }
-            long dur = (long) frames * 1000000L / sampleRate;
-            if (ptsUs >= 0) {
-                lastPtsUs = ptsUs;
-                endPtsUs = ptsUs + dur;
-            } else if (endPtsUs > 0) {
-                endPtsUs += dur;
-            } else {
-                return;
+            synchronized (clockLock) {
+                long dur = (long) frames * 1000000L / sampleRate;
+                if (ptsUs >= 0) {
+                    lastPtsUs = ptsUs;
+                    endPtsUs = ptsUs + dur;
+                } else if (endPtsUs > 0) {
+                    endPtsUs += dur;
+                } else {
+                    return;
+                }
+                totalFrames += frames;
             }
-            totalFrames += frames;
         }
 
         /** 音频时钟（微秒）：正在播放的那一帧的 PTS。 */
         long clockUs() {
-            if (endPtsUs <= 0 || sampleRate <= 0) {
-                return -1;
+            long endPts, frames, rate;
+            synchronized (clockLock) {
+                if (endPtsUs <= 0 || sampleRate <= 0) {
+                    return -1;
+                }
+                endPts = endPtsUs;
+                frames = totalFrames;
+                rate = sampleRate;
             }
             long head = 0;
             if (track != null) {
@@ -1124,11 +1140,11 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 } catch (Throwable ignored) {
                 }
             }
-            long pending = totalFrames - head;
+            long pending = frames - head;
             if (pending < 0) {
                 pending = 0;
             }
-            return endPtsUs - pending * 1000000L / sampleRate;
+            return endPts - pending * 1000000L / rate;
         }
 
         private void closeTrack() {
