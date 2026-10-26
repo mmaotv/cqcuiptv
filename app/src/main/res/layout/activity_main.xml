@@ -123,10 +123,10 @@
         android:textSize="14sp"
         android:visibility="gone" />
 
-    <!-- 频道列表抽屉：左边分类，右边该分类下的频道 -->
+    <!-- 频道列表抽屉：左边分类，中间该分类下的频道，右边常驻当前频道的节目单 -->
     <LinearLayout
         android:id="@+id/panel"
-        android:layout_width="700dp"
+        android:layout_width="860dp"
         android:clickable="true"
         android:layout_height="match_parent"
         android:layout_gravity="right"
@@ -170,7 +170,7 @@
 
             <ListView
                 android:id="@+id/group_list"
-                android:layout_width="186dp"
+                android:layout_width="150dp"
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
                 android:divider="#00000000"
@@ -197,6 +197,45 @@
                 android:fadingEdge="none"
                 android:listSelector="@drawable/item_selector"
                 android:scrollbars="none" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
+                android:background="#22FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.25"
+                android:orientation="vertical"
+                android:paddingLeft="8dp">
+
+                <TextView
+                    android:id="@+id/panel_epg_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingBottom="8dp"
+                    android:singleLine="true"
+                    android:text="节目单"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ListView
+                    android:id="@+id/panel_epg"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:cacheColorHint="#00000000"
+                    android:divider="#00000000"
+                    android:dividerHeight="2dp"
+                    android:fadingEdge="none"
+                    android:listSelector="@drawable/item_selector"
+                    android:scrollbars="none" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

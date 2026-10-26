@@ -95,6 +95,11 @@ public class MainActivity extends Activity implements
     private ChannelAdapter adapter;
     private boolean panelOpen;
 
+    /** 频道列表抽屉里常驻的节目单（占右侧之前空白的区域） */
+    private ListView panelEpg;
+    private EpgAdapter panelEpgAdapter;
+    private TextView panelEpgTitle;
+
     private View epgPanel;
     private ListView epgList;
     private TextView epgChannelView;
@@ -183,6 +188,7 @@ public class MainActivity extends Activity implements
         adapter = new ChannelAdapter(this);
         list.setAdapter(adapter);
         list.setOnItemClickListener(this);
+        list.setOnItemSelectedListener(this);
 
         epgPanel = findViewById(R.id.epg_panel);
         epgList = (ListView) findViewById(R.id.epg_list);
@@ -191,6 +197,11 @@ public class MainActivity extends Activity implements
         epgAdapter = new EpgAdapter(this);
         epgList.setAdapter(epgAdapter);
         epgList.setOnItemClickListener(this);
+
+        panelEpg = (ListView) findViewById(R.id.panel_epg);
+        panelEpgTitle = (TextView) findViewById(R.id.panel_epg_title);
+        panelEpgAdapter = new EpgAdapter(this);
+        panelEpg.setAdapter(panelEpgAdapter);
 
         setupGestures();
         fitPanels();
@@ -236,8 +247,8 @@ public class MainActivity extends Activity implements
     /** 面板按屏幕宽度收一下，平板上不至于铺满、小屏上不至于超出。 */
     private void fitPanels() {
         int screen = getResources().getDisplayMetrics().widthPixels;
-        int max = (int) (screen * 0.92f);
-        clampWidth(panel, (int) (700 * getResources().getDisplayMetrics().density), max);
+        int max = (int) (screen * 0.94f);
+        clampWidth(panel, (int) (860 * getResources().getDisplayMetrics().density), max);
         clampWidth(epgPanel, (int) (620 * getResources().getDisplayMetrics().density), max);
     }
 
@@ -633,6 +644,9 @@ public class MainActivity extends Activity implements
         if (epgOpen) {
             fillEpg();
         }
+        if (panelOpen) {
+            updatePanelEpg(index);
+        }
     }
 
     private static String epgId(Channel c) {
@@ -719,6 +733,38 @@ public class MainActivity extends Activity implements
         epgList.setSelection(target);
     }
 
+    /** 频道列表抽屉里常驻显示某个频道的节目单，把右侧空白占起来。 */
+    private void updatePanelEpg(int globalIndex) {
+        if (channels.isEmpty() || globalIndex < 0 || globalIndex >= channels.size()
+                || panelEpgAdapter == null) {
+            return;
+        }
+        Channel c = channels.get(globalIndex);
+        if (panelEpgTitle != null) {
+            panelEpgTitle.setText(c.name + "　的节目单");
+        }
+        if (epg == null) {
+            panelEpgAdapter.setData(null);
+            return;
+        }
+        List<Epg.Programme> prog = epg.list(epgId(c));
+        panelEpgAdapter.setData(prog);
+        long now = System.currentTimeMillis();
+        int target = 0;
+        for (int i = 0; i < prog.size(); i++) {
+            Epg.Programme p = prog.get(i);
+            if (p.start <= now && now < p.stop) {
+                target = i;
+                break;
+            }
+            if (p.start > now) {
+                target = i;
+                break;
+            }
+        }
+        panelEpg.setSelection(target);
+    }
+
     // ------------------------------------------------------------------ 换台
 
     private void tune(int i) {
@@ -735,6 +781,9 @@ public class MainActivity extends Activity implements
         prefs.setLastIndex(i);
         if (adapter != null) {
             adapter.setCurrent(i);
+        }
+        if (panelOpen) {
+            updatePanelEpg(i);
         }
 
         Channel c = channels.get(i);
@@ -1030,6 +1079,7 @@ public class MainActivity extends Activity implements
         if (local >= 0) {
             list.setSelection(local);
         }
+        updatePanelEpg(index);
         groupList.requestFocus();
     }
 
@@ -1115,6 +1165,9 @@ public class MainActivity extends Activity implements
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (parent.getId() == R.id.group_list && panelOpen) {
             showGroup(position);
+        } else if (parent.getId() == R.id.list && panelOpen) {
+            int global = position < shownNumbers.length ? shownNumbers[position] : position;
+            updatePanelEpg(global);
         }
     }
 

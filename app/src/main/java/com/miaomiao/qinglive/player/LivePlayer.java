@@ -86,6 +86,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
     private volatile int videoHeight;
     private volatile int spsWidth;
     private volatile int spsHeight;
+    private volatile boolean spsInterlaced;
     private volatile int decodeWidth;
     private volatile int decodeHeight;
     private volatile byte[] csd0;
@@ -250,9 +251,11 @@ public final class LivePlayer implements TsDemuxer.Listener {
     }
 
     @Override
-    public void onVideoSize(int width, int height) {
+    public void onVideoSize(int width, int height, boolean interlaced) {
         spsWidth = width;
         spsHeight = height;
+        spsInterlaced = interlaced;
+        Log.i(TAG, "sps " + width + "x" + height + (interlaced ? " 隔行(1080i)" : " 逐行"));
     }
 
     @Override
@@ -347,10 +350,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
         }
         decodeWidth = choice.width;
         decodeHeight = choice.height;
-        if (choice.width < srcWidth) {
-            Log.i(TAG, "decode " + srcWidth + "x" + srcHeight + " -> " + choice.width + "x" + choice.height
-                    + " (" + choice.name + " 的能力上限)");
-        }
+        Log.i(TAG, "video " + mime + " source=" + srcWidth + "x" + srcHeight
+                + (spsInterlaced ? "(隔行)" : "")
+                + " decode=" + choice.width + "x" + choice.height
+                + " codec=" + (choice.name == null ? "type-fallback" : choice.name));
 
         boolean waitingKey = true;
         long lastPts = 0;
@@ -512,7 +515,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
                             if (info.isEncoder()) {
                                 continue;
                             }
-                            boolean hw = info.isHardwareAccelerated();
+                            boolean hw = isHardware(info);
                             if ((pass == 0) != hw) {
                                 continue;
                             }
@@ -537,6 +540,29 @@ public final class LivePlayer implements TsDemuxer.Listener {
         c.width = srcWidth;
         c.height = srcHeight;
         return c;
+    }
+
+    /**
+     * 判断解码器是不是硬件的。
+     * <p>
+     * 本来用 {@link MediaCodecInfo#isHardwareAccelerated()}，但有的定制 ROM（比如这台小米盒子）
+     * 谎报 API≥21 却把这个方法阉割了，一调用就抛 NoSuchMethodError，导致整个选解码逻辑崩掉、
+     * 退化成 createDecoderByType 直接用源分辨率硬解（4K 会崩、还会失去尺寸降级能力）。
+     * 这里先试着调，抛异常就按名字 heuristics 判断：谷歌/安卓自带的软解名字里带 google/android。
+     */
+    private static boolean isHardware(MediaCodecInfo info) {
+        try {
+            return info.isHardwareAccelerated();
+        } catch (Throwable t) {
+            String n = info.getName();
+            if (n == null) {
+                return false;
+            }
+            String ln = n.toLowerCase();
+            return !(ln.contains("google") || ln.contains("android")
+                    || ln.contains(".sw.") || ln.contains("software")
+                    || ln.contains("c2.android"));
+        }
     }
 
     private static boolean supports(MediaCodecInfo info, String mime, int width, int height) {
@@ -642,8 +668,37 @@ public final class LivePlayer implements TsDemuxer.Listener {
             boolean render = videoInfo.size > 0;
             if (render) {
                 stOut++;
+                if (clock <= 0) {
+                    // 音频时钟还没就绪（启动头一秒），立刻上屏，别干等
+                    codec.releaseOutputBuffer(outIndex, true);
+                } else {
+                    // 用码流 PTS 把上屏时刻对齐到「正在播放的声音」所在的墙上时间：
+                    // 让每一帧都在它该出现的那一刻才呈现，而不是一解码出来就立刻堆上去。
+                    // 之前不调度，解码帧成簇地瞬间上屏，SurfaceFlinger 在一个 vsync 内
+                    // 塞不下就丢帧，表现为「每秒掉一次」的卡顿（CCTV8 最明显）；CCTV1 还会
+                    // 因为丢帧聚簇而显得模糊块。配合 runVideo 里 80ms 的超前限流，每帧最多
+                    // 被 Surface 按住约 80ms，不会撑爆解码器输出缓冲。
+                    long lead = pts - clock;          // 比声音时钟超前多少微秒
+                    if (lead <= -50000) {
+                        // 落后太多，别把时间往回拨，直接现在上屏追上
+                        codec.releaseOutputBuffer(outIndex, true);
+                    } else {
+                        long delayNs = lead > 0 ? lead * 1000L : 0;
+                        long schedNs = System.nanoTime() + delayNs;
+                        try {
+                            // API 21+ 的两参重载 (index, renderTimestampNs)：
+                            // 把帧按码流 PTS 对齐到「正在播放的声音」所在的墙上时刻再上屏，
+                            // 即便解码成簇输出，Surface 也会在各自正确的 vsync 上呈现，
+                            // 不再聚簇丢帧（修复 CCTV8「每秒掉一次」、CCTV1 模糊块）。
+                            codec.releaseOutputBuffer(outIndex, schedNs);
+                        } catch (Throwable t) {
+                            codec.releaseOutputBuffer(outIndex, true);
+                        }
+                    }
+                }
+            } else {
+                codec.releaseOutputBuffer(outIndex, false);
             }
-            codec.releaseOutputBuffer(outIndex, render);
             if (render && !preparedReported) {
                 preparedReported = true;
                 if (videoWidth == 0) {
@@ -819,6 +874,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
         videoHeight = 0;
         spsWidth = 0;
         spsHeight = 0;
+        spsInterlaced = false;
         csd0 = null;
         csd1 = null;
         metaLine = "";

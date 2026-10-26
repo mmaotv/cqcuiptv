@@ -3,6 +3,7 @@ package com.miaomiao.qinglive;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -37,6 +38,9 @@ public class SettingsActivity extends Activity {
         for (int i = 0; i < chips.length; i++) {
             final int days = Prefs.CACHE_DAYS[i];
             chips[i].setText(Prefs.CACHE_LABELS[i]);
+            // 让芯片也能被方向键聚焦，并且不进入触摸聚焦态，保证光标高亮始终画得出来
+            chips[i].setFocusable(true);
+            chips[i].setFocusableInTouchMode(false);
             chips[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -114,6 +118,29 @@ public class SettingsActivity extends Activity {
     protected void onResume() {
         super.onResume();
         refreshServer();
+    }
+
+    /**
+     * 设置页内容超过一屏、可滚动。触屏滑动或列表滚动后焦点偶尔会整页丢失，
+     * 于是按方向键也找不到光标（用户反馈「重新拉取上面的按钮都没有选中状态」）。
+     * 这里在焦点丢失时先把光标放到第一个可聚焦控件上，保证总能看到选中态。
+     */
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent e) {
+        if (e.getAction() == KeyEvent.ACTION_DOWN
+                && (e.getKeyCode() == KeyEvent.KEYCODE_DPAD_UP
+                    || e.getKeyCode() == KeyEvent.KEYCODE_DPAD_DOWN
+                    || e.getKeyCode() == KeyEvent.KEYCODE_DPAD_LEFT
+                    || e.getKeyCode() == KeyEvent.KEYCODE_DPAD_RIGHT
+                    || e.getKeyCode() == KeyEvent.KEYCODE_DPAD_CENTER
+                    || e.getKeyCode() == KeyEvent.KEYCODE_TAB)
+                && getCurrentFocus() == null) {
+            View first = findViewById(R.id.btn_cfg_toggle);
+            if (first != null) {
+                first.requestFocus();
+            }
+        }
+        return super.dispatchKeyEvent(e);
     }
 
     private void refreshChips() {

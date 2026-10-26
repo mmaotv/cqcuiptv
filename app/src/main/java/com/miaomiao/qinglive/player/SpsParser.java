@@ -64,7 +64,7 @@ final class SpsParser {
         }
     }
 
-    /** 在 Annex-B 数据里找到第一个 SPS 并返回 {宽, 高}，找不到返回 null。 */
+    /** 在 Annex-B 数据里找到第一个 SPS 并返回 {宽, 高, 是否隔行(1/0)}，找不到返回 null。 */
     static int[] parse(byte[] data, int length, boolean hevc) {
         int i = 0;
         while (i + 4 < length) {
@@ -96,6 +96,7 @@ final class SpsParser {
                 } catch (Throwable t) {
                     android.util.Log.w("SPS", "parse fail: " + t);
                 }
+                // parseH264/parseHevc 只在找到 SPS 时返回，这里兜底继续找下一个 NAL
             }
             i = nalEnd;
         }
@@ -192,7 +193,9 @@ final class SpsParser {
         int width = widthMbs * 16 - (cropLeft + cropRight) * subWidthC;
         int height = (2 - (frameMbsOnly ? 1 : 0)) * heightMapUnits * 16
                 - (cropTop + cropBottom) * subHeightC * (2 - (frameMbsOnly ? 1 : 0));
-        return new int[]{width, height};
+        // 第三个值：是否隔行。frameMbsOnly=0 说明是 1080i 这类隔行（或 MBAFF），
+        // 这种源直接送 Surface 会出梳状/发虚，电视直播里常见于 CCTV1 等新闻台。
+        return new int[]{width, height, frameMbsOnly ? 0 : 1};
     }
 
     private static int[] parseHevc(byte[] rbsp) {
@@ -245,6 +248,6 @@ final class SpsParser {
             width -= (left + right) * subWidthC;
             height -= (top + bottom) * subHeightC;
         }
-        return new int[]{width, height};
+        return new int[]{width, height, 0};
     }
 }

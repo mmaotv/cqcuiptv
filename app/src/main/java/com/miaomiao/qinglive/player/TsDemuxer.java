@@ -26,8 +26,8 @@ public final class TsDemuxer {
 
         void onVideo(byte[] data, int length, long ptsUs, boolean keyframe);
 
-        /** 从 SPS 解出的真实分辨率，只回调一次。 */
-        void onVideoSize(int width, int height);
+        /** 从 SPS 解出的真实分辨率，只回调一次。interlaced=true 表示 1080i 这类隔行源。 */
+        void onVideoSize(int width, int height, boolean interlaced);
 
         void onAudio(byte[] data, int length, long ptsUs);
     }
@@ -291,7 +291,7 @@ public final class TsDemuxer {
                 if (size != null) {
                     videoWidth = size[0];
                     videoHeight = size[1];
-                    listener.onVideoSize(videoWidth, videoHeight);
+                    listener.onVideoSize(videoWidth, videoHeight, size.length > 2 && size[2] == 1);
                 }
             }
             listener.onVideo(state.buf, state.len, state.ptsUs,
