@@ -549,47 +549,48 @@ public final class LivePlayer implements TsDemuxer.Listener {
         int height;
     }
 
-    /** 常见显示尺寸，从大到小试；解码器支持哪一档就用哪一档。 */
-    private static final int[][] SIZE_LADDER = {
-            {3840, 2160}, {2560, 1440}, {1920, 1080}, {1280, 720}, {720, 576}
-    };
-
     /**
      * 按 mime 挑一颗能真正吃下这个尺寸的解码器。
      * <p>
-     * 不用 createDecoderByType 是因为它只返回「第一个匹配」，压根不看尺寸上限；
-     * 遇到 4K HEVC 会挑到上限 2560x1440 的 MTK 组件，configure 直接把它撑崩。
+     * 不用 createDecoderByType 是因为它只返回「第一个匹配」，压根不看尺寸上限。
+     * 关键：**配置尺寸必须等于码流分辨率**。曾经这里有一张 SIZE_LADDER，解不了就往
+     * 下降一档（4K 退成 2560x1440），但喂进去的码流仍是 3840x2160，配置与码流不符，
+     * 解码器 configure 后随即死掉，反复重启 → 所有 4K 频道全卡。降级只能靠换解码器，
+     * 不能靠改 MediaFormat 尺寸。
      * 这里读 MediaCodecInfo 的能力表，硬件优先、尺寸够大优先。
      */
     private CodecChoice chooseCodec(String mime, int srcWidth, int srcHeight) {
         if (Build.VERSION.SDK_INT >= 21) {
             try {
                 MediaCodecList list = new MediaCodecList(MediaCodecList.ALL_CODECS);
-                // 先硬件后软件，软件解 4K 会直接把机器拖死
+                // 两轮：硬件优先，软件兜底。但两轮都必须是「按源分辨率真能解」——
+                // 绝不能像以前那样解不了就把配置尺寸降一档（配 2560x1440 却喂 3840x2160
+                // 的码流，配置与码流不符，解码器会当场死掉，反复重启表现为 4K 全部卡顿）。
                 for (int pass = 0; pass < 2; pass++) {
-                    for (int[] size : SIZE_LADDER) {
-                        if (size[0] > srcWidth || size[1] > srcHeight) {
+                    for (MediaCodecInfo info : list.getCodecInfos()) {
+                        if (info.isEncoder()) {
                             continue;
                         }
-                        for (MediaCodecInfo info : list.getCodecInfos()) {
-                            if (info.isEncoder()) {
-                                continue;
-                            }
-                            boolean hw = isHardware(info);
-                            if ((pass == 0) != hw) {
-                                continue;
-                            }
-                            if (!supports(info, mime, size[0], size[1])) {
-                                continue;
-                            }
-                            CodecChoice c = new CodecChoice();
-                            c.name = info.getName();
-                            c.width = size[0];
-                            c.height = size[1];
-                            return c;
+                        boolean hw = isHardware(info);
+                        if ((pass == 0) != hw) {
+                            continue;
                         }
+                        if (!supports(info, mime, srcWidth, srcHeight)) {
+                            continue;
+                        }
+                        Log.i(TAG, "codec pick " + info.getName()
+                                + " hw=" + hw + " " + srcWidth + "x" + srcHeight);
+                        CodecChoice c = new CodecChoice();
+                        c.name = info.getName();
+                        c.width = srcWidth;
+                        c.height = srcHeight;
+                        return c;
                     }
                 }
+                // 一颗都吃不下的情况（本机 4K HEVC 就是）：让 openCodec 按源尺寸试，
+                // 由它如实报「解不了」，而不是拿错误的尺寸把组件撑崩。
+                Log.w(TAG, "no codec declares " + srcWidth + "x" + srcHeight
+                        + " for " + mime + "，仍按源尺寸试");
             } catch (Throwable t) {
                 Log.w(TAG, "codec list fail", t);
             }
@@ -640,18 +641,27 @@ public final class LivePlayer implements TsDemuxer.Listener {
             MediaCodecInfo.VideoCapabilities vc =
                     info.getCapabilitiesForType(mime).getVideoCapabilities();
             if (vc == null) {
+                Log.w(TAG, "sup " + info.getName() + " " + width + "x" + height + " -> no vc");
                 return false;
             }
             Range<Integer> rw = vc.getSupportedWidths();
             Range<Integer> rh = vc.getSupportedHeights();
             if (width < rw.getLower() || width > rw.getUpper()) {
+                Log.i(TAG, "sup " + info.getName() + " " + width + "x" + height
+                        + " -> width out of " + rw + "x" + rh);
                 return false;
             }
             if (height < rh.getLower() || height > rh.getUpper()) {
+                Log.i(TAG, "sup " + info.getName() + " " + width + "x" + height
+                        + " -> height out of " + rw + "x" + rh);
                 return false;
             }
-            return vc.isSizeSupported(width, height);
+            boolean ok = vc.isSizeSupported(width, height);
+            Log.i(TAG, "sup " + info.getName() + " " + width + "x" + height
+                    + " -> sizeSupported=" + ok);
+            return ok;
         } catch (Throwable t) {
+            Log.w(TAG, "sup " + info.getName() + " " + width + "x" + height + " -> fail " + t);
             return false;
         }
     }
