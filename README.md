@@ -3,6 +3,11 @@
 **安卓电视 / 机顶盒上的极轻量直播播放器** —— 约 100 KB，零第三方依赖，Android 4.4+ 都能装。
 支持自定义 M3U 直播源、EPG 节目单、分类频道，遥控器和触摸屏都能用，无广告、不需要账号。
 
+### 👉 [**网页版介绍 · mmaotv.github.io/cqcuiptv**](https://mmaotv.github.io/cqcuiptv/)
+
+不想翻文档？截图、三步上手、下载入口都在上面这一页。
+
+[![Website](https://img.shields.io/badge/%F0%9F%8C%90%20%E7%BD%91%E9%A1%B5%E4%BB%8B%E7%BB%8D-mmaotv.github.io%2Fcqcuiptv-blueviolet)](https://mmaotv.github.io/cqcuiptv/)
 [![Build APK](https://github.com/mmaotv/cqcuiptv/actions/workflows/android.yml/badge.svg)](https://github.com/mmaotv/cqcuiptv/actions/workflows/android.yml)
 [![License](https://img.shields.io/github/license/mmaotv/cqcuiptv)](LICENSE)
 [![APK size](https://img.shields.io/badge/APK-%7E100%20KB-blue)](https://github.com/mmaotv/cqcuiptv/releases/latest)
