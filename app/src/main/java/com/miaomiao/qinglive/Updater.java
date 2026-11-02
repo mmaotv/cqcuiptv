@@ -34,7 +34,12 @@ import java.net.URL;
  * 检查更新：读仓库根目录的 update.json，拿到新版本号、更新日志、安装包地址。
  *
  * 国内访问 GitHub 时通时断（实测同一台盒子半小时内会从 200 变成连不上），所以清单
- * 同时向几个镜像取、谁先成功用谁；单个源卡住也不会拖住整次检查。
+ * 同时向几个镜像取，单个源卡住也不会拖住整次检查。
+ *
+ * 注意这里**不能「谁先返回用谁」**：jsDelivr 的分支缓存可能十几小时不刷新，发新版后
+ * 它会继续返回上一版清单，而且国内常常比 raw 快 —— 谁先到就用谁，会让「检查更新」
+ * 长期报「已是最新」。所以同一批结果里取 versionCode 最大的那份，另外给 jsDelivr
+ * 加时间桶参数绕开陈旧缓存。
  *
  * 是否升级完全由用户决定：这里只做「检查 → 展示日志 → 用户点更新才下载安装」，
  * 不做后台自动下载、不静默安装。
@@ -42,9 +47,8 @@ import java.net.URL;
 public final class Updater {
 
     /**
-     * 更新清单源，按顺序启动、并发竞速，取最先返回的那份。
-     * raw 是权威源（5 分钟缓存）；jsDelivr 国内通常更快，但分支缓存可能有十几小时延迟，
-     * 所以只当兜底——能查到版本号总比「检查失败」好。
+     * 更新清单源，按顺序启动、并发获取，最后取版本号最高的那份（不是最先返回的）。
+     * raw 是权威源（5 分钟缓存）；jsDelivr 国内通常更快，但分支缓存有十几小时延迟。
      */
     private static final String[] MANIFESTS = {
             "https://raw.githubusercontent.com/mmaotv/cqcuiptv/main/update.json",
@@ -58,6 +62,10 @@ public final class Updater {
     private static final long CHECK_TOTAL_TIMEOUT = 20000L;
     /** 抢清单的时限：比总时限小，留出报告结果的时间 */
     private static final long FETCH_DEADLINE = 12000L;
+    /** 第一个源返回后，为其余源再等这么久：够把「新版」和「CDN 旧缓存」区分开 */
+    private static final long FRESH_GRACE = 1200L;
+    /** jsDelivr 缓存桶：10 分钟一换，让镜像定期回源，不至于长期停在旧版 */
+    private static final long CDN_BUST_BUCKET = 600000L;
 
     private static final Handler MAIN = new Handler(Looper.getMainLooper());
 
@@ -153,11 +161,15 @@ public final class Updater {
         }, "update-check-watchdog").start();
     }
 
-    /** 并发向所有清单源要同一份 json，谁先成功用谁，全都失败才报错。 */
+    /**
+     * 取所有源里**版本号最高**的那份清单，而不是最先返回的。
+     * 理由见类注释：镜像的旧缓存会抢先返回，用它就会一直报「已是最新」。
+     */
     private static Info fetch() throws Exception {
+        final String[] urls = manifestUrls();
         final java.util.concurrent.LinkedBlockingQueue<Object[]> results =
                 new java.util.concurrent.LinkedBlockingQueue<Object[]>();
-        for (final String url : MANIFESTS) {
+        for (final String url : urls) {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -177,9 +189,15 @@ public final class Updater {
         }
 
         long deadline = System.currentTimeMillis() + FETCH_DEADLINE;
+        long graceEnd = 0;
         Exception last = null;
-        for (int i = 0; i < MANIFESTS.length; i++) {
-            long wait = deadline - System.currentTimeMillis();
+        Info best = null;
+        for (int i = 0; i < urls.length; i++) {
+            long now = System.currentTimeMillis();
+            long wait = deadline - now;
+            if (graceEnd > 0) {
+                wait = Math.min(wait, graceEnd - now);
+            }
             if (wait <= 0) {
                 break;
             }
@@ -188,13 +206,34 @@ public final class Updater {
                 break;
             }
             if (r[0] != null) {
-                return (Info) r[0];
-            }
-            if (r[1] instanceof Exception) {
+                Info info = (Info) r[0];
+                if (best == null || info.versionCode > best.versionCode) {
+                    best = info;
+                }
+                if (graceEnd == 0) {
+                    // 已经有一份可用了，再给其它源 FRESH_GRACE，好拿到更新的那份，
+                    // 但不会因此把整次检查拖到超时。
+                    graceEnd = System.currentTimeMillis() + FRESH_GRACE;
+                }
+            } else if (r[1] instanceof Exception) {
                 last = (Exception) r[1];
             }
         }
+        if (best != null) {
+            return best;
+        }
         throw last != null ? last : new IOException("连接超时，稍后再试");
+    }
+
+    /** jsDelivr 的清单地址加一个时间桶参数，避免发版后被它的分支缓存挡住。 */
+    private static String[] manifestUrls() {
+        long bucket = System.currentTimeMillis() / CDN_BUST_BUCKET;
+        String[] urls = new String[MANIFESTS.length];
+        for (int i = 0; i < MANIFESTS.length; i++) {
+            String u = MANIFESTS[i];
+            urls[i] = u.contains("jsdelivr") ? (u + "?v=" + bucket) : u;
+        }
+        return urls;
     }
 
     private static Info parse(String body) throws Exception {
