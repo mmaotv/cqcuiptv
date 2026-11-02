@@ -45,6 +45,8 @@ public class MainActivity extends Activity implements
     private static final long NUMBER_TIMEOUT = 1100L;
     /** 长时间没出画就当失败 */
     private static final long PREPARE_TIMEOUT = 15000L;
+    /** 同一频道自动重拉（自愈）次数上限，超过就放弃自动恢复，避免死循环 */
+    private static final int MAX_AUTO_RECOVER = 4;
     /** OK 键按住多久算长按 */
     private static final long LONG_PRESS = 700L;
     /** 底部默认提示语 */
@@ -76,6 +78,8 @@ public class MainActivity extends Activity implements
     private MediaPlayer player;
     /** 每次起播 +1，用来丢弃上一个频道残留的回调 */
     private int playGen;
+    /** 自动重拉（自愈）计数：成功起播后归零，超过上限则放弃自动恢复 */
+    private int autoRecoverCount = 0;
 
     private boolean playing;
 
@@ -911,6 +915,50 @@ public class MainActivity extends Activity implements
                     }
                 });
             }
+
+            @Override
+            public void onRecover(int reason) {
+                // 播放引擎判断当前频道黑屏未起播或卡死，请求自动重拉。带重试上限，超过则放弃。
+                autoRecoverCount++;
+                if (autoRecoverCount > MAX_AUTO_RECOVER) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNotice("该频道持续异常，已停止自动恢复\n按 OK 重试，或按 ↓ 换台");
+                        }
+                    });
+                    return;
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 注意：不要做 gen != playGen 的丢弃判断——本回调本就是要重新拉起一个
+                        // 全新的会话（tune 内部会 ++playGen），若在此拦截，重拉永远不会发生，
+                        // 频道就会一直黑屏。看门狗只在“当前会话仍存活”时调用本回调，无需兜底。
+                        if (reason == LivePlayer.Listener.RECOVER_BLACK) {
+                            // 黑屏未起播：实测同频道直接重拉仍大概率黑屏，必须“切走再切回”
+                            // （等价于用户手动切台），让本机/服务端为新会话重新下发关键帧与参数集。
+                            // 先切到下一台（该会话只活 2.5s，短于黑屏判定阈值，不会触发它的看门狗），
+                            // 再切回原频道，得到一个全新的、通常能起播的会话。
+                            final int original = index;
+                            tune((original + 1) % channels.size());
+                            final int bounceGen = playGen; // 记住这次“切走”的代际
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 若用户在此期间已自行换台，就不再强行切回，避免覆盖用户操作
+                                    if (playGen == bounceGen) {
+                                        tune(original);
+                                    }
+                                }
+                            }, 5000);
+                        } else {
+                            // 播放中卡死：同频道原地重拉即可，不扰动用户当前频道
+                            tune(index);
+                        }
+                    }
+                });
+            }
         });
         livePlayer = p;
         p.setSurface(holder);
@@ -939,6 +987,7 @@ public class MainActivity extends Activity implements
 
     private void onPlaybackStarted() {
         playing = true;
+        autoRecoverCount = 0; // 成功起播：清零自愈计数，允许后续再次出现问题时再次自愈
         handler.removeCallbacks(prepareWatchdog);
         hideNotice();
         updateOsdEpg();

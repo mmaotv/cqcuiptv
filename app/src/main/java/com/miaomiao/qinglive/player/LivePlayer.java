@@ -34,6 +34,17 @@ public final class LivePlayer implements TsDemuxer.Listener {
         void onMeta(String line);
 
         void onError(String message);
+
+        /** 自愈兜底原因：黑屏未起播（需要“切台再切回”式重拉） */
+        int RECOVER_BLACK = 1;
+        /** 自愈兜底原因：播放中卡死（同频道原地重拉即可） */
+        int RECOVER_STALL = 2;
+
+        /**
+         * 健康看门狗兜底：本级解码器已做 flush / 原地重建仍无起色，请重新拉起当前频道。
+         * reason 指示黑屏未起播还是播放中卡死，上层据此决定重拉方式（带重试上限）。
+         */
+        void onRecover(int reason);
     }
 
     private static final class Frame {
@@ -60,16 +71,26 @@ public final class LivePlayer implements TsDemuxer.Listener {
     private final ArrayDeque<Frame> videoPool = new ArrayDeque<Frame>();
     private final ArrayDeque<Frame> audioPool = new ArrayDeque<Frame>();
     private long videoBytes;
-    /** 队列上限：直播源的视频 PTS 本来比音频时钟超前 0.7 秒左右，队列得放得下这段 */
-    private static final int QUEUE_VIDEO = 40;
-    /** 队列里最多占多少字节，4K 单帧几百 KB，按帧数限会吃光内存 */
-    private static final long MAX_QUEUE_BYTES = 8 * 1024 * 1024L;
+    /** 队列上限：直播源的视频 PTS 本来比音频时钟超前 0.7 秒左右，队列得放得下这段。
+     *  4K 是 50fps，40 帧只有 0.8 秒，RTSP 一成簇送包就顶满 -> 溢出丢参考帧 ->
+     *  解码器凑不出完整 GOP -> 画面冻几十秒（实测 192.168.10.85 江苏卫视 4K 就是这样卡的）。
+     *  放到 90 帧（1.8 秒）留足余量。 */
+    private static final int QUEUE_VIDEO = 90;
+    /** 队列里最多占多少字节，4K 单帧几百 KB，按帧数限会吃光内存。
+     *  4K 38Mbps≈4.8MB/s，20MB 约 4 秒，仍远小于 32 位进程的上限。 */
+    private static final long MAX_QUEUE_BYTES = 20 * 1024 * 1024L;
     /** 送进解码器时允许比“正在播的声音”超前多少：够解码起转就行 */
     private static final long LEAD_US = 80000L;
     /** 开播前预缓冲的编码帧数：网络/RTSP 常成簇送包，靠这段缓冲顶住短暂空档 */
     private static final int PREBUFFER_FRAMES = 15;
     /** 无音频时钟时按墙钟放行的提前量；也等于编码帧留在队列里吸收抖动的深度 */
     private static final long PACE_AHEAD_US = 40000L;
+    /** lead 超过这个值就当时间轴对不上（PTS 回绕 / 换台接缝 / 音频钟滞后），不再硬等 */
+    private static final long LEAD_RESET_US = 2000000L;
+    /** 单帧在放行闸门上最多等多久：绝不无限期挂住视频线程 */
+    private static final long GATE_MAX_WAIT_MS = 900L;
+    /** 溢出后等关键帧的最长时间：超过就退一步从当前帧接着喂，别永远等下去 */
+    private static final long RESYNC_GIVEUP_MS = 3000L;
     /** 音频 24 帧约 0.6 秒：再大就只是堆延迟，音画会越拉越开 */
     private static final int QUEUE_AUDIO = 24;
 
@@ -78,6 +99,37 @@ public final class LivePlayer implements TsDemuxer.Listener {
 
     /** 诊断计数（只在排查时看，不参与播放逻辑） */
     private volatile long stIn, stDrop, stFed, stOut, stBytes, stLate, stAvUs;
+    /** 诊断：被跳过的帧数、重同步次数（溢出投诉时看这两个就知道有没有陷入抖动螺旋） */
+    private volatile long stSkip, stResync;
+    /** 溢出丢帧后开始等关键帧的时刻（0 表示当前没在等） */
+    private volatile long resyncStartMs;
+
+    /** 看门狗状态（仅诊断/自愈用，不参与播放逻辑） */
+    private volatile MediaCodec vCodec;
+    private volatile boolean waitingKey;
+
+    // —— 播放健康看门狗（独立线程，不与视频线程耦合：视频线程卡死时仍能监测）——
+    /** 码流已连通、收到视频帧，但超过这么久仍零输出 -> 黑屏未起播 */
+    private static final long BLACK_TIMEOUT = 12000L;
+    /** 起播后超过这么久没有新帧渲染（且码流仍在进）-> 播放卡住 */
+    private static final long STALL_TIMEOUT = 6000L;
+    /** 两次自愈动作之间的最小间隔，避免连发把正常频道也抖一下 */
+    private static final long HEAL_COOLDOWN = 3000L;
+    /** 本次会话起始时刻（流已连通），黑屏计时以此为准 */
+    private volatile long sessionStartMs;
+    /** 每次 start() 自增，看门狗据此识别“已被重拉、进入新会话” */
+    private volatile long sessionId;
+    private volatile long watchSessionId = -1;
+    private volatile long lastInMs;       // 最近一次收到视频帧的时刻
+    private volatile long lastOutMs;      // 最近一次渲染输出的时刻
+    private volatile long prevIn, prevOut; // 上一拍计数，用于算速率
+    private volatile int healLevel;       // 0 健康 / 1 已 flush / 2 已 rebuild
+    private volatile long lastHealMs;
+    private volatile int retuneCount;     // 本次会话已请求重拉次数（仅日志用）
+    private volatile boolean needFlush;   // 视频线程执行：flush + 等关键帧
+    private volatile boolean needRebuild; // 视频线程执行：原地重建解码器
+    private volatile boolean watchRunning;
+    private Thread healthThread;
 
     /** 队列爆过、参考帧被丢掉了：等下一个关键帧重来，否则会一直花屏 */
     private volatile boolean resyncNeeded;
@@ -119,6 +171,8 @@ public final class LivePlayer implements TsDemuxer.Listener {
     public void start(final String url) {
         stop();
         running = true;
+        sessionId++;
+        startHealthWatchdog();
         demuxer = new TsDemuxer(this);
         audioOutput = new AudioOutput();
         Thread control = new Thread(new Runnable() {
@@ -157,7 +211,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
 
     private void startWorkers() {
         final RtspSession s = rtsp;
-
+        sessionStartMs = SystemClock.elapsedRealtime();
         rtpThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -284,7 +338,12 @@ public final class LivePlayer implements TsDemuxer.Listener {
             videoBytes += length;
             while (videoQueue.size() > QUEUE_VIDEO || videoBytes > MAX_QUEUE_BYTES) {
                 stDrop++;
-                // 丢掉的是 GOP 中间的参考帧，解码器会一路花屏，必须等关键帧重来
+                // 丢掉的是 GOP 中间的参考帧，解码器会一路花屏，必须等关键帧重来。
+                // 起点只在“从不需要重同步 -> 需要”时记录，别被后续每次丢帧刷新掉，
+                // 否则 RESYNC_GIVEUP_MS 的超时兜底永远到不了。
+                if (!resyncNeeded) {
+                    resyncStartMs = SystemClock.elapsedRealtime();
+                }
                 resyncNeeded = true;
                 Frame old = videoQueue.pollFirst();
                 if (old == null) {
@@ -350,13 +409,14 @@ public final class LivePlayer implements TsDemuxer.Listener {
         // 2560x1440，拿 3840x2160 去 configure 组件会当场崩（ACodec ERROR 0x80001005），
         // MediaCodec 被打进 Released 态，之后每次 dequeue 都抛异常，线程就空转烧 CPU。
         CodecChoice choice = chooseCodec(mime, srcWidth, srcHeight);
-        MediaCodec codec = choice == null ? null : openCodec(choice, mime);
-        if (codec == null) {
+        vCodec = choice == null ? null : openCodec(choice, mime);
+        if (vCodec == null) {
             listener.onError("视频解码失败：这个盒子没有能解 " + mime + " 的解码器");
             return;
         }
         decodeWidth = choice.width;
         decodeHeight = choice.height;
+        waitingKey = true;
         Log.i(TAG, "video " + mime + " source=" + srcWidth + "x" + srcHeight
                 + (spsInterlaced ? "(隔行)" : "")
                 + " decode=" + choice.width + "x" + choice.height
@@ -374,17 +434,40 @@ public final class LivePlayer implements TsDemuxer.Listener {
         }
         Log.i(TAG, "prebuffer " + videoQueue.size() + " frames");
 
-        boolean waitingKey = true;
+        waitingKey = true;
         long lastPts = 0;
         int failCount = 0;
         long lastStat = SystemClock.elapsedRealtime();
         while (running) {
             long nowMs = SystemClock.elapsedRealtime();
+            // 视频线程执行看门狗下发的自愈动作：保证在视频线程内操作解码器，线程安全
+            if (needFlush) {
+                needFlush = false;
+                try {
+                    if (vCodec != null) {
+                        vCodec.flush();
+                    }
+                } catch (Throwable ignored) {
+                }
+                resyncNeeded = true;
+                resyncStartMs = SystemClock.elapsedRealtime();
+                waitingKey = true;
+                Log.w(TAG, "[HEAL] flush executed");
+            }
+            if (needRebuild) {
+                needRebuild = false;
+                String m = videoCodec == TsDemuxer.VIDEO_HEVC ? "video/hevc" : "video/avc";
+                int w = spsWidth > 0 ? spsWidth : 1920;
+                int h = spsHeight > 0 ? spsHeight : 1080;
+                rebuildVideoDecoder(m, w, h);
+                Log.w(TAG, "[HEAL] rebuild executed");
+            }
             if (nowMs - lastStat >= 10000) {
                 lastStat = nowMs;
                 Log.i(TAG, "[stat] q=" + videoQueue.size() + "/" + QUEUE_VIDEO
                         + " in=" + stIn + " drop=" + stDrop + " fed=" + stFed
                         + " out=" + stOut + " late=" + stLate
+                        + " skip=" + stSkip + " rsy=" + stResync
                         + " av=" + (stAvUs / 1000) + "ms"
                         + " kbps=" + (stBytes * 8 / 1000 / 10));
                 stBytes = 0;
@@ -412,17 +495,24 @@ public final class LivePlayer implements TsDemuxer.Listener {
             }
             try {
                 if (waitingKey && !f.key) {
+                    stSkip++;
                     continue;
                 }
                 if (resyncNeeded) {
-                    // 队列溢出时丢掉了参考帧，从这里接不上，干脆等关键帧、清空解码器重来
-                    if (!f.key) {
+                    // 溢出时丢了参考帧，必须等下一个关键帧重新接上——但绝不在这里 flush()。
+                    // flush 会把解码器里正在解的那段 GOP 整块丢弃，而溢出往往是持续的
+                    // （队列一满又丢），于是每遇到一个关键帧就 flush 一次 -> 解码器永远只
+                    // 拿到 1 帧/GOP、凑不出完整 GOP -> 零输出，画面冻几十秒甚至不恢复。
+                    // 硬件解码器收到 IDR 会自行重同步，从关键帧开始连续喂就够了。
+                    if (!f.key && nowMs - resyncStartMs < RESYNC_GIVEUP_MS) {
+                        stSkip++;
                         continue;
                     }
                     resyncNeeded = false;
-                    try {
-                        codec.flush();
-                    } catch (Throwable ignored) {
+                    stResync++;
+                    if ((stResync & 7) == 1) {
+                        Log.i(TAG, "[resync] resume at " + (f.key ? "keyframe" : "non-key")
+                                + " after " + (nowMs - resyncStartMs) + "ms q=" + videoQueue.size());
                     }
                 }
                 waitingKey = false;
@@ -440,6 +530,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 if (clock > 0) {
                     // 有音频时钟：以音频为基准放行，快轮到上屏了才喂解码器。
                     // 这既控音画同步，也天然把编码帧压在 videoQueue 里当抖动缓冲。
+                    long gateWait0 = SystemClock.elapsedRealtime();
                     while (running) {
                         clock = ao.clockUs();
                         if (clock < 0) {
@@ -449,7 +540,17 @@ public final class LivePlayer implements TsDemuxer.Listener {
                         if (lead <= LEAD_US) {
                             break;
                         }
-                        drainVideo(codec);
+                        // 护栏一：lead 大得离谱（PTS 回绕 / 换台接缝 / 音频时钟滞后），
+                        // 说明时间轴对不上了，硬等只会把喂帧冻住，直接放行让解码器自己走。
+                        if (lead > LEAD_RESET_US) {
+                            Log.i(TAG, "[gate] lead " + (lead / 1000) + "ms too big, feed anyway");
+                            break;
+                        }
+                        // 护栏二：单帧最多等 GATE_MAX_WAIT_MS，绝不无限期挂在闸门上。
+                        if (SystemClock.elapsedRealtime() - gateWait0 > GATE_MAX_WAIT_MS) {
+                            break;
+                        }
+                        drainVideo(vCodec);
                         sleep((int) Math.min((lead - LEAD_US) / 1000, 40));
                     }
                 } else {
@@ -472,45 +573,50 @@ public final class LivePlayer implements TsDemuxer.Listener {
                             pacePtsUs = pts;
                             break;
                         }
-                        drainVideo(codec);
+                        drainVideo(vCodec);
                         sleep((int) Math.min(ahead / 1000000L, 40));
                     }
                 }
                 // 输入缓冲暂时拿不到时先抽输出腾地方，别把这帧扔了——丢中间帧就是丢参考帧
                 int index = -1;
                 long ib0 = SystemClock.elapsedRealtime();
-                for (int tries = 0; tries < 40 && running; tries++) {
-                    index = codec.dequeueInputBuffer(5000);
+                for (int tries = 0; tries < 5 && running; tries++) {
+                    index = vCodec.dequeueInputBuffer(1000);
                     if (index >= 0) {
                         break;
                     }
-                    drainVideo(codec);
+                    drainVideo(vCodec);
                 }
                 long ibms = SystemClock.elapsedRealtime() - ib0;
                 if (ibms >= 80) {
                     Log.i(TAG, "[dec] input wait " + ibms + "ms q=" + videoQueue.size());
                 }
                 if (index < 0) {
+                    // 输入缓冲仍拿不到：解码器内部可能已卡死。丢弃这帧，让看门狗评估，
+                    // 绝不再把线程焊死在 200 秒的输入等待上（那样画面冻、声音却一直响）。
                     continue;
                 }
-                ByteBuffer ib = codec.getInputBuffer(index);
+                ByteBuffer ib = vCodec.getInputBuffer(index);
                 ib.clear();
                 if (f.length > ib.capacity()) {
                     continue;
                 }
                 ib.put(f.data, 0, f.length);
-                codec.queueInputBuffer(index, 0, f.length, pts, 0);
+                vCodec.queueInputBuffer(index, 0, f.length, pts, 0);
                 stFed++;
-                drainVideo(codec);
+                drainVideo(vCodec);
                 failCount = 0;
             } catch (IllegalStateException dead) {
-                // 解码器已经被系统回收（4K 码流撑崩组件就是这个表现）。
-                // 再循环只是每秒刷几十次异常、白烧 CPU，直接把话说给用户听。
+                // 解码器被系统回收 / 内部卡死。先原地重建（不动音频线程，声音不中断），
+                // 重建失败才把话说给用户听。
                 Log.w(TAG, "video codec dead at " + choice.width + "x" + choice.height);
-                listener.onError("这个频道解不了：" + srcWidth + "x" + srcHeight
-                        + "\n本机 " + vName(mime) + " 硬解最高只到 "
-                        + choice.width + "x" + choice.height);
-                break;
+                rebuildVideoDecoder(mime, srcWidth, srcHeight);
+                if (vCodec == null) {
+                    listener.onError("这个频道解不了：" + srcWidth + "x" + srcHeight
+                            + "\n本机 " + vName(mime) + " 硬解最高只到 "
+                            + choice.width + "x" + choice.height);
+                    break;
+                }
             } catch (Throwable t) {
                 if (!running) {
                     break;
@@ -529,13 +635,50 @@ public final class LivePlayer implements TsDemuxer.Listener {
             }
         }
         try {
-            codec.stop();
+            if (vCodec != null) {
+                vCodec.stop();
+            }
         } catch (Throwable ignored) {
         }
         try {
-            codec.release();
+            if (vCodec != null) {
+                vCodec.release();
+            }
         } catch (Throwable ignored) {
         }
+        vCodec = null;
+    }
+
+    /** 原地重建视频解码器：停掉旧的、按源分辨率重开一颗、等关键帧。音频线程不动。 */
+    private void rebuildVideoDecoder(String mime, int w, int h) {
+        MediaCodec old = vCodec;
+        try {
+            if (old != null) {
+                old.stop();
+            }
+        } catch (Throwable ignored) {
+        }
+        try {
+            if (old != null) {
+                old.release();
+            }
+        } catch (Throwable ignored) {
+        }
+        vCodec = null;
+        CodecChoice choice = chooseCodec(mime, w, h);
+        MediaCodec c = choice == null ? null : openCodec(choice, mime);
+        if (c == null) {
+            Log.w(TAG, "[HEAL] rebuild failed, drop video (audio keeps playing)");
+            return;
+        }
+        vCodec = c;
+        decodeWidth = choice.width;
+        decodeHeight = choice.height;
+        waitingKey = true;
+        resyncNeeded = true;
+        preparedReported = false;
+        Log.w(TAG, "[HEAL] video decoder rebuilt "
+                + (choice.name == null ? "type-fallback" : choice.name) + " " + w + "x" + h);
     }
 
     private static String vName(String mime) {
@@ -929,6 +1072,8 @@ public final class LivePlayer implements TsDemuxer.Listener {
         paceWallNs = -1;
         resyncNeeded = false;
         stIn = stDrop = stFed = stOut = stBytes = stLate = 0;
+        stSkip = stResync = 0;
+        resyncStartMs = 0;
         videoWidth = 0;
         videoHeight = 0;
         spsWidth = 0;
@@ -937,6 +1082,135 @@ public final class LivePlayer implements TsDemuxer.Listener {
         csd0 = null;
         csd1 = null;
         metaLine = "";
+        watchRunning = false;
+        join(healthThread);
+        healthThread = null;
+    }
+
+    // ----------------------------------------------------- 播放健康看门狗
+
+    /**
+     * 启动独立看门狗线程：每 2 秒评估一次播放健康度，必要时下达自愈指令。
+     * 与视频线程解耦——即便视频线程被解码器卡住，看门狗仍能监测并触发重拉。
+     */
+    private void startHealthWatchdog() {
+        watchRunning = true;
+        lastInMs = SystemClock.elapsedRealtime();
+        lastOutMs = lastInMs;
+        prevIn = 0;
+        prevOut = 0;
+        healLevel = 0;
+        lastHealMs = 0;
+        retuneCount = 0;
+        watchSessionId = -1;
+        if (healthThread == null || !healthThread.isAlive()) {
+            healthThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runHealthWatchdog();
+                }
+            }, "health");
+            healthThread.setDaemon(true);
+            healthThread.start();
+        }
+    }
+
+    private void runHealthWatchdog() {
+        while (watchRunning) {
+            sleep(2000);
+            if (!running) {
+                continue;
+            }
+            evaluateHealth();
+        }
+    }
+
+    /**
+     * 健康评估与分级自愈：
+     * <ul>
+     *   <li>黑屏未起播：流已连通、有视频帧进来（stIn>0），但超过 BLACK_TIMEOUT 仍零输出。</li>
+     *   <li>播放卡住：曾经正常出帧（stOut>0），但超过 STALL_TIMEOUT 无新帧、且码流仍在进。</li>
+     * </ul>
+     * 自愈分级：先 flush+等关键帧（轻量、不切台）→ 再原地重建解码器（音频不中断）→
+     * 仍无效则请求上层重拉当前频道（等价于手动切台再切回）。正常频道持续出帧，[HEAL] 永不触发。
+     */
+    private void evaluateHealth() {
+        long now = SystemClock.elapsedRealtime();
+        // 新会话（已被重拉）：以当前计数做基线，避免拿旧会话的帧数误判
+        if (watchSessionId != sessionId) {
+            watchSessionId = sessionId;
+            prevIn = stIn;
+            prevOut = stOut;
+            lastInMs = now;
+            lastOutMs = now;
+            healLevel = 0;
+            lastHealMs = 0;
+            retuneCount = 0;
+            return;
+        }
+        long inDelta = stIn - prevIn;
+        prevIn = stIn;
+        long outDelta = stOut - prevOut;
+        prevOut = stOut;
+        if (inDelta > 0) {
+            lastInMs = now;
+        }
+        if (outDelta > 0) {
+            // 正常出帧：健康，清零自愈状态（一次成功起播后允许再次自愈）
+            lastOutMs = now;
+            if (healLevel != 0) {
+                healLevel = 0;
+                lastHealMs = 0;
+                Log.i(TAG, "[HEAL] recovered, health reset");
+            }
+            return;
+        }
+        boolean streamAlive = (now - lastInMs) < 6000; // 近期仍有视频帧进来
+        boolean noStart = (now - sessionStartMs) > BLACK_TIMEOUT
+                && stOut == 0 && streamAlive && stIn > 5;
+        boolean stalled = stOut > 0 && (now - lastOutMs) > STALL_TIMEOUT && streamAlive;
+        if (!noStart && !stalled) {
+            return;
+        }
+        if (now - lastHealMs < HEAL_COOLDOWN) {
+            return; // 自愈动作之间的冷却，避免连发
+        }
+        if (noStart) {
+            // 黑屏未起播：flush 试一次，无效则请求上层“切台再切回”式重拉
+            if (healLevel == 0) {
+                needFlush = true;
+                healLevel = 1;
+                lastHealMs = now;
+                Log.w(TAG, "[HEAL] black-screen tier1 flush");
+            } else {
+                requestRetune(now, Listener.RECOVER_BLACK);
+            }
+        } else {
+            // 播放中卡住：flush -> 原地重建 -> 同频道重拉
+            if (healLevel == 0) {
+                needFlush = true;
+                healLevel = 1;
+                lastHealMs = now;
+                Log.w(TAG, "[HEAL] stall tier1 flush");
+            } else if (healLevel == 1) {
+                needRebuild = true;
+                healLevel = 2;
+                lastHealMs = now;
+                Log.w(TAG, "[HEAL] stall tier2 rebuild");
+            } else {
+                requestRetune(now, Listener.RECOVER_STALL);
+            }
+        }
+    }
+
+    private void requestRetune(long now, int reason) {
+        retuneCount++;
+        healLevel = 0;
+        lastHealMs = now;
+        Log.w(TAG, "[HEAL] tier3 retune #" + retuneCount
+                + " reason=" + (reason == Listener.RECOVER_BLACK ? "black" : "stall")
+                + " (request upper layer re-tune)");
+        listener.onRecover(reason);
     }
 
     private void join(Thread t) {
