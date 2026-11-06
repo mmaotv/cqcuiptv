@@ -1,5 +1,6 @@
 package com.miaomiao.qinglive.player;
 
+import android.annotation.SuppressLint;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -596,7 +597,10 @@ public final class LivePlayer implements TsDemuxer.Listener {
                     // 绝不再把线程焊死在 200 秒的输入等待上（那样画面冻、声音却一直响）。
                     continue;
                 }
-                ByteBuffer ib = vCodec.getInputBuffer(index);
+                ByteBuffer ib = inputBufferOf(vCodec, index);
+                if (ib == null) {
+                    continue;
+                }
                 ib.clear();
                 if (f.length > ib.capacity()) {
                     continue;
@@ -754,6 +758,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
      * 退化成 createDecoderByType 直接用源分辨率硬解（4K 会崩、还会失去尺寸降级能力）。
      * 这里先试着调，抛异常就按名字 heuristics 判断：谷歌/安卓自带的软解名字里带 google/android。
      */
+    @SuppressLint("NewApi")   // 只被 chooseCodec 的 SDK>=21 分支调用，4.4 上不会执行
     private static boolean isHardware(MediaCodecInfo info) {
         try {
             return info.isHardwareAccelerated();
@@ -769,6 +774,7 @@ public final class LivePlayer implements TsDemuxer.Listener {
         }
     }
 
+    @SuppressLint("NewApi")   // VideoCapabilities / Range 都是 API 21+，同样只在 SDK>=21 分支调用
     private static boolean supports(MediaCodecInfo info, String mime, int width, int height) {
         try {
             boolean type = false;
@@ -825,13 +831,54 @@ public final class LivePlayer implements TsDemuxer.Listener {
             if (c1 != null && c1.length > 0) {
                 format.setByteBuffer("csd-1", ByteBuffer.wrap(c1));
             }
-            codec.configure(format, surface, null, 0);
+            // Surface 是在 setSurface 时快照的。老盒子（4.4 / 海思）开机快、列表又走本地缓存，
+            // tune() 很可能早于 surfaceCreated，那时快照到的是「尚未有效」的 Surface，
+            // configure 上去解码器照跑、但 releaseOutputBuffer 永远不上屏 = 黑屏且无报错。
+            // 开解码器时重新向 holder 取一次实际有效的 Surface。
+            Surface sf = surface;
+            if (sf == null || !sf.isValid()) {
+                SurfaceHolder h = holder;
+                Surface hs = h == null ? null : h.getSurface();
+                if (hs != null && hs.isValid()) {
+                    sf = hs;
+                    surface = hs;
+                }
+            }
+            codec.configure(format, sf, null, 0);
             codec.start();
             return codec;
         } catch (Throwable t) {
             Log.w(TAG, "video codec fail " + choice.width + "x" + choice.height, t);
             return null;
         }
+    }
+
+    /**
+     * 取解码器的输入缓冲。
+     * <p>
+     * {@code MediaCodec.getInputBuffer(int)} 是 **API 21** 才有的方法。Android 4.4（API 19，
+     * 比如海思 MV100 的 HG680-KA）上直接调用会抛 {@code NoSuchMethodError}，被 runVideo 的
+     * catch 抓成「queue video fail」，连抛 40 次就「video decode gave up」→ 画面永远黑屏。
+     * 4.4 只能用 {@code getInputBuffers()} 拿到 ByteBuffer 数组，再按 index 取。
+     * <p>
+     * 每次都重新取数组、不做缓存：4.4 上它就是返回内部缓存数组的引用（一次 JNI，50fps 下可忽略），
+     * 但能自动跟随 flush / 原地重建解码器之后的新缓冲，不用维护失效判断。
+     */
+    private static ByteBuffer inputBufferOf(MediaCodec codec, int index) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            return codec.getInputBuffer(index);
+        }
+        ByteBuffer[] bufs = codec.getInputBuffers();
+        return index >= 0 && index < bufs.length ? bufs[index] : null;
+    }
+
+    /** 同 {@link #inputBufferOf}，输出侧：API 21 以下走 {@code getOutputBuffers()} 数组。 */
+    private static ByteBuffer outputBufferOf(MediaCodec codec, int index) {
+        if (Build.VERSION.SDK_INT >= 21) {
+            return codec.getOutputBuffer(index);
+        }
+        ByteBuffer[] bufs = codec.getOutputBuffers();
+        return index >= 0 && index < bufs.length ? bufs[index] : null;
     }
 
     private void drainVideo(MediaCodec codec) {
@@ -878,7 +925,12 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 codec.releaseOutputBuffer(outIndex, false);
                 continue;
             }
-            boolean render = videoInfo.size > 0;
+            // 老 OMX 视频解码器（Android 4.4 / 海思 MV100 这类）在 surface 模式下
+            // 常常把 BufferInfo.size 报成 0，但缓冲区其实是有效的一帧。若仍按 size>0 判断，
+            // 会一帧都不 releaseOutputBuffer(true) → 画面永远黑屏（而且不报任何错）。
+            // 新版系统维持原判据不动（3.0.13 已实测稳定），只对 API 19 放宽。
+            boolean eos = (videoInfo.flags & MediaCodec.BUFFER_FLAG_END_OF_STREAM) != 0;
+            boolean render = !eos && (videoInfo.size > 0 || Build.VERSION.SDK_INT < 21);
             if (render) {
                 stOut++;
                 // 直接以「当前单调时钟(System.nanoTime)」立即上屏，落在 SurfaceFlinger 的
@@ -888,10 +940,15 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 // 音画同步改由 runVideo 的输入节流(按音频时钟放行, LEAD_US=80ms)与下方丢帧逻辑负责，
                 // 不再用 Surface 的未来时间戳做调度——那套在当前盒子固件上会背压丢帧。
                 try {
-                    codec.releaseOutputBuffer(outIndex, System.nanoTime());
+                    if (Build.VERSION.SDK_INT >= 21) {
+                        codec.releaseOutputBuffer(outIndex, System.nanoTime());
+                    } else {
+                        // API 21 以下没有 releaseOutputBuffer(int, long) 这个重载，
+                        // 用 true 立即呈现。之前靠 catch 兜底，但 4.4 上等于每帧抛一次
+                        // NoSuchMethodError（Dalvik 里异常很贵），干脆按版本走不同调用。
+                        codec.releaseOutputBuffer(outIndex, true);
+                    }
                 } catch (Throwable t) {
-                    // API21 以下两参重载不可用时的兜底（本机 API21+，正常不走）；
-                    // 用 true 立即呈现（即便带原始 PTS 也只会被 SF 钳到当前 vsync，不滞留）。
                     codec.releaseOutputBuffer(outIndex, true);
                 }
             } else {
@@ -1314,19 +1371,28 @@ public final class LivePlayer implements TsDemuxer.Listener {
                 }
                 int inIndex = codec.dequeueInputBuffer(8000);
                 if (inIndex >= 0) {
-                    ByteBuffer ib = codec.getInputBuffer(inIndex);
-                    ib.clear();
-                    if (length <= ib.capacity()) {
-                        ib.put(data, offset, length);
-                        long ts = ptsUs >= 0 ? ptsUs
-                        : (lastVideoPtsUs > 0 ? lastVideoPtsUs - 50000 : lastPtsUs + 24000);
-                        codec.queueInputBuffer(inIndex, 0, length, ts, 0);
-                    } else {
+                    // 4.4 上走 getInputBuffers() 数组，见 inputBufferOf 注释
+                    ByteBuffer ib = inputBufferOf(codec, inIndex);
+                    if (ib == null) {
                         codec.queueInputBuffer(inIndex, 0, 0, 0, 0);
+                    } else {
+                        ib.clear();
+                        if (length <= ib.capacity()) {
+                            ib.put(data, offset, length);
+                            long ts = ptsUs >= 0 ? ptsUs
+                            : (lastVideoPtsUs > 0 ? lastVideoPtsUs - 50000 : lastPtsUs + 24000);
+                            codec.queueInputBuffer(inIndex, 0, length, ts, 0);
+                        } else {
+                            codec.queueInputBuffer(inIndex, 0, 0, 0, 0);
+                        }
                     }
                 }
                 while (true) {
                     int outIndex = codec.dequeueOutputBuffer(info, 0);
+                    if (outIndex == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+                        // API 21 以下输出缓冲是数组，换过之后要重新取；这里无状态、下轮自然重取
+                        continue;
+                    }
                     if (outIndex == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
                         MediaFormat f = codec.getOutputFormat();
                         int rate = f.containsKey("sample-rate") ? f.getInteger("sample-rate") : 48000;
@@ -1339,13 +1405,15 @@ public final class LivePlayer implements TsDemuxer.Listener {
                         break;
                     }
                     if (info.size > 0 && track != null) {
-                        ByteBuffer ob = codec.getOutputBuffer(outIndex);
-                        byte[] raw = new byte[info.size];
-                        ob.position(info.offset);
-                        ob.get(raw, 0, info.size);
-                        byte[] pcm = pcmChannels > 2 ? downmix(raw, pcmChannels) : raw;
-                        note(info.presentationTimeUs, pcm.length / (2 * Math.max(1, channels)));
-                        track.write(pcm, 0, pcm.length);
+                        ByteBuffer ob = outputBufferOf(codec, outIndex);
+                        if (ob != null) {
+                            byte[] raw = new byte[info.size];
+                            ob.position(info.offset);
+                            ob.get(raw, 0, info.size);
+                            byte[] pcm = pcmChannels > 2 ? downmix(raw, pcmChannels) : raw;
+                            note(info.presentationTimeUs, pcm.length / (2 * Math.max(1, channels)));
+                            track.write(pcm, 0, pcm.length);
+                        }
                     }
                     codec.releaseOutputBuffer(outIndex, false);
                 }
