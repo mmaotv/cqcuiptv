@@ -115,6 +115,35 @@ OSD 第三行显示实际配置，例如 `HEVC 3840x2160 · AAC`。
 - **音频队列启动时清空一次**，否则整场声音都比画面晚；
 - **输入缓冲拿不到时先抽输出、不丢这一帧**。
 
+### Android 4.4（API 19）兼容
+
+minSdk 是 19，但 `MediaCodec` 有一批方法其实是 API 21 才有的，业务代码里直接调会在 4.4 上抛
+`NoSuchMethodError`。这不会表现为崩溃对话框，而是被播放线程的 `catch (Throwable)` 吞成
+「queue video fail」，连抛 40 次后判定 `video decode gave up` → **画面永远黑屏、声音也没有**。
+
+| 不能直接用（版本） | 4.4 上的替代 |
+| --- | --- |
+| `getInputBuffer(int)` / `getOutputBuffer(int)`（21） | `getInputBuffers()` / `getOutputBuffers()` 数组按 index 取 |
+| `releaseOutputBuffer(int, long)`（21） | `releaseOutputBuffer(int, true)` |
+| `new MediaCodecList(ALL_CODECS)`（21） | 跳过能力查询，直接 `createDecoderByType` |
+| `VideoCapabilities` / `Range`（21） | 同样只在 SDK≥21 分支内使用 |
+| `MediaCodecInfo.isHardwareAccelerated()`（29） | try/catch + 名字启发式（见 `isHardware`） |
+
+代码里统一封装成 `inputBufferOf()` / `outputBufferOf()`，两边按 `Build.VERSION.SDK_INT` 分支。
+数组**每次现取不缓存**：4.4 上它只是返回内部数组的引用（一次 JNI），但能自动跟随 flush 与原地
+重建解码器之后的新缓冲，不用维护失效判断。
+
+另外两个 4.4 独有、同样表现为「黑屏但不报错」的坑：
+
+- **老 OMX 在 surface 模式下把 `BufferInfo.size` 报成 0**。若用 `size > 0` 判断是否上屏，会一帧都
+  不 `releaseOutputBuffer(true)`。现在的判据是「非 EOS 即上屏」，且只对 API<21 放宽。
+- **`tune()` 可能早于 `surfaceCreated`**。老盒子开机快、列表又走本地缓存时，`setSurface` 快照到的
+  Surface 还没有效，`configure` 上去解码器照跑、但永远不上屏。`openCodec` 现在会重新向
+  `SurfaceHolder` 取一次实际有效的 Surface。
+
+改播放内核后请跑一次 `./gradlew :app:lintRelease`，确认 `NewApi` 告警为 0 —— 这是在没有 4.4
+真机时唯一可靠的静态验证手段。
+
 ### 4K 间歇卡死：队列溢出触发的自激振荡
 
 3.0.12 及以前，4K 频道播 1–2 分钟后画面冻十几到几十秒、声音正常。`[stat]` 日志的特征是：
